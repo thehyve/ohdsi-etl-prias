@@ -1,2 +1,2 @@
-# ohdsi-etl-prias
-Transformation from PRIAS to the OMOP CDM
+# PRIAS to OMOP v6
+ETL scripts to concert the Prostate cancer Research International: Active Surveillance (PRIAS) datasets to OMOP CDM V6.
