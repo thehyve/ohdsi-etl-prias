@@ -74,6 +74,13 @@ docs/_build/
 # PyBuilder
 target/
 
+# Log files
+logs/
+*.log
+
+# PyCharm
+.idea/
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
