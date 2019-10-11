@@ -66,7 +66,7 @@ def main(database, username, password, hostname, port, source, debug):
 
     db = Database(uri)
 
-    etl = Wrapper(db, source, debug)
+    etl = Wrapper(db, source)
 
     logger.info('ETL version {}'.format(__version__))
     if etl.is_git_repo():

@@ -13,15 +13,13 @@
 # GNU General Public License for more details.
 
 # !/usr/bin/env python3
-import collections
 import csv
 
 
-class SourceData(object):
+class SourceData:
     """ Base object for reading source data file """
-
     def __init__(self, source_file_path):
-        self.data_dicts = []  # list of dictionaries
+        self.data_dicts = []  # list of dicts, with each dict representing one row of source data
     
         self.load(source_file_path)
 
@@ -34,9 +32,10 @@ class SourceData(object):
 
 
 class CaseInsensitiveDict(dict):
-    """ Keys are all converted to lowercase.
-    Note: assumes all given keys in lowercase are unique. Data will be lost otherwise. """
-
+    """
+    Keys are all converted to lowercase.
+    Note: assumes all given keys in lowercase are unique. Data will be lost otherwise.
+    """
     def __init__(self, d=None):
         super().__init__()
 
@@ -56,9 +55,3 @@ class CaseInsensitiveDict(dict):
 
     def __contains__(self, key):
         return super().__contains__(key.lower())
-
-
-if __name__ == '__main__':
-    a = SourceData('./resources/synthetic_data/basedata1a.csv')
-    g = a.__iter__()
-    r = next(g)

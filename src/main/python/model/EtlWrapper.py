@@ -26,10 +26,12 @@ from sqlalchemy import text
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import MetaData
+from pathlib import Path
 
 # Import ORM for all OMOP tables
 from src.main.python.model.cdm import *
 
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -42,24 +44,20 @@ class EtlWrapper:
     """
     SOURCE_ROW_COUNT_FORMAT = '{:<60.60} {:>10}'
 
-    def __init__(self, database, source_schema, debug):
+    def __init__(self, database, source_schema):
         self.db = database
-
         self.source_schema = source_schema
-        self.debug = debug
 
         self.n_queries_executed = 0
         self.n_queries_failed = 0
         self.total_rows_inserted = 0
-        self.is_constraints_applied = False
-        self.is_constraints_extensions_applied = False
+
         self.t_start = None
         self.cwd = os.getcwd()
 
-        self._person_lookup = None
         self._stcm_lookup = defaultdict(dict)  # {source_vocabulary_id: {source_code: target_concept_id}}
 
-    def count_csv_lines(self, file):
+    def count_csv_lines(self, file) -> Optional[int]:
         """
         Counts the line of a .csv file
         :param file: input file
@@ -70,6 +68,7 @@ class EtlWrapper:
             n_rows = len(f.readlines()) - 1
             f.close()
         except:
+            logger.error(f'Could not read contents of source file: {file}')
             return None
 
         return n_rows
@@ -124,27 +123,28 @@ class EtlWrapper:
         logger.info("Queries failed: %d" % self.n_queries_failed)
         logger.info("Rows inserted: {:,}".format(self.total_rows_inserted))
 
-    def log_tables_rowcounts(self, source_data_dir, do_log_total=True):
+    def log_tables_rowcounts(self, source_data_dir: Path, do_log_total=True):
         """
         Writes the row count of all given source tables from a SQL instance to the log.
         If do_log_total is set to True, it will write the sum of the row counts as well.
         Will ONLY write to file log, not to command line.
-        :param file_paths: list of source table names
+        :param source_data_dir: directory containing the source files
         :param do_log_total: boolean, default True
         """
         total = 0
 
         for path in source_data_dir.glob('*'):
+            if path.name.startswith(('.', '~')):
+                continue
             total += self.log_table_rowcount(path)
 
         if len(list(source_data_dir.glob('*'))) > 1 and do_log_total:
             logger.info('+' * (60 + 1 + 10))
             logger.info(self.SOURCE_ROW_COUNT_FORMAT.format('TOTAL', total))
 
-    def log_table_rowcount(self, file_path):
+    def log_table_rowcount(self, file_path: Path) -> int:
         """
         Writes the row count of given source table to the log.
-        Will ONLY write to file log, not to command line.
         :param file_path: name of the source table
         :return: row count
         """
@@ -216,15 +216,12 @@ class EtlWrapper:
         try:
             rowcount = statement(self)
         except Exception as msg:
-            if self.debug:
-                raise msg
             logger.error("#!#! ERROR: Transformation '%s' failed:" % statement.__name__)
             logger.error(traceback.format_exc(limit=1))
 
             logger.error("##### START FULL TRACEBACK #####")
             logger.error(traceback.format_exc().join('\n# '))  # TODO: join does not work. Other way to prepand each line?
             logger.error("##### END FULL TRACEBACK #####")
-
             self.n_queries_failed += 1
             return
 
@@ -250,7 +247,7 @@ class EtlWrapper:
         self.log_query_in_progress(os.path.basename(source_file))
 
         t1 = time.time()
-        session = self.connection()
+        session = self.db.get_new_session()
         n_creates = 0
         n_updates = 0
         with open(source_file) as f_in:
@@ -282,34 +279,30 @@ class EtlWrapper:
         self.log_query_in_progress(source_base_name)
 
         t1 = time.time()
-        session = self.connection()
+        with self.db.session_scope() as session:
+            if truncate_first:
+                session.query(SourceToConceptMap).delete()
 
-        if truncate_first:
-            session.query(SourceToConceptMap).delete()
+            n_creates = 0
+            with open(source_file) as f_in:
+                rows = csv.DictReader(f_in)
+                for row in rows:
+                    source_vocab = session.query(Vocabulary).get(row['source_vocabulary_id'])
 
-        n_creates = 0
-        with open(source_file) as f_in:
-            rows = csv.DictReader(f_in)
-            for row in rows:
-                source_vocab = session.query(Vocabulary).get(row['source_vocabulary_id'])
+                    if not source_vocab:
+                        session.add(Vocabulary(
+                            vocabulary_id=row['source_vocabulary_id'],
+                            vocabulary_name=row['source_vocabulary_id'].replace('_', '').title(),
+                            vocabulary_concept_id=0
+                        ))
 
-                if not source_vocab:
-                    session.add(Vocabulary(
-                        vocabulary_id=row['source_vocabulary_id'],
-                        vocabulary_name=row['source_vocabulary_id'].replace('_', '').title(),
-                        vocabulary_concept_id=0
-                    ))
+                    session.add(
+                        SourceToConceptMap(**row)
+                    )
 
-                session.add(
-                    SourceToConceptMap(**row)
-                )
+                    self._stcm_lookup[row['source_vocabulary_id']][row['source_code']] = int(row['target_concept_id'])
 
-                self._stcm_lookup[row['source_vocabulary_id']][row['source_code']] = int(row['target_concept_id'])
-
-                n_creates += 1
-
-        session.commit()
-        session.close()
+                    n_creates += 1
 
         t2 = time.time()
         self.log_table_completed('INTO source_to_concept_map', n_creates, t2-t1, '')

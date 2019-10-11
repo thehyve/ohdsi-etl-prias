@@ -31,22 +31,13 @@ logger = logging.getLogger(__name__)
 
 class Wrapper(EtlWrapper):
 
-    def __init__(self, database, source_folder, debug):
-        super().__init__(database=database, source_schema='', debug=debug)
+    def __init__(self, database, source_folder):
+        super().__init__(database=database, source_schema='')
         self.source_folder = pathlib.Path(source_folder)
         self.person_id_lookup = None
-        self.source_table_basedata = None
-        self.source_table_diagnosis = None
-        self.source_table_death = None
-        self.source_table_attendance = None
-        self.source_table_biopsies = None
 
     def run(self):
-        # self.load_concept_from_csv('./resources/custom_vocabulary/2b_concepts.csv')
-        # self.load_source_to_concept_map_from_csv('./resources/mapping_tables/stcm_erspc_answers.csv', truncate_first=True)
-        # self.execute_transformation(biopsies_to_observation)
-        # return
-        """ Run PRIAS to OMOP ETL"""
+        """Run PRIAS to OMOP V6.0 ETL"""
         self.start_timing()
         self.log_timestamp()
 
@@ -64,19 +55,15 @@ class Wrapper(EtlWrapper):
 
         # Load custom concepts and stcm
         # self.load_concept_from_csv('./resources/custom_vocabulary/2b_concepts.csv')
-        # self.load_concept_from_csv('./resources/custom_vocabulary/new_concepts.csv')
-        # self.load_source_to_concept_map_from_csv('./resources/mapping_tables/stcm_erspc_answers.csv', truncate_first=True)
 
         # Transformations
         logger.info('{:-^100}'.format(' ETL '))
-
         # self.execute_transformation(basedata_to_person)
+
         self.create_person_lookup()
 
         self.log_summary()
-
         self.log_runtime()
-
         self.log_timestamp()
 
     def drop_cdm(self):
@@ -111,22 +98,13 @@ class Wrapper(EtlWrapper):
         logger.info('Creating OMOP CDM (non-vocabulary) tables')
         self.db.base.metadata.create_all(self.db.engine)
 
-    def get_source_death(self):
-        if not self.source_table_death:
-            self.source_table_death = SourceData(self.source_folder / 'death4.csv')
-
-        return self.source_table_death
-
     def create_person_lookup(self):
-        """ Initialize the person lookup """
-        session = self.db.get_new_session()
+        """Initialize the person lookup"""
+        with self.db.session_scope() as session:
+            query = session.query(clinical_data.Person).all()
+            self.person_id_lookup = {x.person_source_value: x.person_id for x in query}
 
-        query = session.query(clinical_data.Person).all()
-        self.person_id_lookup = {x.person_source_value: x.person_id for x in query}
-
-        session.close()
-
-    def lookup_person_id(self, person_source_value):
+    def lookup_person_id(self, person_source_value: str) -> int:
         if self.person_id_lookup is None:
             self.create_person_lookup()
 
