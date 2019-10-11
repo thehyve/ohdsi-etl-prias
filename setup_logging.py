@@ -13,7 +13,7 @@ def setup_logging(debug: bool):
     log_dir = Path('./logs')
     log_dir.mkdir(exist_ok=True)
     time_string = time.strftime('%Y-%m-%dT%H%M%S')
-    logfile = log_dir.joinpath(f'{time_string}.txt')
+    logfile = log_dir.joinpath(f'{time_string}.log')
 
     default_level = logging.DEBUG if debug else logging.INFO
     config_path = Path('./logging.yaml')

@@ -53,7 +53,8 @@ class EtlWrapper:
 
         self._stcm_lookup = defaultdict(dict)  # {source_vocabulary_id: {source_code: target_concept_id}}
 
-    def count_csv_lines(self, file) -> Optional[int]:
+    @staticmethod
+    def count_csv_lines(file) -> Optional[int]:
         """
         Counts the line of a .csv file
         :param file: input file
@@ -91,7 +92,7 @@ class EtlWrapper:
         # Check if branch is from a git version
         if re.search('HEAD', branch_str):
             # Retrieve git release version
-            return 'release ' + re.findall('\*.+?([0-9\.]+).+?\\\\n', str(branch_str))[0]
+            return 'release ' + re.findall('\*.+?([0-9.]+).+?\\\\n', str(branch_str))[0]
         else:
             # Else retrieve the git branch name
             return 'branch ' + re.findall('\* (.+?)\\\\n', str(branch_str))[0]
@@ -101,7 +102,8 @@ class EtlWrapper:
         self.n_queries_failed = 0
         self.total_rows_inserted = 0
 
-    def log_timestamp(self):
+    @staticmethod
+    def log_timestamp():
         logger.info(time.strftime('%a %Y-%m-%d %H:%M:%S'))
 
     def start_timing(self):
@@ -214,9 +216,10 @@ class EtlWrapper:
         except Exception as msg:
             logger.error("#!#! ERROR: Transformation '%s' failed:" % statement.__name__)
             logger.error(traceback.format_exc(limit=1))
-
+            logger.error(msg)
             logger.error("##### START FULL TRACEBACK #####")
-            logger.error(traceback.format_exc().join('\n# '))  # TODO: join does not work. Other way to prepand each line?
+            logger.error(
+                traceback.format_exc().join('\n# '))  # TODO: join does not work. Other way to prepand each line?
             logger.error("##### END FULL TRACEBACK #####")
             self.n_queries_failed += 1
             return
@@ -268,7 +271,7 @@ class EtlWrapper:
         t2 = time.time()
 
         message = 'INTO concept - created {}, updated {}'.format(n_creates, n_updates)
-        self.log_table_completed(message, n_creates + n_updates, t2-t1, '')
+        self.log_table_completed(message, n_creates + n_updates, t2 - t1, '')
 
     def load_source_to_concept_map_from_csv(self, source_file, truncate_first=False):
         source_base_name = os.path.basename(source_file)
@@ -301,7 +304,7 @@ class EtlWrapper:
                     n_creates += 1
 
         t2 = time.time()
-        self.log_table_completed('INTO source_to_concept_map', n_creates, t2-t1, '')
+        self.log_table_completed('INTO source_to_concept_map', n_creates, t2 - t1, '')
 
     def lookup_stcm(self, source_vocabulary_id, source_code):
         if source_vocabulary_id not in self._stcm_lookup:
@@ -317,7 +320,8 @@ class EtlWrapper:
         except KeyError:
             return 0
 
-    def log_query_in_progress(self, filename):
+    @staticmethod
+    def log_query_in_progress(filename):
         basename = os.path.basename(filename)
         logger.info("{:<30.30} => ".format(basename))
 
@@ -342,7 +346,8 @@ class EtlWrapper:
 
         return self.log_table_completed(None, row_count, execution_time)
 
-    def log_table_completed(self, table_into, row_count, execution_time, prefix='INTO', show_count_per_record=False):
+    @staticmethod
+    def log_table_completed(table_into, row_count, execution_time, prefix='INTO', show_count_per_record=False):
         if table_into:
             table_into_message = prefix + ' ' + table_into
         else:
@@ -351,7 +356,7 @@ class EtlWrapper:
         message = '{:<40.40} {:>9,} [{:>8.2f} s'.format(table_into_message, row_count, execution_time)
 
         if show_count_per_record and row_count > 0:
-            message += '| {:>.1e} s/#]'.format(execution_time/row_count)
+            message += '| {:>.1e} s/#]'.format(execution_time / row_count)
         else:
             message += ']'
 
@@ -379,6 +384,7 @@ class EtlWrapper:
         else:
             return ''
 
+    @staticmethod
     def parse_target_table_session(py_func):
         return py_func.__name__
 

@@ -14,17 +14,15 @@
 
 # !/usr/bin/env python3
 
+import logging
 import sys
 import traceback
-import logging
-from setup_logging import setup_logging
 
 import click
-from sqlalchemy import create_engine
-from sqlalchemy.exc import OperationalError
 
-from src.main.python.wrapper import Wrapper
+from setup_logging import setup_logging
 from src.main.python.database.database import Database
+from src.main.python.wrapper import Wrapper
 
 __version__ = '0.0.1'
 
@@ -34,7 +32,7 @@ logger = logging.getLogger(__name__)
 @click.command()
 @click.option('--hostname', '-h', default='localhost', metavar='<host>',
               help='Database server host or socket directory (localhost)')
-@click.option('--port', '-p', default='5432', metavar='<port>',
+@click.option('--port', '-p', default='5432', metavar='<port>', type=int,
               help='Database server port (5432)')
 @click.option('--database', '-d', default='etl1', metavar='<database>',
               help='Database name to connect to (etl1)')
@@ -53,19 +51,12 @@ logger = logging.getLogger(__name__)
 def main(database, username, password, hostname, port, source, debug):
     setup_logging(debug)
 
-    # Connect to database
+    # Test database connection
     uri = f'postgresql://{username}:{password}@{hostname}:{port}/{database}'
-
-    # engine = create_engine(uri, use_batch_mode=True)
-
-    # try:
-    #     engine.connect()
-    # except OperationalError:
-    #     logger.error(f'Could not connect to database: {uri}')
-    #     return
+    if not Database.can_connect(uri):
+        return
 
     db = Database(uri)
-
     etl = Wrapper(db, source)
 
     logger.info('ETL version {}'.format(__version__))
