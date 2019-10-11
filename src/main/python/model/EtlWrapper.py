@@ -12,26 +12,22 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-# !/usr/bin/env python3
-from collections import defaultdict
 import csv
-import os
-import time
-import subprocess
-import re
-import traceback
 import logging
+import os
+import re
+import subprocess
+import time
+import traceback
+
+from collections import defaultdict
+from pathlib import Path
+from typing import Optional
 
 from sqlalchemy import text
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import MetaData
-from pathlib import Path
 
 # Import ORM for all OMOP tables
 from src.main.python.model.cdm import *
-
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
