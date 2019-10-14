@@ -2,40 +2,40 @@
 
 ### Table: basedata.csv
 
-| Field | Type | Most freq. value | Comment |
-| --- | --- | --- | --- |
-| p_id | int | List truncated... | Already anonymised.  Patient id unique in basedata. |
-| psa | real | 5.1 | Measuring prostate-specific antigen.  |
-| prostatic_vol | real | 40 | Prostate volume measured in ml. |
-| dre | varchar | T1c | Digital rectal examination. |
-| num_cores | int | 12 | Number of core biopsies. |
-| num_cores_pc | int | 1 |  Number of core biopsies that contained prostate cancer. |
+| Field | Type | Most freq. value | Description | Concept | Mapped to table |
+| --- | --- | --- | --- | --- | --- |
+| p_id | int | List truncated... | Already anonymised.  Patient id unique in basedata. | | Person |
+| psa | real | 5.1 | Measuring prostate-specific antigen in ng/ml.  | Total PSA level - 44793131 | Measurement |
+| prostatic_vol | real | 40 | Prostate volume measured in mL. | Size of prostate - 4096978, mL - 8587 | Measurement |
+| dre | varchar | T1c | Digital rectal examination. | DRE - Digital rectal examination - 4254766, Tumor stage T1c - 4129916, Tumor stage T2a - 4129917, Tumor stage T2b - 4127611, 	Tumor stage T2c - 4129127, Tumor stage T3 - 4032012 | Measurement |
+| num_cores | int | 12 | Number of core biopsies. | Number of Cores Examined - 35917476 | Measurement |
+| num_cores_pc | int | 1 |  Number of core biopsies that contained prostate cancer. | Number of Cores Positive - 35918000 | Measurement |
 | asa | int | 0 | Do not map this variable (empty and not in the current form).  In follow up this contains the Charlson score (separate charlson variable in basedata). |
-| log2psa | real | 2.26303 | Derived variable from psa.  Do not map. |
-| gleason1 | int | 3 | Gleason primary grade.   |
-| gleason2 | int | 3 | Gleason secondary grade. |
-| gleason_sum | int | 6 | Gleason score (gleason1 + gleason2).  Do not map, info captured in more detail from gleason1 and 2. Value  0 should not be possible (prostate cancer is inclusion criterum). |
-| free_psa | real | 0 | Free-PSA test measures the percentage of unbound PSA. |
-| pro_psa | int |  | Do not map, barely filled in, same in follow-up. |
-| phi | int |  |  |
-| charlson | int | 0 | Charlson Comorbidity Index (CCI) predicts the ten-year mortality for a patient who may have a range of comorbid conditions.   |
-| tnm | int | 1992 | TNM version from 1992 (not 1998 or 2002)  Do not map, not relevant, always the same. |
-| method_detection | varchar | Screen-detected | Clinically =  by docter during hosptial visit due to complaints,  screen-detected = by routine check without complaints. |
-| length | int | 0 | Length of patient (in cm). |
-| weight | int | 0 | Weight of patient (in kg). |
-| num_cores2 | int | 0 | Repeated biopsy, if first was less than 8 cores. Map the same as num_cores. |
-| num_cores_pc2 | int | 0 | Repeated biopsy, if first was less than 8 cores. Map the same as num_cores_pc. |
-| gleason1_2 | int | 0 | Repeated biopsy, if first was less than 8 cores.  Map the same as gleason_1. |
-| gleason2_2 | int | 0 | Repeated biopsy, if first was less than 8 cores.  Map together with gleason1_2. |
-| no_co_morbidity | int | 1 | Other comorbidities.  Do not map. Should always be true (no comorbitidy), if other, it is an error as patient should then not be included. |
-| active_visit | int | 1 | Bij basedata altijd active (=1).  Do not map. |
-| biopt_prob_type | int | 0 | Antibioticum given (profylaxe).  0 - data not provided (empty),  1 - no antibioticum used (capture, to distinguish from missing),  2 - yes, fluorquinolones,  3 - yes, tmp smx,  4 - yes, other.   |
-| biopt_infection | int | 0 | Infection occurred after biopsy. 0 - not provided (does not mean no complications occurred),  1 - yes 2 - no |
+| log2psa | real | 2.26303 | Do not map. Derived variable from psa. |
+| gleason1 | int | 3 | Gleason primary grade. | | Measurement |
+| gleason2 | int | 3 | Gleason secondary grade. Map together with gleason 1. Gleason score (gleason1 + gleason2)| 'Grade Group 1: Gleason score less than or equal to 6' - 35934087, 'Grade Group 2: Gleason score 7 Gleason pattern 3+4' - 35930757, 'Grade Group 3: Gleason score 7 Gleason pattern 4+3' - 35929404, 'Grade Group 4: Gleason score 8' - 35921496, 'Grade Group 5: Gleason score 9 or 10' - 35928355 | Measurement |
+| gleason_sum | int | 6 | Do not map, info captured in more detail from gleason1 and 2. Gleason score (gleason1 + gleason2). Value  0 should not be possible (prostate cancer is inclusion criterum). |
+| free_psa | real | 0 | Free-PSA test measures the percentage of unbound PSA. | Free prostate specific antigen level - 4194418, % - 8554 | Measurement |
+| pro_psa | int |  | Do not map. Barely filled in, same in follow-up. |
+| phi | int |  | Prostate Health Index. Derived variable from free-psa and pro-psa. Sometimes phi captured while free/pro not captured, so also save phi. | TODO: PHI concept | Measurement |
+| charlson | int | 0 | Charlson Comorbidity Index (CCI) predicts the ten-year mortality for a patient who may have a range of comorbid conditions. | Charlson Comorbidity Index - 42538860 | Measurement |
+| tnm | int | 1992 | Do not map. Not relevant, always the same. TNM version from 1992 (not 1998 or 2002). |
+| method_detection | varchar | Screen-detected | Do we want to map this? This type of low-grade prostate cancer would not give complaints? Clinically = by doctor during hospital visit due to complaints,  screen-detected = by routine check without complaints. |
+| length | int | 0 | Length of patient (in cm). | Body height measured - 3023540, cm - 8582 | Measurement |
+| weight | int | 0 | Weight of patient (in kg). | Body weight Measured - 3013762, kg - 9529 | Measurement |
+| num_cores2 | int | 0 | Repeated biopsy, if first was less than 8 cores. See num_cores. |
+| num_cores_pc2 | int | 0 | Repeated biopsy, if first was less than 8 cores. See num_cores_pc. |
+| gleason1_2 | int | 0 | Repeated biopsy, if first was less than 8 cores.  See gleason_1. |
+| gleason2_2 | int | 0 | Repeated biopsy, if first was less than 8 cores.  See gleason1_2. |
+| no_co_morbidity | int | 1 | Do not map. Other comorbidities.  Should always be true (no comorbitidy), if other, it is an error as patient should then not be included. |
+| active_visit | int | 1 | Do not map. Always active at basedata (=1). |
+| biopt_prob_type | int | 0 | Antibioticum given (profylaxe).  0 - data not provided (empty),  1 - no antibioticum used (capture, to distinguish from missing),  2 - yes, fluoroquinolones,  3 - yes, tmp smx,  4 - yes, other. | No - 45878245, Fluoroquinolone - 1176676, Trimethoprim+Sulfamethoxazole - 40792503, Other Antibiotic - 40779119 | Measurement |
+| biopt_infection | int | 0 | Infection occurred after biopsy. 0 - not provided (does not mean no complications occurred),  1 - yes 2 - no | TODO: concept of 'Infection occurred after biopsy', Yes - 4188539, No - 45878245| Measurement |
 | biopt_inf_urine_culture | int | 0 | Urine culture measured.  0 - not provided or not measured (empty)  1 - positive (bacterium is cultured, is an infection), 2 - negative (no bacterium cultered, not an infection) |
 | biopt_inf_urine_bacterium | int |  | Type of urine bacterium measured. 0 - not filled in, 1 - *E.coli*,  2 - *pseudomonas*, 3 - *Enterococci*, 4 - *proteus*, 5 - *Staphylococci*, 6 - *Klebsiella*, 7 - other enterobacteria, 8 - other |
 | biopt_inf_unrine_resistant | varchar |  | To which antibioticum is the urine bacteria resistant.  0 - not filled in,  1 - Fluoroquinolones, 2 - Trimethoprim-sulfonamide (TMP-SMX) combination, 3 - Cephalosporin (group 1 or 2), 4 - Cephalosporin (group >=3), 5 - Carbapenems, 6 - Penicillins (without B-lactam),  7 - Aminoglycosides, 8 - Nitrofuran, 9 - other. |
 | biopt_inf_antibiotic_therapy | int | 0 | If antibiotic therapy is given.  0 - not filled in, 1 - yes, 2 - no. |
-| biopt_inf_antibiotic_type | int |  | What kind of antibiotic is given. 0 - not filled in,  1 - Fluoroquinolones, 2 - Trimethoprim-sulfonamide (TMP-SMX) combination, 3 - Cephalosporin (group 1 or 2), 4 - Cephalosporin (group >=3), 5 - Carbapenems, 6 - Penicillins (without B-lactam), 7 - Penicillins (with B-lactam), 8 - Aminoglycosides, 9 - Nitrofuran, 10 - other. |
+| biopt_inf_antibiotic_type | int |  | What kind of antibiotic is given. 0 - not filled in,  1 - Fluoroquinolones, 2 - trimethoprim-sulfamethoxazole (TMP-SMX) combination, 3 - Cephalosporin (group 1 or 2), 4 - Cephalosporin (group >=3), 5 - Carbapenems, 6 - Penicillins (without B-lactam), 7 - Penicillins (with B-lactam), 8 - Aminoglycosides, 9 - Nitrofuran, 10 - other. |
 | biopt_inf_hospitalisation | int | 0 | Hospitalisation due to bioptic infection. 0 - not filled in, 1 - yes, 2 - no. |
 | biopt_inf_hospitalisation_days | int | 0 | Days in hospital. |
 | biopt_inf_outcome | int | 0 | Cured or death.  0 = not given (empty)  1 = cured  2 = death (not in baseline). |
@@ -72,7 +72,7 @@
 | mri_prostate_volume.0 | int |  | Not measured by MRI, but manually entered based on MRI in ml. |
 | mri_prostate_volume_method.0 | int |  | Combine with mri_prostate_volume (do not map?). |
 | age_diagnosis | real | 66.92 | Age at diagnosis (observation).  Include to be complete. |
-| year_diagnosis | int | 2015 |  |
+| year_diagnosis | int | 2015 | Year of diagnosis  | | observation_period, visit_occurrence |
 
 ### Table: fulong.csv
 
