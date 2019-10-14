@@ -1,3 +1,6 @@
+# Exclude the config yml
+src/test/R/config.yml
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
