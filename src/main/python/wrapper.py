@@ -24,7 +24,6 @@ import src.main.python.model.cdm.health_system_data as health_system_data
 
 from .model import EtlWrapper
 # Import transformation functions
-from .transformation import basedata_to_person
 
 logger = logging.getLogger(__name__)
 
