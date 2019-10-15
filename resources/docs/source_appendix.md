@@ -22,33 +22,33 @@
 | tnm | int | 1992 | Do not map. Not relevant, always the same. TNM version from 1992 (not 1998 or 2002). |
 | method_detection | varchar | Screen-detected | Do we want to map this? This type of low-grade prostate cancer would not give complaints? Clinically = by doctor during hospital visit due to complaints,  screen-detected = by routine check without complaints. |
 | length | int | 0 | Length of patient (in cm). | Body height measured - 3023540, cm - 8582 | Measurement |
-| weight | int | 0 | Weight of patient (in kg). | Body weight Measured - 3013762, kg - 9529 | Measurement |
+| weight | int | 0 | Weight of patient (in kg). | Body weight measured - 3013762, kg - 9529 | Measurement |
 | num_cores2 | int | 0 | Repeated biopsy, if first was less than 8 cores. See num_cores. |
 | num_cores_pc2 | int | 0 | Repeated biopsy, if first was less than 8 cores. See num_cores_pc. |
 | gleason1_2 | int | 0 | Repeated biopsy, if first was less than 8 cores.  See gleason_1. |
 | gleason2_2 | int | 0 | Repeated biopsy, if first was less than 8 cores.  See gleason1_2. |
 | no_co_morbidity | int | 1 | Do not map. Other comorbidities.  Should always be true (no comorbitidy), if other, it is an error as patient should then not be included. |
 | active_visit | int | 1 | Do not map. Always active at basedata (=1). |
-| biopt_prob_type | int | 0 | Antibioticum given (profylaxe).  0 - data not provided (empty),  1 - no antibioticum used (capture, to distinguish from missing),  2 - yes, fluoroquinolones,  3 - yes, tmp smx,  4 - yes, other. | No - 45878245, Fluoroquinolone - 1176676, Trimethoprim+Sulfamethoxazole - 40792503, Other Antibiotic - 40779119 | Measurement |
-| biopt_infection | int | 0 | Infection occurred after biopsy. 0 - not provided (does not mean no complications occurred),  1 - yes 2 - no | TODO: concept of 'Infection occurred after biopsy', Yes - 4188539, No - 45878245| Measurement |
-| biopt_inf_urine_culture | int | 0 | Urine culture measured.  0 - not provided or not measured (empty)  1 - positive (bacterium is cultured, is an infection), 2 - negative (no bacterium cultered, not an infection) |
-| biopt_inf_urine_bacterium | int |  | Type of urine bacterium measured. 0 - not filled in, 1 - *E.coli*,  2 - *pseudomonas*, 3 - *Enterococci*, 4 - *proteus*, 5 - *Staphylococci*, 6 - *Klebsiella*, 7 - other enterobacteria, 8 - other |
-| biopt_inf_unrine_resistant | varchar |  | To which antibioticum is the urine bacteria resistant.  0 - not filled in,  1 - Fluoroquinolones, 2 - Trimethoprim-sulfonamide (TMP-SMX) combination, 3 - Cephalosporin (group 1 or 2), 4 - Cephalosporin (group >=3), 5 - Carbapenems, 6 - Penicillins (without B-lactam),  7 - Aminoglycosides, 8 - Nitrofuran, 9 - other. |
-| biopt_inf_antibiotic_therapy | int | 0 | If antibiotic therapy is given.  0 - not filled in, 1 - yes, 2 - no. |
-| biopt_inf_antibiotic_type | int |  | What kind of antibiotic is given. 0 - not filled in,  1 - Fluoroquinolones, 2 - trimethoprim-sulfamethoxazole (TMP-SMX) combination, 3 - Cephalosporin (group 1 or 2), 4 - Cephalosporin (group >=3), 5 - Carbapenems, 6 - Penicillins (without B-lactam), 7 - Penicillins (with B-lactam), 8 - Aminoglycosides, 9 - Nitrofuran, 10 - other. |
-| biopt_inf_hospitalisation | int | 0 | Hospitalisation due to bioptic infection. 0 - not filled in, 1 - yes, 2 - no. |
-| biopt_inf_hospitalisation_days | int | 0 | Days in hospital. |
-| biopt_inf_outcome | int | 0 | Cured or death.  0 = not given (empty)  1 = cured  2 = death (not in baseline). |
-| biopt_hematuria | int | 0 | Hematuria (red blood cells in urine), more than 3 days. 0 - not filled in,  1 - yes  2 - no. |
-| biopt_hemospermia | int | 0 | Hemospermia. 0 - not filled in,  1 - yes  2 - no. |
-| biopt_pain | int | 0 | Pain after biopsy. 0 - not filled in,  1 - yes  2 - no. |
-| biopt_route | int | 0 | 0 - not given,  1 - transrectal  2 - transperineal. |
-| biopt_max_cancer_score_lenght | int | 0 | Number of millimeters on a prostate cancer biopsy consisting of prostate cancer (largest part). |
-| mri_included | int | 0 | Whether patient has been selected for MRI side study. Do not map. |
-| bonescan | varchar |  | Old variable, do not map. |
-| mri_taken.0 | int | 0 | MRI made at baseline. Result MRI does not always have to be given, so save separately.  |
-| mri_lesions.0 | int | 0 | Abnormalities detected on MRI. |
-| mri_suspected_number.0 | int | 0 | Number of suspected abnormalities/lesions on MRI. |
+| biopt_prob_type | int | 0 | Antibioticum given (profylaxe).  0 - data not provided (empty),  1 - no antibioticum used (capture, to distinguish from missing),  2 - yes, fluoroquinolones,  3 - yes, tmp smx,  4 - yes, other. | TODO: concept 'Antibiotic given', No - 45878245, Fluoroquinolone - 1176676, Trimethoprim+Sulfamethoxazole - 40792503, Other Antibiotic - 40779119 | Measurement |
+| biopt_infection | int | 0 | Infection occurred after biopsy. 0 - not provided (does not mean no complications occurred),  1 - yes 2 - no | TODO: concept of 'Infection occurred after biopsy', Yes - 4188539, No - 45878245 | Measurement |
+| biopt_inf_urine_culture | int | 0 | Urine culture measured.  0 - not provided or not measured (empty)  1 - positive (bacterium is cultured, is an infection), 2 - negative (no bacterium cultered, not an infection) | Urine culture - 4024509, Positive - 9191, Negative - 9189 | Measurement |
+| biopt_inf_urine_bacterium | int |  | Type of urine bacterium measured. 0 - not filled in, 1 - *E.coli*,  2 - *pseudomonas*, 3 - *Enterococci*, 4 - *proteus*, 5 - *Staphylococci*, 6 - *Klebsiella*, 7 - other enterobacteria, 8 - other | Bacteria [Presence] in Urine - 36304419, Escherichia coli - 4011683, Pseudomonas - 4211547, Genus Enterococcus - 4101235, Proteus - 4196666, Staphylococcus - 4278981, Klebsiella - 4327473, Enterobacter - 4242438, Other - 9177 | Measurement |
+| biopt_inf_unrine_resistant | varchar |  | To which antibiotic is the urine bacteria resistant.  0 - not filled in,  1 - Fluoroquinolones, 2 - Trimethoprim-sulfonamide (TMP-SMX) combination, 3 - Cephalosporin (group 1 or 2), 4 - Cephalosporin (group >=3), 5 - Carbapenems, 6 - Penicillins (without B-lactam),  7 - Aminoglycosides, 8 - Nitrofuran, 9 - other. | Fluoroquinolone resistant bacteria - 46272500, Carbapenem resistant bacteria - 45768954, Other - 9177, TODO: concept 'Trimethoprim+Sulfamethoxazole resistant bacteria', concept 'Cephalosporin resistant bacteria',  concept 'Penicillins resistant bacteria', concept 'Aminoglycosides resistant bacteria',  concept 'Nitrofuran resistant bacteria'| Measurement |
+| biopt_inf_antibiotic_therapy | int | 0 | If antibiotic therapy is given.  0 - not filled in, 1 - yes, 2 - no. | 4085730 - Antibiotic therapy, Yes - 4188539, No - 45878245 | Measurement |
+| biopt_inf_antibiotic_type | int |  | What kind of antibiotic is given. 0 - not filled in,  1 - Fluoroquinolones, 2 - trimethoprim-sulfamethoxazole (TMP-SMX) combination, 3 - Cephalosporin (group 1 or 2), 4 - Cephalosporin (group >=3), 5 - Carbapenems, 6 - Penicillins (without B-lactam), 7 - Penicillins (with B-lactam), 8 - Aminoglycosides, 9 - Nitrofuran, 10 - other. | Fluoroquinolone - 1176676, Trimethoprim+Sulfamethoxazole - 40792503, Cephalosporin - 37026981, 1176571 - Carbapenem, Penicillin - 40772521, Aminoglycoside - 36306522, Nitrofurantoin - 40795842, Other - 9177 | Measurement |
+| biopt_inf_hospitalisation | int | 0 | Hospitalisation due to bioptic infection. 0 - not filled in, 1 - yes, 2 - no. | Hospitalization - 45884746, Yes - 4188539, No - 45878245 | Measurement |
+| biopt_inf_hospitalisation_days | int | 0 | Days in hospital. | Hospitalization - 45884746, day - 8512 | Measurement |
+| biopt_inf_outcome | int | 0 | Cured or death.  0 = not given (empty)  1 = cured  2 = death (not in baseline). | Patient cured - 4159637, Patient died - 4216643 | Measurement | 
+| biopt_hematuria | int | 0 | Hematuria for more than 3 days. 0 - not filled in,  1 - yes  2 - no. | 437038 - Blood in urine, Yes - 4188539, No - 45878245 | Measurement |
+| biopt_hemospermia | int | 0 | Hemospermia. 0 - not filled in,  1 - yes  2 - no. | 439871 - Hemospermia, Yes - 4188539, No - 45878245 | Measurement |
+| biopt_pain | int | 0 | Pain after biopsy. 0 - not filled in,  1 - yes  2 - no. | TODO: concept 'Pain after biopsy', Yes - 4188539, No - 45878245 | Measurement |
+| biopt_route | int | 0 | 0 - not given,  1 - transrectal  2 - transperineal. | Transrectal biopsy of prostate - 4339403, Transperineal needle biopsy of prostate - 4142388 | Procedure_Occurrence |
+| biopt_max_cancer_score_lenght | int | 0 | Number of millimeters on a prostate cancer biopsy consisting of prostate cancer (largest part). | TODO: concept 'Biopsy consisting prostate cancer', millimeter - 8588 
+| mri_included | int | 0 | Do not map. Whether patient has been selected for MRI side study. |
+| bonescan | varchar |  | Do not map. Old variable. |
+| mri_taken.0 | int | 0 | MRI made at baseline. Result MRI does not always have to be given, so save separately. | MRI of prostate - 4192638, Yes - 4188539, No - 45878245| Measurement |
+| mri_lesions.0 | int | 0 | Abnormalities detected on MRI. | MRI scan abnormal - 4059669 | Observation | 
+| mri_suspected_number.0 | int | 0 | Number of suspected abnormalities/lesions on MRI. | Number of lesions - 4085855 | Measurement |
 | mri_pirads_1.0 | int | 0 | The PIRADS score is given for each suspected lesion (maximum of 3). |
 | mri_largest_dia_1.0 | int | 0 | The largest diameter in mm of lesion 1. |
 | mri_location_1.0 | int | 0 | Location of lesion 1 in the prostate. |
