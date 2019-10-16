@@ -141,28 +141,28 @@
 
 ### Table: enddata.csv
 
-| Field | Type | Most freq. value | Comment |
+| Field | Type | Most freq. value | Description | Concept | Mapped to table |
 | --- | --- | --- | --- |
-| p_id | int | List truncated... | Multiple rows per id? Patient id? |
-| nr_fuvisits | int | 4 | Number of follow up visits.  Do not map, administrative (max from time in fudata) |
-| discontinued | varchar | Robot radical prostatectomy | Given therapy  Except; death, lost to follow-up and on request   |
+| p_id | int | List truncated... | Multiple rows per id? Patient id? | | | 
+| nr_fuvisits | int | 4 | Number of follow up visits.  Do not map, administrative (max from time in fudata) | | |
+| discontinued | varchar | Robot radical prostatectomy | Given therapy  Except; death, lost to follow-up and on request   | If death, map to PERSON.death_datetime, 4132627 - Discontinued, 46270921 - Robot assisted laparoscopic radical prostatectomy, 4141448 - Teleradiotherapy procedure" (synonym is External beam radiotherapy), 4190466 - No anti-cancer treatment - watchful waiting, 4096783 - Radical prostatectomy, 44809585 - Laparoscopic radical prostatectomy, 4040610 - Low dose rate brachytherapie, 4163894 - Lost to follow-up,  4306655 - Death, 4172376 - Brachytherapy dose rate,  4038003 - High dose rate brachytherapy, 4202313 - Request status, or 4013713 - Request for, 21602613 - ANTIANDROGENS, 4120004 - High intensity focused ultrasound  or 44791407 - High intensity focused ultrasound of prostate, TODO: "Other of unknown treatment" and "LHRH Agnosts" | |       
 | days_discontinued_diagnosis | int | 385 | Days from diagnosis to discontinuation? |
-| reason_treatment | varchar | Based on protocol advice | General reason for discontinuation in Active Surveillance (additional information may be still collected, not in extract) |
+| reason_treatment | varchar | Based on protocol advice | General reason for discontinuation in Active Surveillance (additional information may be still collected, not in extract) | 44790553 - Following protocol or 4167380 - Treatment adjusted per protocol, 9177 - OTHER, 4294169 - Not applicable, 4163894 - Lost to follow-up, 4202313 - Request status or 4013713 - Request for,  441542 - Anxiety | |
 | days_surgery_diagnosis | int |  | Days from diagnosis to surgery.  This is often later than discontinued  Do not map, Often not given, use days_discontinued |
-| pt | varchar |  | Surgery T stadium by pathologist  Same mapping as dre |
-| pn | int |  | N stadium.   9 - pnx, unknown (no prostatectomy)  0 - pn0  1 - pn1 |
-| pm | int |  | M stadium.   9 - pmx (no prostatectomy)  0 - pm0  1 - pm1 |
-| gleason1_rad_prost | int |  | Radical (geheel verwijderd) prostatectomy |
-| gleason2_rad_prost | int |  |  |
-| prostatevolume | varchar |  | Volume as by pathologist |
-| tumorvolume | real |  | Volume in ml of only the tumor |
-| ece | int |  | Extra capsulaire extension (yes/no/unknown)  0 - no  1 - yes  9 - unknown (do not map)  To be checked   |
-| svi | int |  | seminal vesical invasion (yes/no/unknown)  0 - no  1 - yes  9 - unknown (do not map, might not be different from empty)  To be checked   |
-| pos_surgical_margins | int |  | Positive surgical margins  Is the tumor completely (cleanly) removed?  0 - no  1 - yes  9 - unknown (do not map)   |
-| postoperative_psa | varchar |  | PSA level after surgery. Typical 6 weeks-3months after surgery   |
-| pathology_reported | int |  | Do not map, administrative whether pathology done. |
-| adjuvant_radiotherapy | int |  | Radiotherapy after surgery  1 - yes  0 - no  9 - unknown  Only map 1 |
-| year_discontinued | int | 2015 | Year of discontinuation  Do not use, instead use days discontinued and year_diag as proxy |
+| pt | varchar |  | Surgery T stadium by pathologist  Same mapping as dre |  4300140 - Tumor stage finding or 4110284 - TNM Prostate tumor staging, T0 category - 4243213, Tumor stage T1a - 4130414, Tumor stage T1b - 4129126, Tumor stage T1c - 4129916, Tumor stage T2a - 4129917, Tumor stage T2b - 4127611, Tumor stage T2c - 4129127, Tumor stage T3a - 4129918, Tumor stage T3b - 4130416, Tumor stage T3c - 4129919, Tumor stage T4a - 4127612, Tumor stage T4a - 4129920, Tumor stage T4c -  4129921, Tumor stage T4d - 4129129, TX category - 4282467 | |
+| pn | int |  | N stadium.   9 - pnx, unknown (no prostatectomy)  0 - pn0  1 - pn1 |  4300140 - Tumor stage finding or 4110284 - TNM Prostate tumor staging,  35919633 - pNX, 35919637 - pN0, 35919098 - pN1, or 4195718 - NX category, 4266674 - N0 category, 4203608 - N1 category (erspc mapping) | |
+| pm | int |  | M stadium.   9 - pmx (no prostatectomy)  0 - pm0  1 - pm1 |  4300140 - Tumor stage finding or 4110284 - TNM Prostate tumor staging, 45876323 - MX, 45878650 - M0, 45876322 - M1, or 4098852 - MX category, 4149726 - M0 category, 4205430 - M1 category
+| gleason1_rad_prost | int |  | Radical (geheel verwijderd) prostatectomy | 4096783 - "Radical prostatectomy" (should we map this to differentiate between the "normal" Gleason score and the Gleason score after radical prostatectomy?) | |
+| gleason2_rad_prost | int |  |  | | |
+| prostatevolume | varchar |  | Volume as by pathologist | Remove "ml" when present in value (?) | |
+| tumorvolume | real |  | Volume in ml of only the tumor | | | | | 
+| ece | int |  | Extra capsulaire extension (yes/no/unknown)  0 - no  1 - yes  9 - unknown (do not map)  To be checked   | 4241310 - T3a: Prostate tumor with extracapsular extension,  4188539 - Yes, 4188540 - No. Or only map 1? (as 4241310) | |
+| svi | int |  | seminal vesical invasion (yes/no/unknown)  0 - no  1 - yes  9 - unknown (do not map, might not be different from empty)  To be checked   | 4240691 - T3b: Prostate tumor invades the semical vesicle(s), 4188539 - Yes, 4188540 - No. Or only map 1? (as 4240691) | |
+| pos_surgical_margins | int |  | Positive surgical margins  Is the tumor completely (cleanly) removed?  0 - no  1 - yes  9 - unknown (do not map)   | 4157779 - Excision of malignant neoplasm, 45878092 - Yes, completely or 4188539 - Yes, 4188540 - No (TODO: No means that tumor wasn't completely removed, how to map this?) | |
+| postoperative_psa | varchar |  | PSA level after surgery. Typical 6 weeks-3months after surgery   | Split operator from value (?)| |
+| pathology_reported | int |  | Do not map, administrative whether pathology done. | | |
+| adjuvant_radiotherapy | int |  | Radiotherapy after surgery  1 - yes  0 - no  9 - unknown  Only map 1 |  45881386 - Rad after surgery (SNOMED) or 35919395 - Radiation after surgery (NAACCR)| |
+| year_discontinued | int | 2015 | Year of discontinuation  Do not use, instead use days discontinued and year_diag as proxy | | |
 
 ### Table: stem_table
 
