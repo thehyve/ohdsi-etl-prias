@@ -142,7 +142,7 @@
 ### Table: enddata.csv
 
 | Field | Type | Most freq. value | Description | Concept | Mapped to table |
-| --- | --- | --- | --- |
+| --- | --- | --- | --- | --- | --- |
 | p_id | int | List truncated... | Multiple rows per id? Patient id? | | | 
 | nr_fuvisits | int | 4 | Number of follow up visits.  Do not map, administrative (max from time in fudata) | | |
 | discontinued | varchar | Robot radical prostatectomy | Given therapy  Except; death, lost to follow-up and on request   | If death, map to PERSON.death_datetime, 4132627 - Discontinued, 46270921 - Robot assisted laparoscopic radical prostatectomy, 4141448 - Teleradiotherapy procedure" (synonym is External beam radiotherapy), 4190466 - No anti-cancer treatment - watchful waiting, 4096783 - Radical prostatectomy, 44809585 - Laparoscopic radical prostatectomy, 4040610 - Low dose rate brachytherapie, 4163894 - Lost to follow-up,  4306655 - Death, 4172376 - Brachytherapy dose rate,  4038003 - High dose rate brachytherapy, 4202313 - Request status, or 4013713 - Request for, 21602613 - ANTIANDROGENS, 4120004 - High intensity focused ultrasound  or 44791407 - High intensity focused ultrasound of prostate, TODO: "Other of unknown treatment" and "LHRH Agnosts" | |       
