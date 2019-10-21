@@ -18,9 +18,9 @@ import csv
 
 class SourceData:
     """ Base object for reading source data file """
-    def __init__(self, source_file_path):
+    def __init__(self, source_file_path, delimiter=','):
         self.data_dicts = []  # list of dicts, with each dict representing one row of source data
-    
+        self.delimiter = delimiter
         self.load(source_file_path)
 
     def __iter__(self):
@@ -28,7 +28,7 @@ class SourceData:
 
     def load(self, source_file_path):
         with open(source_file_path) as f_in:
-            self.data_dicts = [CaseInsensitiveDict(x) for x in csv.DictReader(f_in, delimiter=';')]
+            self.data_dicts = [CaseInsensitiveDict(x) for x in csv.DictReader(f_in, delimiter=self.delimiter)]
 
 
 class CaseInsensitiveDict(dict):
@@ -46,8 +46,6 @@ class CaseInsensitiveDict(dict):
             self.__setitem__(key.lower(), value)
 
     def __getitem__(self, key):
-        # if key not in self:  # Note: bit tricky; no warning if variable does not exist...
-        #     return None
         return super().__getitem__(key.lower())
 
     def __setitem__(self, key, value):

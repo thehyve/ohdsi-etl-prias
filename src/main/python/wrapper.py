@@ -22,8 +22,7 @@ import src.main.python.model.cdm.derived_elements as derived_elements
 import src.main.python.model.cdm.health_economics as health_economics
 import src.main.python.model.cdm.health_system_data as health_system_data
 
-from .model import EtlWrapper
-# Import transformation functions
+from src.main.python.model import EtlWrapper
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +33,9 @@ class Wrapper(EtlWrapper):
         super().__init__(database=database, source_schema='')
         self.source_folder = pathlib.Path(source_folder)
         self.person_id_lookup = None
+        self.source_table_basedata = None
+        self.source_table_fulong = None
+        self.source_table_enddata = None
 
     def run(self):
         """Run PRIAS to OMOP V6.0 ETL"""
@@ -112,3 +114,21 @@ class Wrapper(EtlWrapper):
             raise Exception('Person source value "{}" not found in lookup.'.format(person_source_value))
 
         return self.person_id_lookup[person_source_value]
+
+    def get_basedata(self):
+        if not self.source_table_basedata:
+             self.source_table_basedata = SourceData(self.source_folder / 'basedata.csv')
+
+        return self.source_table_basedata
+
+    def get_fulong(self):
+        if not self.source_table_fulong:
+            self.source_table_fulong = SourceData(self.source_folder / 'fulong.csv')
+
+        return self.source_table_fulong
+
+    def get_enddata(self):
+        if not self.source_table_enddata:
+            self.source_table_enddata = SourceData(self.source_folder / 'enddata.csv')
+
+        return self.source_table_enddata

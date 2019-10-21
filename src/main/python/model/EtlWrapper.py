@@ -212,7 +212,10 @@ class EtlWrapper:
         t1 = time.time()
 
         try:
-            rowcount = statement(self)
+            records_to_insert = statement(self)
+            with self.db.session_scope() as session:
+                session.bulk_save_objects(records_to_insert)
+                session.commit()
         except Exception as msg:
             logger.error("#!#! ERROR: Transformation '%s' failed:" % statement.__name__)
             logger.error(traceback.format_exc(limit=1))
