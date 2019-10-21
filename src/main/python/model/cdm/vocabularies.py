@@ -1,4 +1,4 @@
-from sqlalchemy import CHAR, Column, Date, ForeignKey, Integer, Numeric, String, Text
+from sqlalchemy import Column, Date, ForeignKey, Integer, Numeric, String
 from sqlalchemy.orm import relationship
 
 from src.main.python.database.database import base
@@ -6,46 +6,20 @@ from src.main.python.database.database import base
 metadata = base.metadata
 
 
-class AttributeDefinition(base):
-    __tablename__ = 'attribute_definition'
-    __table_args__ = {'schema': 'public'}
-
-    attribute_definition_id = Column(Integer, primary_key=True, index=True)
-    attribute_name = Column(String(255), nullable=False)
-    attribute_description = Column(Text)
-    attribute_type_concept_id = Column(Integer, nullable=False)
-    attribute_syntax = Column(Text)
-
-
-class CohortDefinition(base):
-    __tablename__ = 'cohort_definition'
-    __table_args__ = {'schema': 'public'}
-
-    cohort_definition_id = Column(Integer, primary_key=True, index=True)
-    cohort_definition_name = Column(String(255), nullable=False)
-    cohort_definition_description = Column(Text)
-    definition_type_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
-    cohort_definition_syntax = Column(Text)
-    subject_concept_id = Column(Integer, nullable=False)
-    cohort_initiation_date = Column(Date)
-
-    definition_type_concept = relationship('Concept')
-
-
 class Concept(base):
     __tablename__ = 'concept'
     __table_args__ = {'schema': 'public'}
 
     concept_id = Column(Integer, primary_key=True, unique=True)
-    concept_name = Column(String(255))
+    concept_name = Column(String(255), nullable=False)
     domain_id = Column(ForeignKey('public.domain.domain_id'), nullable=False, index=True)
     vocabulary_id = Column(ForeignKey('public.vocabulary.vocabulary_id'), nullable=False, index=True)
     concept_class_id = Column(ForeignKey('public.concept_class.concept_class_id'), nullable=False, index=True)
-    standard_concept = Column(CHAR(1))
+    standard_concept = Column(String(1))
     concept_code = Column(String(50), nullable=False, index=True)
     valid_start_date = Column(Date, nullable=False)
     valid_end_date = Column(Date, nullable=False)
-    invalid_reason = Column(CHAR(1))
+    invalid_reason = Column(String(1))
 
     concept_class = relationship('ConceptClass', primaryjoin='Concept.concept_class_id == ConceptClass.concept_class_id')
     domain = relationship('Domain', primaryjoin='Concept.domain_id == Domain.domain_id')
@@ -56,10 +30,13 @@ class ConceptAncestor(base):
     __tablename__ = 'concept_ancestor'
     __table_args__ = {'schema': 'public'}
 
-    ancestor_concept_id = Column(Integer, primary_key=True, nullable=False, index=True)
-    descendant_concept_id = Column(Integer, primary_key=True, nullable=False, index=True)
+    ancestor_concept_id = Column(ForeignKey('public.concept.concept_id'), primary_key=True, nullable=False, index=True)
+    descendant_concept_id = Column(ForeignKey('public.concept.concept_id'), primary_key=True, nullable=False, index=True)
     min_levels_of_separation = Column(Integer, nullable=False)
     max_levels_of_separation = Column(Integer, nullable=False)
+
+    ancestor_concept = relationship('Concept', primaryjoin='ConceptAncestor.ancestor_concept_id == Concept.concept_id')
+    descendant_concept = relationship('Concept', primaryjoin='ConceptAncestor.descendant_concept_id == Concept.concept_id')
 
 
 class ConceptClass(base):
@@ -68,24 +45,24 @@ class ConceptClass(base):
 
     concept_class_id = Column(String(20), primary_key=True, unique=True)
     concept_class_name = Column(String(255), nullable=False)
-    concept_class_concept_id = Column(ForeignKey('public.concept.concept_id'))
+    concept_class_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
 
-    concept_class_concept = relationship('Concept',
-                                         primaryjoin='ConceptClass.concept_class_concept_id == Concept.concept_id',
-                                         post_update=True)
+    concept_class_concept = relationship('Concept', primaryjoin='ConceptClass.concept_class_concept_id == Concept.concept_id')
 
 
 class ConceptRelationship(base):
     __tablename__ = 'concept_relationship'
     __table_args__ = {'schema': 'public'}
 
-    concept_id_1 = Column(Integer, primary_key=True, nullable=False, index=True)
-    concept_id_2 = Column(Integer, primary_key=True, nullable=False, index=True)
+    concept_id_1 = Column(ForeignKey('public.concept.concept_id'), primary_key=True, nullable=False, index=True)
+    concept_id_2 = Column(ForeignKey('public.concept.concept_id'), primary_key=True, nullable=False, index=True)
     relationship_id = Column(ForeignKey('public.relationship.relationship_id'), primary_key=True, nullable=False, index=True)
     valid_start_date = Column(Date, nullable=False)
     valid_end_date = Column(Date, nullable=False)
-    invalid_reason = Column(CHAR(1))
+    invalid_reason = Column(String(1))
 
+    concept1 = relationship('Concept', primaryjoin='ConceptRelationship.concept_id_1 == Concept.concept_id')
+    concept2 = relationship('Concept', primaryjoin='ConceptRelationship.concept_id_2 == Concept.concept_id')
     relationship = relationship('Relationship')
 
 
@@ -93,10 +70,12 @@ class ConceptSynonym(base):
     __tablename__ = 'concept_synonym'
     __table_args__ = {'schema': 'public'}
 
-    concept_id = Column(Integer, primary_key=True, nullable=False, index=True)
-    concept_synonym_name = Column(String(1000), primary_key=True)
-    language_concept_id = Column(Integer, nullable=False)
-    # TODO: relationship to concept table
+    concept_id = Column(ForeignKey('public.concept.concept_id'), primary_key=True, nullable=False, index=True)
+    concept_synonym_name = Column(String(1000), primary_key=True, nullable=False)
+    language_concept_id = Column(ForeignKey('public.concept.concept_id'), primary_key=True, nullable=False)
+
+    concept = relationship('Concept', primaryjoin='ConceptSynonym.concept_id == Concept.concept_id')
+    language_concept = relationship('Concept', primaryjoin='ConceptSynonym.language_concept_id == Concept.concept_id')
 
 
 class Domain(base):
@@ -105,7 +84,7 @@ class Domain(base):
 
     domain_id = Column(String(20), primary_key=True, unique=True)
     domain_name = Column(String(255), nullable=False)
-    domain_concept_id = Column(ForeignKey('public.concept.concept_id'))
+    domain_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
 
     domain_concept = relationship('Concept',
                                   primaryjoin='Domain.domain_concept_id == Concept.concept_id',
@@ -127,7 +106,7 @@ class DrugStrength(base):
     box_size = Column(Integer)
     valid_start_date = Column(Date, nullable=False)
     valid_end_date = Column(Date, nullable=False)
-    invalid_reason = Column(CHAR(1))
+    invalid_reason = Column(String(1))
 
     amount_unit_concept = relationship('Concept', primaryjoin='DrugStrength.amount_unit_concept_id == Concept.concept_id')
     denominator_unit_concept = relationship('Concept', primaryjoin='DrugStrength.denominator_unit_concept_id == Concept.concept_id')
@@ -142,8 +121,8 @@ class Relationship(base):
 
     relationship_id = Column(String(20), primary_key=True, unique=True)
     relationship_name = Column(String(255), nullable=False)
-    is_hierarchical = Column(CHAR(1), nullable=False)
-    defines_ancestry = Column(CHAR(1), nullable=False)
+    is_hierarchical = Column(String(1), nullable=False)
+    defines_ancestry = Column(String(1), nullable=False)
     reverse_relationship_id = Column(ForeignKey('public.relationship.relationship_id'), nullable=False)
     relationship_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
 
@@ -163,7 +142,7 @@ class SourceToConceptMap(base):
     target_vocabulary_id = Column(ForeignKey('public.vocabulary.vocabulary_id'), nullable=False, index=True)
     valid_start_date = Column(Date, nullable=False)
     valid_end_date = Column(Date, primary_key=True, nullable=False)
-    invalid_reason = Column(CHAR(1))
+    invalid_reason = Column(String(1))
 
     source_vocabulary = relationship('Vocabulary', primaryjoin='SourceToConceptMap.source_vocabulary_id == Vocabulary.vocabulary_id')
     target_concept = relationship('Concept')
@@ -176,9 +155,9 @@ class Vocabulary(base):
 
     vocabulary_id = Column(String(20), primary_key=True, unique=True)
     vocabulary_name = Column(String(255), nullable=False)
-    vocabulary_reference = Column(String(255))
+    vocabulary_reference = Column(String(255), nullable=False)
     vocabulary_version = Column(String(255))
-    vocabulary_concept_id = Column(ForeignKey('public.concept.concept_id'))
+    vocabulary_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
 
     vocabulary_concept = relationship('Concept',
                                       primaryjoin='Vocabulary.vocabulary_concept_id == Concept.concept_id',

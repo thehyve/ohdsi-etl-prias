@@ -27,7 +27,10 @@ def basedata_to_person(wrapper) -> list:
             year_of_birth=int(row['year_birth']),
             gender_concept_id=8507,  # Always male
             race_concept_id=0,
-            ethnicity_concept_id=0
+            ethnicity_concept_id=0,
+            gender_source_concept_id=0,
+            race_source_concept_id=0,
+            ethnicity_source_concept_id=0
         )
         records_to_insert.append(record)
 
