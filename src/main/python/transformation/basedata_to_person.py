@@ -13,17 +13,21 @@
 # GNU General Public License for more details.
 
 # !/usr/bin/env python3
-from src.main.python.model.cdm import Observation
+from src.main.python.model.cdm import Person
 
 
-def _skeleton(wrapper) -> list:
-    source_data = wrapper.get_basedata()
+def basedata_to_person(wrapper) -> list:
+    base_data = wrapper.get_basedata()
 
     records_to_insert = []
-    for row in source_data:
-        record = Observation(
+    for row in base_data:
+        record = Person(
             person_id=int(row['p_id']),
-            # ADD FIELD MAPPINGS HERE
+            person_source_value=row['p_id'],
+            year_of_birth=int(row['year_birth']),
+            gender_concept_id=8507,  # Always male
+            race_concept_id=0,
+            ethnicity_concept_id=0
         )
         records_to_insert.append(record)
 
@@ -36,6 +40,6 @@ if __name__ == '__main__':
 
     db = Database(f'postgresql://postgres@localhost:5432/postgres')  # A mock database object
     w = Wrapper(db, '../../../../resources/source_data')
-    w.person_id_lookup = {}
-    for x in _skeleton(w):
+
+    for x in basedata_to_person(w):
         print(x.__dict__)

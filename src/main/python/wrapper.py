@@ -24,6 +24,8 @@ import src.main.python.model.cdm.health_system_data as health_system_data
 
 from src.main.python.model import EtlWrapper
 
+from src.main.python.transformation import *
+
 logger = logging.getLogger(__name__)
 
 
@@ -59,7 +61,7 @@ class Wrapper(EtlWrapper):
 
         # Transformations
         logger.info('{:-^100}'.format(' ETL '))
-        # self.execute_transformation(basedata_to_person)
+        self.execute_transformation(basedata_to_person)
 
         self.create_person_lookup()
 

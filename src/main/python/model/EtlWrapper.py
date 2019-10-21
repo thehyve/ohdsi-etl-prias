@@ -231,11 +231,11 @@ class EtlWrapper:
 
         if verbose:
             # NOTE: if multiple queries, then rowcount only last number of inserted/updated rows
-            self.log_query_completed(statement, rowcount, t2 - t1)
+            self.log_query_completed(statement, len(records_to_insert), t2 - t1)
 
         # Note: only tracks row count correctly if 1 insert per file and no update/delete scripts
-        if rowcount > 0:
-            self.total_rows_inserted += rowcount
+        if len(records_to_insert) > 0:
+            self.total_rows_inserted += len(records_to_insert)
 
         self.n_queries_executed += 1
         return

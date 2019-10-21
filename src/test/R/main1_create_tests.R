@@ -23,7 +23,7 @@ source('TestFramework.R')  # Note: removed initFramework() line from original fr
 initFramework()
 
 # Import test cases ------------------------------------------------------------
-# source('test_cases/_test_skeleton.R')
+source('test_cases/test_person.R')
 
 # Generate source csv files -----------------------------------------------------
 dir.create(config$sourceDataDir, recursive=T, showWarnings = F)
