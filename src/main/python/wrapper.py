@@ -16,14 +16,9 @@
 import pathlib
 import logging
 
-from src.main.python.model.SourceData import SourceData
-import src.main.python.model.cdm.clinical_data as clinical_data
-import src.main.python.model.cdm.derived_elements as derived_elements
-import src.main.python.model.cdm.health_economics as health_economics
-import src.main.python.model.cdm.health_system_data as health_system_data
-
 from src.main.python.model import EtlWrapper
-
+from src.main.python.model.SourceData import SourceData
+from src.main.python.model.cdm import *
 from src.main.python.transformation import *
 
 logger = logging.getLogger(__name__)
@@ -42,7 +37,6 @@ class Wrapper(EtlWrapper):
     def run(self):
         """Run PRIAS to OMOP V6.0 ETL"""
         self.start_timing()
-        self.log_timestamp()
 
         logger.info('{:-^100}'.format(' Source Counts '))
         # TODO: integrate this with loading all source files, such that each source table is only named once.
@@ -67,7 +61,6 @@ class Wrapper(EtlWrapper):
 
         self.log_summary()
         self.log_runtime()
-        self.log_timestamp()
 
     def drop_cdm(self):
         """Drops clinical tables, if they exist"""
@@ -94,7 +87,8 @@ class Wrapper(EtlWrapper):
             clinical_data.Person.__table__,
             health_system_data.Location.__table__,
             health_system_data.CareSite.__table__,
-            health_system_data.Provider.__table__
+            health_system_data.Provider.__table__,
+            clinical_data.StemTable.__table__
         ])
 
     def create_cdm(self):
