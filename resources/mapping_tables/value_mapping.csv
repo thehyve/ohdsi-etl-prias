@@ -1,0 +1,9 @@
+variable_source_code,value_source_code,source_code_description,target_concept_id,target_concept_name,valid_start_date,valid_end_date,invalid_reason
+biopt_inf_urine_bacterium,1,E.coli,4011683,Escherichia coli,2019-10-22,2099-12-31,
+biopt_inf_urine_bacterium,2,pseudomonas,4211547,Pseudomonas,2019-10-22,2099-12-31,
+biopt_inf_urine_bacterium,3,Enterococci,4101235,Genus Enterococcus,2019-10-22,2099-12-31,
+biopt_inf_urine_bacterium,4,proteus,4196666,Proteus,2019-10-22,2099-12-31,
+biopt_inf_urine_bacterium,5,Staphylococci,4278981,Staphylococcus,2019-10-22,2099-12-31,
+biopt_inf_urine_bacterium,6,Klebsiella,4327473,Klebsiella,2019-10-22,2099-12-31,
+biopt_inf_urine_bacterium,7,other enterobacteria,4242438,Enterobacter,2019-10-22,2099-12-31,
+biopt_inf_urine_bacterium,8,other,9177,Other,2019-10-22,2099-12-31,
