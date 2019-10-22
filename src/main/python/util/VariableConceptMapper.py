@@ -15,7 +15,7 @@
 # !/usr/bin/env python3
 import csv
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Optional
 
 
 class Target:
@@ -47,7 +47,6 @@ class VariableConceptMapper:
             self.load(directory)
 
     def load(self, directory: Path):
-        # TODO: validate the mapping files. Does every variable have either a categorical or numerical value
         if not directory.exists():
             raise FileNotFoundError(f"No such directory: '{directory}'")
 
@@ -59,32 +58,38 @@ class VariableConceptMapper:
     def _load_variable_map(self, file_path: Path):
         for row in self._load_map(file_path):
             variable = row['variable_source_code']
-            target = row['target_concept_id']
+            target_concept_id = row['target_concept_id']
 
-            self.variable_to_concept[variable] = int(target)
+            self.variable_to_concept[variable] = int(target_concept_id)
 
     def _load_variable_value_map(self, file_path: Path):
         for row in self._load_map(file_path):
             variable = row['variable_source_code']
             value = row['value_source_code']
-            target = row['target_concept_id']
+            target_concept_id = row['target_concept_id']
 
-            self.variable_value_to_concept.setdefault(variable, {})[value] = int(target)
+            self.variable_value_to_concept.setdefault(variable, {})[value] = int(target_concept_id)
 
     def _load_value_map(self, file_path: Path):
         for row in self._load_map(file_path):
             variable = row['variable_source_code']
             value = row['value_source_code']
-            target = row['target_concept_id']
+            target_concept_id = row['target_concept_id']
 
-            self.variable_value_to_value.setdefault(variable, {})[value] = int(target)
+            if not self.has_mapping_for_variable(variable):
+                raise Exception(f"Variable {variable} has no concept mapping, but does have a value mapping.")
+
+            self.variable_value_to_value.setdefault(variable, {})[value] = int(target_concept_id)
 
     def _load_unit_map(self, file_path: Path):
         for row in self._load_map(file_path):
             variable = row['variable_source_code']
-            target = row['target_concept_id']
+            target_concept_id = row['target_concept_id']
 
-            self.variable_to_unit[variable] = int(target)
+            if not self.has_mapping_for_variable(variable):
+                raise Exception(f"Variable {variable} has no concept mapping, but does have a unit mapping.")
+
+            self.variable_to_unit[variable] = int(target_concept_id)
 
     @staticmethod
     def _load_map(file_path: Path):
@@ -94,15 +99,20 @@ class VariableConceptMapper:
                     continue
                 yield row
 
-    def lookup(self, variable: str, value: str) -> Target:
-        # TODO: error handling. What if variable and/or value not present in any mapping?
+    def has_mapping_for_variable(self, variable: str):
+        return variable in self.variable_to_concept or variable in self.variable_value_to_value
+
+    def lookup(self, variable: str, value: str) -> Optional[Target]:
+        if not self.has_mapping_for_variable(variable):
+            return None
         value = str(value)
         target = Target()
+
         # Get concept_id from variable and value or only from variable (in that order of priority)
         target.concept_id = self.variable_value_to_concept.get(variable, {}).get(value) or \
                             self.variable_to_concept.get(variable)
 
-        # value is either categorical or numerical
+        # Value is either categorical or numerical. If value has no mapping, it is assumed to be numeric.
         is_categorical_value = variable in self.variable_value_to_concept or variable in self.variable_value_to_value
         if is_categorical_value:
             target.value_as_concept_id = self.variable_value_to_value.get(variable, {}).get(value)
@@ -116,6 +126,7 @@ class VariableConceptMapper:
 if __name__ == '__main__':
     mapper = VariableConceptMapper(Path('./resources/mapping_tables'))
 
+    # Some simple tests
     a = mapper.lookup('biopt_route', '1')
     print(a)  # c_id = 4339403
     b = mapper.lookup('biopt_inf_urine_bacterium', '2')
@@ -124,3 +135,5 @@ if __name__ == '__main__':
     print(c)  # c_id = 44793131, v_n = 55.2, u_c_id = 8842
     d = mapper.lookup('biopt_route', '99')
     print(d)  # c_id = 4278515 (the backup mapping if combo var+val not found)
+    e = mapper.lookup('unknown', '99')
+    print(e)  # None
