@@ -1,4 +1,4 @@
 variable_source_code,source_code_description,target_concept_id,target_concept_name,valid_start_date,valid_end_date,invalid_reason
-biopt_route,Route through which biopsy is taken,0,,2019-10-22,2099-12-31,
+biopt_route,Route through which biopsy is taken,4278515,Biopsy of prostate,2019-10-22,2099-12-31,
 biopt_inf_urine_bacterium,Type of urine bacterium measured,36304419,Bacteria [Presence] in Urine,2019-10-22,2099-12-31,
 psa,Measuring prostate-specific antigen in ng/ml,44793131,Total PSA level,2019-10-22,2099-12-31,
