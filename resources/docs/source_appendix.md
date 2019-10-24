@@ -73,6 +73,7 @@
 | mri_prostate_volume_method.0 | int |  | Do not map? Combine with mri_prostate_volume. |
 | age_diagnosis | real | 66.92 | Age at diagnosis (observation).  Include to be complete. | Age - 4265453 | Observation | 
 | year_diagnosis | int | 2015 | Year of diagnosis  | | observation_period, visit_occurrence |
+| year_birth | int | 1946 | Year of birth  | | |
 
 ### Table: fulong.csv
 
