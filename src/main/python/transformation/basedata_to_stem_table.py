@@ -23,6 +23,9 @@ def basedata_to_stem_table(wrapper) -> list:
     records_to_insert = []
     for row in source_data:
         for variable, value in row.items():
+            if row['year_diagnosis'] == '':
+                continue
+
             # Skip columns not containing variables
             if variable in ['p_id', 'year_diagnosis', 'year_birth']:
                 continue
@@ -45,6 +48,7 @@ def basedata_to_stem_table(wrapper) -> list:
                 unit_concept_id=target.unit_concept_id,
                 source_value=variable,
                 value_source_value=value,
+                unit_source_value=variable if target.unit_concept_id else None,
                 type_concept_id=0  # TODO
             )
             records_to_insert.append(record)

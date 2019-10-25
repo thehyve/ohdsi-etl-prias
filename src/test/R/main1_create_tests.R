@@ -17,7 +17,6 @@
 library(yaml)
 config <- yaml.load_file('config.yml')
 
-
 # Initialize the framework once -------------------------------------------
 source('TestFramework.R')  # Note: removed initFramework() line from original framework, otherwise framework resets every load
 initFramework()
@@ -32,7 +31,7 @@ generateSourceCsv(config$sourceDataDir)
 print(paste0('Test source tables written to ', config$sourceDataDir))
 
 # Create test query -------------------------------------------------------
-testSql <- generateTestSql('omopcdm')
+testSql <- generateTestSql(config$cdmSchema)
 dir.create(dirname(config$testQueryFileName), recursive=T, showWarnings = F)
 write(testSql, config$testQueryFileName)
 print(paste0('Test queries written to ', config$testQueryFileName))

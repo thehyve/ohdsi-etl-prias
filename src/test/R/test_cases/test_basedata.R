@@ -7,7 +7,7 @@ add_basedata(p_id = '201', psa = 5.1)
 expect_person(person_source_value = '201')
 expect_measurement(person_id = lookup_person('person_id', person_source_value = '201'), 
                    measurement_concept_id = 44793131, value_as_number = 5.1, unit_concept_id = 8842,
-                   value_as_concept_id = NULL, value_source_value = NULL)
+                   value_as_concept_id = NULL)
 
 # Categorical measurement -------------------------------------------------
 declareTest(202, 'biopt urine bacterium')

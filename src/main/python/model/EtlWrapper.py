@@ -194,7 +194,7 @@ class EtlWrapper:
 
         if verbose:
             # NOTE: if multiple queries, then rowcount only last number of inserted/updated rows
-            self.log_query_completed(query, result.rowcount, t2 - t1)
+            self.log_query_completed_sqlquery(query, result.rowcount, t2 - t1)
 
         # Note: only tracks row count correctly if 1 insert per file and no update/delete scripts
         if result.rowcount > 0 and self.parse_query_type(query) in ['INTO', 'CREATE']:
@@ -338,11 +338,11 @@ class EtlWrapper:
 
         return self.log_table_completed(None, row_count, execution_time)
 
-    def log_query_completed__sqlfile(self, sql_query, row_count, execution_time=None):
+    def log_query_completed_sqlquery(self, sql_query, row_count, execution_time=None):
         """ Create message on how many lines inserted into which table from a SQL script run """
         if row_count >= 0:
             # NOTE: if multiple queries, then rowcount only last number of inserted/updated rows
-            table_into = self.parse_target_table_session(sql_query)
+            table_into = self.parse_target_table_sqlquery(sql_query)
             prefix = self.parse_query_type(sql_query)
 
             return self.log_table_completed(table_into, row_count, execution_time, prefix)

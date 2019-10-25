@@ -13,11 +13,12 @@
 # GNU General Public License for more details.
 
 # After the ETL has run, this last phase will create the test results.
-source('TestFrameWork.R')
 library(DatabaseConnector)
 library(yaml)
 config <- yaml.load_file('config.yml')
 options(width=150)  # Preventing wrapping when printing dataframe
+
+source('TestFrameWork.R')
 
 # Run and output test queries ---------------------------------------------
 connectionConfig <- config$connectionDetails
@@ -38,3 +39,4 @@ outputTestResultsSummary(connection, config$cdmSchema)
 # Write full test results to file ---------------------------------------
 df_results <- DatabaseConnector::querySql(connection, gsub('@cdm_database_schema', config$cdmSchema, 'SELECT * FROM @cdm_database_schema.test_results;'))
 write.csv(df_results, "unittest_results.csv", row.names = FALSE, quote = c(1))
+disconnect(connection)

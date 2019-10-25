@@ -60,10 +60,16 @@ class Wrapper(EtlWrapper):
         self.execute_transformation(basedata_to_person)
         self.execute_transformation(basedata_to_stem_table)
 
-        self.create_person_lookup()
+        self.stem_table_to_domains()
+
+        # self.create_person_lookup()
 
         self.log_summary()
         self.log_runtime()
+
+    def stem_table_to_domains(self):
+        post_processing_path = Path('src/main/python/post_processing')
+        self.execute_sql_file(post_processing_path / 'stem_table_to_measurement.sql')
 
     def drop_cdm(self):
         """Drops clinical tables, if they exist"""
