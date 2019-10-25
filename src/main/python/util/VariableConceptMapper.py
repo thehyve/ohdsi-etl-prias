@@ -102,11 +102,24 @@ class VariableConceptMapper:
     def has_mapping_for_variable(self, variable: str):
         return variable in self.variable_to_concept or variable in self.variable_value_to_value
 
-    def lookup(self, variable: str, value: str) -> Optional[Target]:
-        if not self.has_mapping_for_variable(variable):
-            return None
-        value = str(value)
+    def lookup(self, variable: str, value: str) -> Target:
+        """
+        For given variable/value pair, looks up the target concept_id, value_as_concept_id, value_as_number and unit_concept_id.
+        The mapping can be one of three types:
+        1. Only concept. Variable and value together map to one concept_id.
+        2. Categorical. Variable maps to a concept_id, value maps to a value_as_concept_id.
+        3. Numeric. If no mapping for value found, the value is assumed to be numeric. Variable maps to concept_id and unit_concept_id. Value is converted to float.
+        :param variable: string
+        :param value: string
+        :return: Target
+        """
         target = Target()
+
+        if not self.has_mapping_for_variable(variable):
+            target.concept_id = 0
+            return target
+
+        value = str(value)
 
         # Get concept_id from variable and value or only from variable (in that order of priority)
         target.concept_id = self.variable_value_to_concept.get(variable, {}).get(value) or \
@@ -117,7 +130,11 @@ class VariableConceptMapper:
         if is_categorical_value:
             target.value_as_concept_id = self.variable_value_to_value.get(variable, {}).get(value)
         else:
-            target.value_as_number = float(value)
+            if value != '':
+                try:
+                    target.value_as_number = float(value)
+                except ValueError:
+                    raise ValueError(f'"{variable}" recognised as numeric variable, but could not convert value to float: "{value}"')
             target.unit_concept_id = self.variable_to_unit.get(variable)
 
         return target

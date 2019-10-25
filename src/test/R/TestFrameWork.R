@@ -168,98 +168,33 @@ initFramework <- function() {
   assign('enddata', defaults, envir = frameworkContext$defaultValues)
 
   frameworkContext$sourceFieldsMapped <- c(
-     'fulong.p_id'
-    ,'enddata.p_id'
-    ,'enddata.adjuvant_radiotherapy'
-    ,'basedata.free_psa'
-    ,'fulong.days_psa_diag'
-    ,'enddata.ece'
-    ,'basedata.num_cores_pc'
-    ,'enddata.days_discontinued_diagnosis'
-    ,'enddata.gleason2_rad_prost'
-    ,'basedata.mri_location_free_1.0'
-    ,'basedata.biopt_prob_type'
-    ,'enddata.postoperative_psa'
-    ,'basedata.year_birth'
-    ,'basedata.dre'
-    ,'enddata.reason_treatment'
-    ,'basedata.year_diagnosis'
-    ,'basedata.psa'
-    ,'enddata.pt'
-    ,'fulong.psadt'
-    ,'basedata.gleason1'
-    ,'enddata.prostatevolume'
-    ,'enddata.gleason1_rad_prost'
-    ,'basedata.charlson'
-    ,'basedata.phi'
-    ,'basedata.gleason2'
-    ,'enddata.svi'
-    ,'enddata.year_discontinued'
-    ,'basedata.length'
+     'basedata.p_id'
     ,'fulong.time'
-    ,'fulong.asa_fu'
-    ,'enddata.discontinued'
-    ,'basedata.prostatic_vol'
-    ,'basedata.method_detection'
-    ,'enddata.pos_surgical_margins'
-    ,'basedata.p_id'
-    ,'basedata.weight'
-    ,'basedata.num_cores'
-    ,'enddata.tumorvolume'
+    ,'enddata.year_discontinued'
+    ,'fulong.p_id'
+    ,'basedata.year_birth'
+    ,'fulong.days_psa_diag'
+    ,'basedata.year_diagnosis'
   )
 
   frameworkContext$targetFieldsMapped <- c(
-     'device_exposure.person_id'
-    ,'condition_occurrence.person_id'
-    ,'measurement.value_as_number'
-    ,'measurement.value_as_concept_id'
-    ,'condition_occurrence.condition_start_date'
-    ,'observation.observation_concept_id'
-    ,'condition_occurrence.condition_concept_id'
-    ,'visit_occurrence.visit_end_date'
-    ,'drug_exposure.drug_exposure_start_date'
-    ,'observation.value_as_concept_id'
-    ,'observation.visit_occurrence_id'
-    ,'specimen.specimen_concept_id'
-    ,'observation.value_as_number'
-    ,'observation.person_id'
-    ,'condition_occurrence.visit_occurrence_id'
-    ,'observation.value_as_string'
-    ,'measurement.visit_occurrence_id'
-    ,'measurement.person_id'
-    ,'measurement.measurement_concept_id'
-    ,'observation_period.person_id'
-    ,'observation_period.observation_period_start_date'
-    ,'measurement.measurement_date'
-    ,'person.year_of_birth'
-    ,'drug_exposure.visit_occurrence_id'
-    ,'visit_occurrence.person_id'
-    ,'procedure_occurrence.visit_occurrence_id'
-    ,'observation.unit_concept_id'
-    ,'procedure_occurrence.procedure_concept_id'
-    ,'specimen.unit_concept_id'
+     'person.year_of_birth'
     ,'person.person_id'
-    ,'measurement.operator_concept_id'
-    ,'procedure_occurrence.person_id'
-    ,'procedure_occurrence.procedure_date'
+    ,'visit_occurrence.visit_end_date'
+    ,'observation_period.observation_period_end_date'
+    ,'observation_period.person_id'
     ,'visit_occurrence.visit_concept_id'
-    ,'device_exposure.visit_occurrence_id'
-    ,'device_exposure.device_exposure_start_date'
-    ,'drug_exposure.drug_concept_id'
-    ,'drug_exposure.person_id'
-    ,'device_exposure.device_concept_id'
-    ,'specimen.person_id'
+    ,'observation_period.observation_period_start_date'
+    ,'visit_occurrence.person_id'
     ,'person.person_source_value'
     ,'visit_occurrence.visit_start_date'
-    ,'observation_period.observation_period_end_date'
-    ,'measurement.unit_concept_id'
-    ,'observation.observation_date'
-    ,'specimen.specimen_date'
   )
 
   frameworkContext$sourceFieldsTested <- c()
   frameworkContext$targetFieldsTested <- c()
 }
+
+initFramework()
 
 set_defaults_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, num_cores_pc, asa, log2psa, gleason1, gleason2, gleason_sum, free_psa, pro_psa, phi, charlson, tnm, method_detection, length, weight, num_cores2, num_cores_pc2, gleason1_2, gleason2_2, no_co_morbidity, active_visit, biopt_prob_type, biopt_infection, biopt_inf_urine_culture, biopt_inf_urine_bacterium, biopt_inf_unrine_resistant, biopt_inf_antibiotic_therapy, biopt_inf_antibiotic_type, biopt_inf_hospitalisation, biopt_inf_hospitalisation_days, biopt_inf_outcome, biopt_hematuria, biopt_hemospermia, biopt_pain, biopt_route, biopt_max_cancer_score_lenght, mri_included, bonescan, mri_taken.0, mri_lesions.0, mri_suspected_number.0, mri_pirads_1.0, mri_largest_dia_1.0, mri_location_1.0, mri_location_free_1.0, mri_pirads_2.0, mri_largest_dia_2.0, mri_location_2.0, mri_location_free_2.0, mri_pirads_3.0, mri_largest_dia_3.0, mri_location_3.0, mri_location_free_3.0, mri_progrssion_lesions.0, mri_targeted_biopsy.0, mri_targeted_cores.0, mri_targeted_taken.0, mri_targeted_gleason1.0, mri_targeted_gleason1.0.1, mri_lesion_positive.0, mri_method_used.0, mri_prostate_volume.0, mri_prostate_volume_method.0, age_diagnosis, year_diagnosis) {
   defaults <- get('basedata', envir = frameworkContext$defaultValues)
@@ -763,700 +698,560 @@ add_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, n
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.year_birth')
   }
-  if (!is.null(year_birth)) {
-    fields <- c(fields, "year_birth")
-    values <- c(values, if (is.null(year_birth)) "NULL" else if (is(year_birth, "subQuery")) paste0("(", as.character(year_birth), ")") else paste0("'", as.character(year_birth), "'"))
-  }
+  fields <- c(fields, "year_birth")
+  values <- c(values, if (is.null(year_birth)) "NULL" else if (is(year_birth, "subQuery")) paste0("(", as.character(year_birth), ")") else paste0("'", as.character(year_birth), "'"))
 
   if (missing(p_id)) {
     p_id <- defaults$p_id
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.p_id')
   }
-  if (!is.null(p_id)) {
-    fields <- c(fields, "p_id")
-    values <- c(values, if (is.null(p_id)) "NULL" else if (is(p_id, "subQuery")) paste0("(", as.character(p_id), ")") else paste0("'", as.character(p_id), "'"))
-  }
+  fields <- c(fields, "p_id")
+  values <- c(values, if (is.null(p_id)) "NULL" else if (is(p_id, "subQuery")) paste0("(", as.character(p_id), ")") else paste0("'", as.character(p_id), "'"))
 
   if (missing(psa)) {
     psa <- defaults$psa
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.psa')
   }
-  if (!is.null(psa)) {
-    fields <- c(fields, "psa")
-    values <- c(values, if (is.null(psa)) "NULL" else if (is(psa, "subQuery")) paste0("(", as.character(psa), ")") else paste0("'", as.character(psa), "'"))
-  }
+  fields <- c(fields, "psa")
+  values <- c(values, if (is.null(psa)) "NULL" else if (is(psa, "subQuery")) paste0("(", as.character(psa), ")") else paste0("'", as.character(psa), "'"))
 
   if (missing(prostatic_vol)) {
     prostatic_vol <- defaults$prostatic_vol
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.prostatic_vol')
   }
-  if (!is.null(prostatic_vol)) {
-    fields <- c(fields, "prostatic_vol")
-    values <- c(values, if (is.null(prostatic_vol)) "NULL" else if (is(prostatic_vol, "subQuery")) paste0("(", as.character(prostatic_vol), ")") else paste0("'", as.character(prostatic_vol), "'"))
-  }
+  fields <- c(fields, "prostatic_vol")
+  values <- c(values, if (is.null(prostatic_vol)) "NULL" else if (is(prostatic_vol, "subQuery")) paste0("(", as.character(prostatic_vol), ")") else paste0("'", as.character(prostatic_vol), "'"))
 
   if (missing(dre)) {
     dre <- defaults$dre
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.dre')
   }
-  if (!is.null(dre)) {
-    fields <- c(fields, "dre")
-    values <- c(values, if (is.null(dre)) "NULL" else if (is(dre, "subQuery")) paste0("(", as.character(dre), ")") else paste0("'", as.character(dre), "'"))
-  }
+  fields <- c(fields, "dre")
+  values <- c(values, if (is.null(dre)) "NULL" else if (is(dre, "subQuery")) paste0("(", as.character(dre), ")") else paste0("'", as.character(dre), "'"))
 
   if (missing(num_cores)) {
     num_cores <- defaults$num_cores
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.num_cores')
   }
-  if (!is.null(num_cores)) {
-    fields <- c(fields, "num_cores")
-    values <- c(values, if (is.null(num_cores)) "NULL" else if (is(num_cores, "subQuery")) paste0("(", as.character(num_cores), ")") else paste0("'", as.character(num_cores), "'"))
-  }
+  fields <- c(fields, "num_cores")
+  values <- c(values, if (is.null(num_cores)) "NULL" else if (is(num_cores, "subQuery")) paste0("(", as.character(num_cores), ")") else paste0("'", as.character(num_cores), "'"))
 
   if (missing(num_cores_pc)) {
     num_cores_pc <- defaults$num_cores_pc
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.num_cores_pc')
   }
-  if (!is.null(num_cores_pc)) {
-    fields <- c(fields, "num_cores_pc")
-    values <- c(values, if (is.null(num_cores_pc)) "NULL" else if (is(num_cores_pc, "subQuery")) paste0("(", as.character(num_cores_pc), ")") else paste0("'", as.character(num_cores_pc), "'"))
-  }
+  fields <- c(fields, "num_cores_pc")
+  values <- c(values, if (is.null(num_cores_pc)) "NULL" else if (is(num_cores_pc, "subQuery")) paste0("(", as.character(num_cores_pc), ")") else paste0("'", as.character(num_cores_pc), "'"))
 
   if (missing(asa)) {
     asa <- defaults$asa
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.asa')
   }
-  if (!is.null(asa)) {
-    fields <- c(fields, "asa")
-    values <- c(values, if (is.null(asa)) "NULL" else if (is(asa, "subQuery")) paste0("(", as.character(asa), ")") else paste0("'", as.character(asa), "'"))
-  }
+  fields <- c(fields, "asa")
+  values <- c(values, if (is.null(asa)) "NULL" else if (is(asa, "subQuery")) paste0("(", as.character(asa), ")") else paste0("'", as.character(asa), "'"))
 
   if (missing(log2psa)) {
     log2psa <- defaults$log2psa
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.log2psa')
   }
-  if (!is.null(log2psa)) {
-    fields <- c(fields, "log2psa")
-    values <- c(values, if (is.null(log2psa)) "NULL" else if (is(log2psa, "subQuery")) paste0("(", as.character(log2psa), ")") else paste0("'", as.character(log2psa), "'"))
-  }
+  fields <- c(fields, "log2psa")
+  values <- c(values, if (is.null(log2psa)) "NULL" else if (is(log2psa, "subQuery")) paste0("(", as.character(log2psa), ")") else paste0("'", as.character(log2psa), "'"))
 
   if (missing(gleason1)) {
     gleason1 <- defaults$gleason1
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.gleason1')
   }
-  if (!is.null(gleason1)) {
-    fields <- c(fields, "gleason1")
-    values <- c(values, if (is.null(gleason1)) "NULL" else if (is(gleason1, "subQuery")) paste0("(", as.character(gleason1), ")") else paste0("'", as.character(gleason1), "'"))
-  }
+  fields <- c(fields, "gleason1")
+  values <- c(values, if (is.null(gleason1)) "NULL" else if (is(gleason1, "subQuery")) paste0("(", as.character(gleason1), ")") else paste0("'", as.character(gleason1), "'"))
 
   if (missing(gleason2)) {
     gleason2 <- defaults$gleason2
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.gleason2')
   }
-  if (!is.null(gleason2)) {
-    fields <- c(fields, "gleason2")
-    values <- c(values, if (is.null(gleason2)) "NULL" else if (is(gleason2, "subQuery")) paste0("(", as.character(gleason2), ")") else paste0("'", as.character(gleason2), "'"))
-  }
+  fields <- c(fields, "gleason2")
+  values <- c(values, if (is.null(gleason2)) "NULL" else if (is(gleason2, "subQuery")) paste0("(", as.character(gleason2), ")") else paste0("'", as.character(gleason2), "'"))
 
   if (missing(gleason_sum)) {
     gleason_sum <- defaults$gleason_sum
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.gleason_sum')
   }
-  if (!is.null(gleason_sum)) {
-    fields <- c(fields, "gleason_sum")
-    values <- c(values, if (is.null(gleason_sum)) "NULL" else if (is(gleason_sum, "subQuery")) paste0("(", as.character(gleason_sum), ")") else paste0("'", as.character(gleason_sum), "'"))
-  }
+  fields <- c(fields, "gleason_sum")
+  values <- c(values, if (is.null(gleason_sum)) "NULL" else if (is(gleason_sum, "subQuery")) paste0("(", as.character(gleason_sum), ")") else paste0("'", as.character(gleason_sum), "'"))
 
   if (missing(free_psa)) {
     free_psa <- defaults$free_psa
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.free_psa')
   }
-  if (!is.null(free_psa)) {
-    fields <- c(fields, "free_psa")
-    values <- c(values, if (is.null(free_psa)) "NULL" else if (is(free_psa, "subQuery")) paste0("(", as.character(free_psa), ")") else paste0("'", as.character(free_psa), "'"))
-  }
+  fields <- c(fields, "free_psa")
+  values <- c(values, if (is.null(free_psa)) "NULL" else if (is(free_psa, "subQuery")) paste0("(", as.character(free_psa), ")") else paste0("'", as.character(free_psa), "'"))
 
   if (missing(pro_psa)) {
     pro_psa <- defaults$pro_psa
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.pro_psa')
   }
-  if (!is.null(pro_psa)) {
-    fields <- c(fields, "pro_psa")
-    values <- c(values, if (is.null(pro_psa)) "NULL" else if (is(pro_psa, "subQuery")) paste0("(", as.character(pro_psa), ")") else paste0("'", as.character(pro_psa), "'"))
-  }
+  fields <- c(fields, "pro_psa")
+  values <- c(values, if (is.null(pro_psa)) "NULL" else if (is(pro_psa, "subQuery")) paste0("(", as.character(pro_psa), ")") else paste0("'", as.character(pro_psa), "'"))
 
   if (missing(phi)) {
     phi <- defaults$phi
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.phi')
   }
-  if (!is.null(phi)) {
-    fields <- c(fields, "phi")
-    values <- c(values, if (is.null(phi)) "NULL" else if (is(phi, "subQuery")) paste0("(", as.character(phi), ")") else paste0("'", as.character(phi), "'"))
-  }
+  fields <- c(fields, "phi")
+  values <- c(values, if (is.null(phi)) "NULL" else if (is(phi, "subQuery")) paste0("(", as.character(phi), ")") else paste0("'", as.character(phi), "'"))
 
   if (missing(charlson)) {
     charlson <- defaults$charlson
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.charlson')
   }
-  if (!is.null(charlson)) {
-    fields <- c(fields, "charlson")
-    values <- c(values, if (is.null(charlson)) "NULL" else if (is(charlson, "subQuery")) paste0("(", as.character(charlson), ")") else paste0("'", as.character(charlson), "'"))
-  }
+  fields <- c(fields, "charlson")
+  values <- c(values, if (is.null(charlson)) "NULL" else if (is(charlson, "subQuery")) paste0("(", as.character(charlson), ")") else paste0("'", as.character(charlson), "'"))
 
   if (missing(tnm)) {
     tnm <- defaults$tnm
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.tnm')
   }
-  if (!is.null(tnm)) {
-    fields <- c(fields, "tnm")
-    values <- c(values, if (is.null(tnm)) "NULL" else if (is(tnm, "subQuery")) paste0("(", as.character(tnm), ")") else paste0("'", as.character(tnm), "'"))
-  }
+  fields <- c(fields, "tnm")
+  values <- c(values, if (is.null(tnm)) "NULL" else if (is(tnm, "subQuery")) paste0("(", as.character(tnm), ")") else paste0("'", as.character(tnm), "'"))
 
   if (missing(method_detection)) {
     method_detection <- defaults$method_detection
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.method_detection')
   }
-  if (!is.null(method_detection)) {
-    fields <- c(fields, "method_detection")
-    values <- c(values, if (is.null(method_detection)) "NULL" else if (is(method_detection, "subQuery")) paste0("(", as.character(method_detection), ")") else paste0("'", as.character(method_detection), "'"))
-  }
+  fields <- c(fields, "method_detection")
+  values <- c(values, if (is.null(method_detection)) "NULL" else if (is(method_detection, "subQuery")) paste0("(", as.character(method_detection), ")") else paste0("'", as.character(method_detection), "'"))
 
   if (missing(length)) {
     length <- defaults$length
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.length')
   }
-  if (!is.null(length)) {
-    fields <- c(fields, "length")
-    values <- c(values, if (is.null(length)) "NULL" else if (is(length, "subQuery")) paste0("(", as.character(length), ")") else paste0("'", as.character(length), "'"))
-  }
+  fields <- c(fields, "length")
+  values <- c(values, if (is.null(length)) "NULL" else if (is(length, "subQuery")) paste0("(", as.character(length), ")") else paste0("'", as.character(length), "'"))
 
   if (missing(weight)) {
     weight <- defaults$weight
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.weight')
   }
-  if (!is.null(weight)) {
-    fields <- c(fields, "weight")
-    values <- c(values, if (is.null(weight)) "NULL" else if (is(weight, "subQuery")) paste0("(", as.character(weight), ")") else paste0("'", as.character(weight), "'"))
-  }
+  fields <- c(fields, "weight")
+  values <- c(values, if (is.null(weight)) "NULL" else if (is(weight, "subQuery")) paste0("(", as.character(weight), ")") else paste0("'", as.character(weight), "'"))
 
   if (missing(num_cores2)) {
     num_cores2 <- defaults$num_cores2
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.num_cores2')
   }
-  if (!is.null(num_cores2)) {
-    fields <- c(fields, "num_cores2")
-    values <- c(values, if (is.null(num_cores2)) "NULL" else if (is(num_cores2, "subQuery")) paste0("(", as.character(num_cores2), ")") else paste0("'", as.character(num_cores2), "'"))
-  }
+  fields <- c(fields, "num_cores2")
+  values <- c(values, if (is.null(num_cores2)) "NULL" else if (is(num_cores2, "subQuery")) paste0("(", as.character(num_cores2), ")") else paste0("'", as.character(num_cores2), "'"))
 
   if (missing(num_cores_pc2)) {
     num_cores_pc2 <- defaults$num_cores_pc2
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.num_cores_pc2')
   }
-  if (!is.null(num_cores_pc2)) {
-    fields <- c(fields, "num_cores_pc2")
-    values <- c(values, if (is.null(num_cores_pc2)) "NULL" else if (is(num_cores_pc2, "subQuery")) paste0("(", as.character(num_cores_pc2), ")") else paste0("'", as.character(num_cores_pc2), "'"))
-  }
+  fields <- c(fields, "num_cores_pc2")
+  values <- c(values, if (is.null(num_cores_pc2)) "NULL" else if (is(num_cores_pc2, "subQuery")) paste0("(", as.character(num_cores_pc2), ")") else paste0("'", as.character(num_cores_pc2), "'"))
 
   if (missing(gleason1_2)) {
     gleason1_2 <- defaults$gleason1_2
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.gleason1_2')
   }
-  if (!is.null(gleason1_2)) {
-    fields <- c(fields, "gleason1_2")
-    values <- c(values, if (is.null(gleason1_2)) "NULL" else if (is(gleason1_2, "subQuery")) paste0("(", as.character(gleason1_2), ")") else paste0("'", as.character(gleason1_2), "'"))
-  }
+  fields <- c(fields, "gleason1_2")
+  values <- c(values, if (is.null(gleason1_2)) "NULL" else if (is(gleason1_2, "subQuery")) paste0("(", as.character(gleason1_2), ")") else paste0("'", as.character(gleason1_2), "'"))
 
   if (missing(gleason2_2)) {
     gleason2_2 <- defaults$gleason2_2
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.gleason2_2')
   }
-  if (!is.null(gleason2_2)) {
-    fields <- c(fields, "gleason2_2")
-    values <- c(values, if (is.null(gleason2_2)) "NULL" else if (is(gleason2_2, "subQuery")) paste0("(", as.character(gleason2_2), ")") else paste0("'", as.character(gleason2_2), "'"))
-  }
+  fields <- c(fields, "gleason2_2")
+  values <- c(values, if (is.null(gleason2_2)) "NULL" else if (is(gleason2_2, "subQuery")) paste0("(", as.character(gleason2_2), ")") else paste0("'", as.character(gleason2_2), "'"))
 
   if (missing(no_co_morbidity)) {
     no_co_morbidity <- defaults$no_co_morbidity
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.no_co_morbidity')
   }
-  if (!is.null(no_co_morbidity)) {
-    fields <- c(fields, "no_co_morbidity")
-    values <- c(values, if (is.null(no_co_morbidity)) "NULL" else if (is(no_co_morbidity, "subQuery")) paste0("(", as.character(no_co_morbidity), ")") else paste0("'", as.character(no_co_morbidity), "'"))
-  }
+  fields <- c(fields, "no_co_morbidity")
+  values <- c(values, if (is.null(no_co_morbidity)) "NULL" else if (is(no_co_morbidity, "subQuery")) paste0("(", as.character(no_co_morbidity), ")") else paste0("'", as.character(no_co_morbidity), "'"))
 
   if (missing(active_visit)) {
     active_visit <- defaults$active_visit
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.active_visit')
   }
-  if (!is.null(active_visit)) {
-    fields <- c(fields, "active_visit")
-    values <- c(values, if (is.null(active_visit)) "NULL" else if (is(active_visit, "subQuery")) paste0("(", as.character(active_visit), ")") else paste0("'", as.character(active_visit), "'"))
-  }
+  fields <- c(fields, "active_visit")
+  values <- c(values, if (is.null(active_visit)) "NULL" else if (is(active_visit, "subQuery")) paste0("(", as.character(active_visit), ")") else paste0("'", as.character(active_visit), "'"))
 
   if (missing(biopt_prob_type)) {
     biopt_prob_type <- defaults$biopt_prob_type
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_prob_type')
   }
-  if (!is.null(biopt_prob_type)) {
-    fields <- c(fields, "biopt_prob_type")
-    values <- c(values, if (is.null(biopt_prob_type)) "NULL" else if (is(biopt_prob_type, "subQuery")) paste0("(", as.character(biopt_prob_type), ")") else paste0("'", as.character(biopt_prob_type), "'"))
-  }
+  fields <- c(fields, "biopt_prob_type")
+  values <- c(values, if (is.null(biopt_prob_type)) "NULL" else if (is(biopt_prob_type, "subQuery")) paste0("(", as.character(biopt_prob_type), ")") else paste0("'", as.character(biopt_prob_type), "'"))
 
   if (missing(biopt_infection)) {
     biopt_infection <- defaults$biopt_infection
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_infection')
   }
-  if (!is.null(biopt_infection)) {
-    fields <- c(fields, "biopt_infection")
-    values <- c(values, if (is.null(biopt_infection)) "NULL" else if (is(biopt_infection, "subQuery")) paste0("(", as.character(biopt_infection), ")") else paste0("'", as.character(biopt_infection), "'"))
-  }
+  fields <- c(fields, "biopt_infection")
+  values <- c(values, if (is.null(biopt_infection)) "NULL" else if (is(biopt_infection, "subQuery")) paste0("(", as.character(biopt_infection), ")") else paste0("'", as.character(biopt_infection), "'"))
 
   if (missing(biopt_inf_urine_culture)) {
     biopt_inf_urine_culture <- defaults$biopt_inf_urine_culture
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_inf_urine_culture')
   }
-  if (!is.null(biopt_inf_urine_culture)) {
-    fields <- c(fields, "biopt_inf_urine_culture")
-    values <- c(values, if (is.null(biopt_inf_urine_culture)) "NULL" else if (is(biopt_inf_urine_culture, "subQuery")) paste0("(", as.character(biopt_inf_urine_culture), ")") else paste0("'", as.character(biopt_inf_urine_culture), "'"))
-  }
+  fields <- c(fields, "biopt_inf_urine_culture")
+  values <- c(values, if (is.null(biopt_inf_urine_culture)) "NULL" else if (is(biopt_inf_urine_culture, "subQuery")) paste0("(", as.character(biopt_inf_urine_culture), ")") else paste0("'", as.character(biopt_inf_urine_culture), "'"))
 
   if (missing(biopt_inf_urine_bacterium)) {
     biopt_inf_urine_bacterium <- defaults$biopt_inf_urine_bacterium
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_inf_urine_bacterium')
   }
-  if (!is.null(biopt_inf_urine_bacterium)) {
-    fields <- c(fields, "biopt_inf_urine_bacterium")
-    values <- c(values, if (is.null(biopt_inf_urine_bacterium)) "NULL" else if (is(biopt_inf_urine_bacterium, "subQuery")) paste0("(", as.character(biopt_inf_urine_bacterium), ")") else paste0("'", as.character(biopt_inf_urine_bacterium), "'"))
-  }
+  fields <- c(fields, "biopt_inf_urine_bacterium")
+  values <- c(values, if (is.null(biopt_inf_urine_bacterium)) "NULL" else if (is(biopt_inf_urine_bacterium, "subQuery")) paste0("(", as.character(biopt_inf_urine_bacterium), ")") else paste0("'", as.character(biopt_inf_urine_bacterium), "'"))
 
   if (missing(biopt_inf_unrine_resistant)) {
     biopt_inf_unrine_resistant <- defaults$biopt_inf_unrine_resistant
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_inf_unrine_resistant')
   }
-  if (!is.null(biopt_inf_unrine_resistant)) {
-    fields <- c(fields, "biopt_inf_unrine_resistant")
-    values <- c(values, if (is.null(biopt_inf_unrine_resistant)) "NULL" else if (is(biopt_inf_unrine_resistant, "subQuery")) paste0("(", as.character(biopt_inf_unrine_resistant), ")") else paste0("'", as.character(biopt_inf_unrine_resistant), "'"))
-  }
+  fields <- c(fields, "biopt_inf_unrine_resistant")
+  values <- c(values, if (is.null(biopt_inf_unrine_resistant)) "NULL" else if (is(biopt_inf_unrine_resistant, "subQuery")) paste0("(", as.character(biopt_inf_unrine_resistant), ")") else paste0("'", as.character(biopt_inf_unrine_resistant), "'"))
 
   if (missing(biopt_inf_antibiotic_therapy)) {
     biopt_inf_antibiotic_therapy <- defaults$biopt_inf_antibiotic_therapy
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_inf_antibiotic_therapy')
   }
-  if (!is.null(biopt_inf_antibiotic_therapy)) {
-    fields <- c(fields, "biopt_inf_antibiotic_therapy")
-    values <- c(values, if (is.null(biopt_inf_antibiotic_therapy)) "NULL" else if (is(biopt_inf_antibiotic_therapy, "subQuery")) paste0("(", as.character(biopt_inf_antibiotic_therapy), ")") else paste0("'", as.character(biopt_inf_antibiotic_therapy), "'"))
-  }
+  fields <- c(fields, "biopt_inf_antibiotic_therapy")
+  values <- c(values, if (is.null(biopt_inf_antibiotic_therapy)) "NULL" else if (is(biopt_inf_antibiotic_therapy, "subQuery")) paste0("(", as.character(biopt_inf_antibiotic_therapy), ")") else paste0("'", as.character(biopt_inf_antibiotic_therapy), "'"))
 
   if (missing(biopt_inf_antibiotic_type)) {
     biopt_inf_antibiotic_type <- defaults$biopt_inf_antibiotic_type
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_inf_antibiotic_type')
   }
-  if (!is.null(biopt_inf_antibiotic_type)) {
-    fields <- c(fields, "biopt_inf_antibiotic_type")
-    values <- c(values, if (is.null(biopt_inf_antibiotic_type)) "NULL" else if (is(biopt_inf_antibiotic_type, "subQuery")) paste0("(", as.character(biopt_inf_antibiotic_type), ")") else paste0("'", as.character(biopt_inf_antibiotic_type), "'"))
-  }
+  fields <- c(fields, "biopt_inf_antibiotic_type")
+  values <- c(values, if (is.null(biopt_inf_antibiotic_type)) "NULL" else if (is(biopt_inf_antibiotic_type, "subQuery")) paste0("(", as.character(biopt_inf_antibiotic_type), ")") else paste0("'", as.character(biopt_inf_antibiotic_type), "'"))
 
   if (missing(biopt_inf_hospitalisation)) {
     biopt_inf_hospitalisation <- defaults$biopt_inf_hospitalisation
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_inf_hospitalisation')
   }
-  if (!is.null(biopt_inf_hospitalisation)) {
-    fields <- c(fields, "biopt_inf_hospitalisation")
-    values <- c(values, if (is.null(biopt_inf_hospitalisation)) "NULL" else if (is(biopt_inf_hospitalisation, "subQuery")) paste0("(", as.character(biopt_inf_hospitalisation), ")") else paste0("'", as.character(biopt_inf_hospitalisation), "'"))
-  }
+  fields <- c(fields, "biopt_inf_hospitalisation")
+  values <- c(values, if (is.null(biopt_inf_hospitalisation)) "NULL" else if (is(biopt_inf_hospitalisation, "subQuery")) paste0("(", as.character(biopt_inf_hospitalisation), ")") else paste0("'", as.character(biopt_inf_hospitalisation), "'"))
 
   if (missing(biopt_inf_hospitalisation_days)) {
     biopt_inf_hospitalisation_days <- defaults$biopt_inf_hospitalisation_days
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_inf_hospitalisation_days')
   }
-  if (!is.null(biopt_inf_hospitalisation_days)) {
-    fields <- c(fields, "biopt_inf_hospitalisation_days")
-    values <- c(values, if (is.null(biopt_inf_hospitalisation_days)) "NULL" else if (is(biopt_inf_hospitalisation_days, "subQuery")) paste0("(", as.character(biopt_inf_hospitalisation_days), ")") else paste0("'", as.character(biopt_inf_hospitalisation_days), "'"))
-  }
+  fields <- c(fields, "biopt_inf_hospitalisation_days")
+  values <- c(values, if (is.null(biopt_inf_hospitalisation_days)) "NULL" else if (is(biopt_inf_hospitalisation_days, "subQuery")) paste0("(", as.character(biopt_inf_hospitalisation_days), ")") else paste0("'", as.character(biopt_inf_hospitalisation_days), "'"))
 
   if (missing(biopt_inf_outcome)) {
     biopt_inf_outcome <- defaults$biopt_inf_outcome
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_inf_outcome')
   }
-  if (!is.null(biopt_inf_outcome)) {
-    fields <- c(fields, "biopt_inf_outcome")
-    values <- c(values, if (is.null(biopt_inf_outcome)) "NULL" else if (is(biopt_inf_outcome, "subQuery")) paste0("(", as.character(biopt_inf_outcome), ")") else paste0("'", as.character(biopt_inf_outcome), "'"))
-  }
+  fields <- c(fields, "biopt_inf_outcome")
+  values <- c(values, if (is.null(biopt_inf_outcome)) "NULL" else if (is(biopt_inf_outcome, "subQuery")) paste0("(", as.character(biopt_inf_outcome), ")") else paste0("'", as.character(biopt_inf_outcome), "'"))
 
   if (missing(biopt_hematuria)) {
     biopt_hematuria <- defaults$biopt_hematuria
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_hematuria')
   }
-  if (!is.null(biopt_hematuria)) {
-    fields <- c(fields, "biopt_hematuria")
-    values <- c(values, if (is.null(biopt_hematuria)) "NULL" else if (is(biopt_hematuria, "subQuery")) paste0("(", as.character(biopt_hematuria), ")") else paste0("'", as.character(biopt_hematuria), "'"))
-  }
+  fields <- c(fields, "biopt_hematuria")
+  values <- c(values, if (is.null(biopt_hematuria)) "NULL" else if (is(biopt_hematuria, "subQuery")) paste0("(", as.character(biopt_hematuria), ")") else paste0("'", as.character(biopt_hematuria), "'"))
 
   if (missing(biopt_hemospermia)) {
     biopt_hemospermia <- defaults$biopt_hemospermia
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_hemospermia')
   }
-  if (!is.null(biopt_hemospermia)) {
-    fields <- c(fields, "biopt_hemospermia")
-    values <- c(values, if (is.null(biopt_hemospermia)) "NULL" else if (is(biopt_hemospermia, "subQuery")) paste0("(", as.character(biopt_hemospermia), ")") else paste0("'", as.character(biopt_hemospermia), "'"))
-  }
+  fields <- c(fields, "biopt_hemospermia")
+  values <- c(values, if (is.null(biopt_hemospermia)) "NULL" else if (is(biopt_hemospermia, "subQuery")) paste0("(", as.character(biopt_hemospermia), ")") else paste0("'", as.character(biopt_hemospermia), "'"))
 
   if (missing(biopt_pain)) {
     biopt_pain <- defaults$biopt_pain
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_pain')
   }
-  if (!is.null(biopt_pain)) {
-    fields <- c(fields, "biopt_pain")
-    values <- c(values, if (is.null(biopt_pain)) "NULL" else if (is(biopt_pain, "subQuery")) paste0("(", as.character(biopt_pain), ")") else paste0("'", as.character(biopt_pain), "'"))
-  }
+  fields <- c(fields, "biopt_pain")
+  values <- c(values, if (is.null(biopt_pain)) "NULL" else if (is(biopt_pain, "subQuery")) paste0("(", as.character(biopt_pain), ")") else paste0("'", as.character(biopt_pain), "'"))
 
   if (missing(biopt_route)) {
     biopt_route <- defaults$biopt_route
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_route')
   }
-  if (!is.null(biopt_route)) {
-    fields <- c(fields, "biopt_route")
-    values <- c(values, if (is.null(biopt_route)) "NULL" else if (is(biopt_route, "subQuery")) paste0("(", as.character(biopt_route), ")") else paste0("'", as.character(biopt_route), "'"))
-  }
+  fields <- c(fields, "biopt_route")
+  values <- c(values, if (is.null(biopt_route)) "NULL" else if (is(biopt_route, "subQuery")) paste0("(", as.character(biopt_route), ")") else paste0("'", as.character(biopt_route), "'"))
 
   if (missing(biopt_max_cancer_score_lenght)) {
     biopt_max_cancer_score_lenght <- defaults$biopt_max_cancer_score_lenght
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.biopt_max_cancer_score_lenght')
   }
-  if (!is.null(biopt_max_cancer_score_lenght)) {
-    fields <- c(fields, "biopt_max_cancer_score_lenght")
-    values <- c(values, if (is.null(biopt_max_cancer_score_lenght)) "NULL" else if (is(biopt_max_cancer_score_lenght, "subQuery")) paste0("(", as.character(biopt_max_cancer_score_lenght), ")") else paste0("'", as.character(biopt_max_cancer_score_lenght), "'"))
-  }
+  fields <- c(fields, "biopt_max_cancer_score_lenght")
+  values <- c(values, if (is.null(biopt_max_cancer_score_lenght)) "NULL" else if (is(biopt_max_cancer_score_lenght, "subQuery")) paste0("(", as.character(biopt_max_cancer_score_lenght), ")") else paste0("'", as.character(biopt_max_cancer_score_lenght), "'"))
 
   if (missing(mri_included)) {
     mri_included <- defaults$mri_included
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_included')
   }
-  if (!is.null(mri_included)) {
-    fields <- c(fields, "mri_included")
-    values <- c(values, if (is.null(mri_included)) "NULL" else if (is(mri_included, "subQuery")) paste0("(", as.character(mri_included), ")") else paste0("'", as.character(mri_included), "'"))
-  }
+  fields <- c(fields, "mri_included")
+  values <- c(values, if (is.null(mri_included)) "NULL" else if (is(mri_included, "subQuery")) paste0("(", as.character(mri_included), ")") else paste0("'", as.character(mri_included), "'"))
 
   if (missing(bonescan)) {
     bonescan <- defaults$bonescan
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.bonescan')
   }
-  if (!is.null(bonescan)) {
-    fields <- c(fields, "bonescan")
-    values <- c(values, if (is.null(bonescan)) "NULL" else if (is(bonescan, "subQuery")) paste0("(", as.character(bonescan), ")") else paste0("'", as.character(bonescan), "'"))
-  }
+  fields <- c(fields, "bonescan")
+  values <- c(values, if (is.null(bonescan)) "NULL" else if (is(bonescan, "subQuery")) paste0("(", as.character(bonescan), ")") else paste0("'", as.character(bonescan), "'"))
 
   if (missing(mri_taken.0)) {
     mri_taken.0 <- defaults$mri_taken.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_taken.0')
   }
-  if (!is.null(mri_taken.0)) {
-    fields <- c(fields, "[mri_taken.0]")
-    values <- c(values, if (is.null(mri_taken.0)) "NULL" else if (is(mri_taken.0, "subQuery")) paste0("(", as.character(mri_taken.0), ")") else paste0("'", as.character(mri_taken.0), "'"))
-  }
+  fields <- c(fields, "[mri_taken.0]")
+  values <- c(values, if (is.null(mri_taken.0)) "NULL" else if (is(mri_taken.0, "subQuery")) paste0("(", as.character(mri_taken.0), ")") else paste0("'", as.character(mri_taken.0), "'"))
 
   if (missing(mri_lesions.0)) {
     mri_lesions.0 <- defaults$mri_lesions.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_lesions.0')
   }
-  if (!is.null(mri_lesions.0)) {
-    fields <- c(fields, "[mri_lesions.0]")
-    values <- c(values, if (is.null(mri_lesions.0)) "NULL" else if (is(mri_lesions.0, "subQuery")) paste0("(", as.character(mri_lesions.0), ")") else paste0("'", as.character(mri_lesions.0), "'"))
-  }
+  fields <- c(fields, "[mri_lesions.0]")
+  values <- c(values, if (is.null(mri_lesions.0)) "NULL" else if (is(mri_lesions.0, "subQuery")) paste0("(", as.character(mri_lesions.0), ")") else paste0("'", as.character(mri_lesions.0), "'"))
 
   if (missing(mri_suspected_number.0)) {
     mri_suspected_number.0 <- defaults$mri_suspected_number.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_suspected_number.0')
   }
-  if (!is.null(mri_suspected_number.0)) {
-    fields <- c(fields, "[mri_suspected_number.0]")
-    values <- c(values, if (is.null(mri_suspected_number.0)) "NULL" else if (is(mri_suspected_number.0, "subQuery")) paste0("(", as.character(mri_suspected_number.0), ")") else paste0("'", as.character(mri_suspected_number.0), "'"))
-  }
+  fields <- c(fields, "[mri_suspected_number.0]")
+  values <- c(values, if (is.null(mri_suspected_number.0)) "NULL" else if (is(mri_suspected_number.0, "subQuery")) paste0("(", as.character(mri_suspected_number.0), ")") else paste0("'", as.character(mri_suspected_number.0), "'"))
 
   if (missing(mri_pirads_1.0)) {
     mri_pirads_1.0 <- defaults$mri_pirads_1.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_pirads_1.0')
   }
-  if (!is.null(mri_pirads_1.0)) {
-    fields <- c(fields, "[mri_pirads_1.0]")
-    values <- c(values, if (is.null(mri_pirads_1.0)) "NULL" else if (is(mri_pirads_1.0, "subQuery")) paste0("(", as.character(mri_pirads_1.0), ")") else paste0("'", as.character(mri_pirads_1.0), "'"))
-  }
+  fields <- c(fields, "[mri_pirads_1.0]")
+  values <- c(values, if (is.null(mri_pirads_1.0)) "NULL" else if (is(mri_pirads_1.0, "subQuery")) paste0("(", as.character(mri_pirads_1.0), ")") else paste0("'", as.character(mri_pirads_1.0), "'"))
 
   if (missing(mri_largest_dia_1.0)) {
     mri_largest_dia_1.0 <- defaults$mri_largest_dia_1.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_largest_dia_1.0')
   }
-  if (!is.null(mri_largest_dia_1.0)) {
-    fields <- c(fields, "[mri_largest_dia_1.0]")
-    values <- c(values, if (is.null(mri_largest_dia_1.0)) "NULL" else if (is(mri_largest_dia_1.0, "subQuery")) paste0("(", as.character(mri_largest_dia_1.0), ")") else paste0("'", as.character(mri_largest_dia_1.0), "'"))
-  }
+  fields <- c(fields, "[mri_largest_dia_1.0]")
+  values <- c(values, if (is.null(mri_largest_dia_1.0)) "NULL" else if (is(mri_largest_dia_1.0, "subQuery")) paste0("(", as.character(mri_largest_dia_1.0), ")") else paste0("'", as.character(mri_largest_dia_1.0), "'"))
 
   if (missing(mri_location_1.0)) {
     mri_location_1.0 <- defaults$mri_location_1.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_location_1.0')
   }
-  if (!is.null(mri_location_1.0)) {
-    fields <- c(fields, "[mri_location_1.0]")
-    values <- c(values, if (is.null(mri_location_1.0)) "NULL" else if (is(mri_location_1.0, "subQuery")) paste0("(", as.character(mri_location_1.0), ")") else paste0("'", as.character(mri_location_1.0), "'"))
-  }
+  fields <- c(fields, "[mri_location_1.0]")
+  values <- c(values, if (is.null(mri_location_1.0)) "NULL" else if (is(mri_location_1.0, "subQuery")) paste0("(", as.character(mri_location_1.0), ")") else paste0("'", as.character(mri_location_1.0), "'"))
 
   if (missing(mri_location_free_1.0)) {
     mri_location_free_1.0 <- defaults$mri_location_free_1.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_location_free_1.0')
   }
-  if (!is.null(mri_location_free_1.0)) {
-    fields <- c(fields, "[mri_location_free_1.0]")
-    values <- c(values, if (is.null(mri_location_free_1.0)) "NULL" else if (is(mri_location_free_1.0, "subQuery")) paste0("(", as.character(mri_location_free_1.0), ")") else paste0("'", as.character(mri_location_free_1.0), "'"))
-  }
+  fields <- c(fields, "[mri_location_free_1.0]")
+  values <- c(values, if (is.null(mri_location_free_1.0)) "NULL" else if (is(mri_location_free_1.0, "subQuery")) paste0("(", as.character(mri_location_free_1.0), ")") else paste0("'", as.character(mri_location_free_1.0), "'"))
 
   if (missing(mri_pirads_2.0)) {
     mri_pirads_2.0 <- defaults$mri_pirads_2.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_pirads_2.0')
   }
-  if (!is.null(mri_pirads_2.0)) {
-    fields <- c(fields, "[mri_pirads_2.0]")
-    values <- c(values, if (is.null(mri_pirads_2.0)) "NULL" else if (is(mri_pirads_2.0, "subQuery")) paste0("(", as.character(mri_pirads_2.0), ")") else paste0("'", as.character(mri_pirads_2.0), "'"))
-  }
+  fields <- c(fields, "[mri_pirads_2.0]")
+  values <- c(values, if (is.null(mri_pirads_2.0)) "NULL" else if (is(mri_pirads_2.0, "subQuery")) paste0("(", as.character(mri_pirads_2.0), ")") else paste0("'", as.character(mri_pirads_2.0), "'"))
 
   if (missing(mri_largest_dia_2.0)) {
     mri_largest_dia_2.0 <- defaults$mri_largest_dia_2.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_largest_dia_2.0')
   }
-  if (!is.null(mri_largest_dia_2.0)) {
-    fields <- c(fields, "[mri_largest_dia_2.0]")
-    values <- c(values, if (is.null(mri_largest_dia_2.0)) "NULL" else if (is(mri_largest_dia_2.0, "subQuery")) paste0("(", as.character(mri_largest_dia_2.0), ")") else paste0("'", as.character(mri_largest_dia_2.0), "'"))
-  }
+  fields <- c(fields, "[mri_largest_dia_2.0]")
+  values <- c(values, if (is.null(mri_largest_dia_2.0)) "NULL" else if (is(mri_largest_dia_2.0, "subQuery")) paste0("(", as.character(mri_largest_dia_2.0), ")") else paste0("'", as.character(mri_largest_dia_2.0), "'"))
 
   if (missing(mri_location_2.0)) {
     mri_location_2.0 <- defaults$mri_location_2.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_location_2.0')
   }
-  if (!is.null(mri_location_2.0)) {
-    fields <- c(fields, "[mri_location_2.0]")
-    values <- c(values, if (is.null(mri_location_2.0)) "NULL" else if (is(mri_location_2.0, "subQuery")) paste0("(", as.character(mri_location_2.0), ")") else paste0("'", as.character(mri_location_2.0), "'"))
-  }
+  fields <- c(fields, "[mri_location_2.0]")
+  values <- c(values, if (is.null(mri_location_2.0)) "NULL" else if (is(mri_location_2.0, "subQuery")) paste0("(", as.character(mri_location_2.0), ")") else paste0("'", as.character(mri_location_2.0), "'"))
 
   if (missing(mri_location_free_2.0)) {
     mri_location_free_2.0 <- defaults$mri_location_free_2.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_location_free_2.0')
   }
-  if (!is.null(mri_location_free_2.0)) {
-    fields <- c(fields, "[mri_location_free_2.0]")
-    values <- c(values, if (is.null(mri_location_free_2.0)) "NULL" else if (is(mri_location_free_2.0, "subQuery")) paste0("(", as.character(mri_location_free_2.0), ")") else paste0("'", as.character(mri_location_free_2.0), "'"))
-  }
+  fields <- c(fields, "[mri_location_free_2.0]")
+  values <- c(values, if (is.null(mri_location_free_2.0)) "NULL" else if (is(mri_location_free_2.0, "subQuery")) paste0("(", as.character(mri_location_free_2.0), ")") else paste0("'", as.character(mri_location_free_2.0), "'"))
 
   if (missing(mri_pirads_3.0)) {
     mri_pirads_3.0 <- defaults$mri_pirads_3.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_pirads_3.0')
   }
-  if (!is.null(mri_pirads_3.0)) {
-    fields <- c(fields, "[mri_pirads_3.0]")
-    values <- c(values, if (is.null(mri_pirads_3.0)) "NULL" else if (is(mri_pirads_3.0, "subQuery")) paste0("(", as.character(mri_pirads_3.0), ")") else paste0("'", as.character(mri_pirads_3.0), "'"))
-  }
+  fields <- c(fields, "[mri_pirads_3.0]")
+  values <- c(values, if (is.null(mri_pirads_3.0)) "NULL" else if (is(mri_pirads_3.0, "subQuery")) paste0("(", as.character(mri_pirads_3.0), ")") else paste0("'", as.character(mri_pirads_3.0), "'"))
 
   if (missing(mri_largest_dia_3.0)) {
     mri_largest_dia_3.0 <- defaults$mri_largest_dia_3.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_largest_dia_3.0')
   }
-  if (!is.null(mri_largest_dia_3.0)) {
-    fields <- c(fields, "[mri_largest_dia_3.0]")
-    values <- c(values, if (is.null(mri_largest_dia_3.0)) "NULL" else if (is(mri_largest_dia_3.0, "subQuery")) paste0("(", as.character(mri_largest_dia_3.0), ")") else paste0("'", as.character(mri_largest_dia_3.0), "'"))
-  }
+  fields <- c(fields, "[mri_largest_dia_3.0]")
+  values <- c(values, if (is.null(mri_largest_dia_3.0)) "NULL" else if (is(mri_largest_dia_3.0, "subQuery")) paste0("(", as.character(mri_largest_dia_3.0), ")") else paste0("'", as.character(mri_largest_dia_3.0), "'"))
 
   if (missing(mri_location_3.0)) {
     mri_location_3.0 <- defaults$mri_location_3.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_location_3.0')
   }
-  if (!is.null(mri_location_3.0)) {
-    fields <- c(fields, "[mri_location_3.0]")
-    values <- c(values, if (is.null(mri_location_3.0)) "NULL" else if (is(mri_location_3.0, "subQuery")) paste0("(", as.character(mri_location_3.0), ")") else paste0("'", as.character(mri_location_3.0), "'"))
-  }
+  fields <- c(fields, "[mri_location_3.0]")
+  values <- c(values, if (is.null(mri_location_3.0)) "NULL" else if (is(mri_location_3.0, "subQuery")) paste0("(", as.character(mri_location_3.0), ")") else paste0("'", as.character(mri_location_3.0), "'"))
 
   if (missing(mri_location_free_3.0)) {
     mri_location_free_3.0 <- defaults$mri_location_free_3.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_location_free_3.0')
   }
-  if (!is.null(mri_location_free_3.0)) {
-    fields <- c(fields, "[mri_location_free_3.0]")
-    values <- c(values, if (is.null(mri_location_free_3.0)) "NULL" else if (is(mri_location_free_3.0, "subQuery")) paste0("(", as.character(mri_location_free_3.0), ")") else paste0("'", as.character(mri_location_free_3.0), "'"))
-  }
+  fields <- c(fields, "[mri_location_free_3.0]")
+  values <- c(values, if (is.null(mri_location_free_3.0)) "NULL" else if (is(mri_location_free_3.0, "subQuery")) paste0("(", as.character(mri_location_free_3.0), ")") else paste0("'", as.character(mri_location_free_3.0), "'"))
 
   if (missing(mri_progrssion_lesions.0)) {
     mri_progrssion_lesions.0 <- defaults$mri_progrssion_lesions.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_progrssion_lesions.0')
   }
-  if (!is.null(mri_progrssion_lesions.0)) {
-    fields <- c(fields, "[mri_progrssion_lesions.0]")
-    values <- c(values, if (is.null(mri_progrssion_lesions.0)) "NULL" else if (is(mri_progrssion_lesions.0, "subQuery")) paste0("(", as.character(mri_progrssion_lesions.0), ")") else paste0("'", as.character(mri_progrssion_lesions.0), "'"))
-  }
+  fields <- c(fields, "[mri_progrssion_lesions.0]")
+  values <- c(values, if (is.null(mri_progrssion_lesions.0)) "NULL" else if (is(mri_progrssion_lesions.0, "subQuery")) paste0("(", as.character(mri_progrssion_lesions.0), ")") else paste0("'", as.character(mri_progrssion_lesions.0), "'"))
 
   if (missing(mri_targeted_biopsy.0)) {
     mri_targeted_biopsy.0 <- defaults$mri_targeted_biopsy.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_targeted_biopsy.0')
   }
-  if (!is.null(mri_targeted_biopsy.0)) {
-    fields <- c(fields, "[mri_targeted_biopsy.0]")
-    values <- c(values, if (is.null(mri_targeted_biopsy.0)) "NULL" else if (is(mri_targeted_biopsy.0, "subQuery")) paste0("(", as.character(mri_targeted_biopsy.0), ")") else paste0("'", as.character(mri_targeted_biopsy.0), "'"))
-  }
+  fields <- c(fields, "[mri_targeted_biopsy.0]")
+  values <- c(values, if (is.null(mri_targeted_biopsy.0)) "NULL" else if (is(mri_targeted_biopsy.0, "subQuery")) paste0("(", as.character(mri_targeted_biopsy.0), ")") else paste0("'", as.character(mri_targeted_biopsy.0), "'"))
 
   if (missing(mri_targeted_cores.0)) {
     mri_targeted_cores.0 <- defaults$mri_targeted_cores.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_targeted_cores.0')
   }
-  if (!is.null(mri_targeted_cores.0)) {
-    fields <- c(fields, "[mri_targeted_cores.0]")
-    values <- c(values, if (is.null(mri_targeted_cores.0)) "NULL" else if (is(mri_targeted_cores.0, "subQuery")) paste0("(", as.character(mri_targeted_cores.0), ")") else paste0("'", as.character(mri_targeted_cores.0), "'"))
-  }
+  fields <- c(fields, "[mri_targeted_cores.0]")
+  values <- c(values, if (is.null(mri_targeted_cores.0)) "NULL" else if (is(mri_targeted_cores.0, "subQuery")) paste0("(", as.character(mri_targeted_cores.0), ")") else paste0("'", as.character(mri_targeted_cores.0), "'"))
 
   if (missing(mri_targeted_taken.0)) {
     mri_targeted_taken.0 <- defaults$mri_targeted_taken.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_targeted_taken.0')
   }
-  if (!is.null(mri_targeted_taken.0)) {
-    fields <- c(fields, "[mri_targeted_taken.0]")
-    values <- c(values, if (is.null(mri_targeted_taken.0)) "NULL" else if (is(mri_targeted_taken.0, "subQuery")) paste0("(", as.character(mri_targeted_taken.0), ")") else paste0("'", as.character(mri_targeted_taken.0), "'"))
-  }
+  fields <- c(fields, "[mri_targeted_taken.0]")
+  values <- c(values, if (is.null(mri_targeted_taken.0)) "NULL" else if (is(mri_targeted_taken.0, "subQuery")) paste0("(", as.character(mri_targeted_taken.0), ")") else paste0("'", as.character(mri_targeted_taken.0), "'"))
 
   if (missing(mri_targeted_gleason1.0)) {
     mri_targeted_gleason1.0 <- defaults$mri_targeted_gleason1.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_targeted_gleason1.0')
   }
-  if (!is.null(mri_targeted_gleason1.0)) {
-    fields <- c(fields, "[mri_targeted_gleason1.0]")
-    values <- c(values, if (is.null(mri_targeted_gleason1.0)) "NULL" else if (is(mri_targeted_gleason1.0, "subQuery")) paste0("(", as.character(mri_targeted_gleason1.0), ")") else paste0("'", as.character(mri_targeted_gleason1.0), "'"))
-  }
+  fields <- c(fields, "[mri_targeted_gleason1.0]")
+  values <- c(values, if (is.null(mri_targeted_gleason1.0)) "NULL" else if (is(mri_targeted_gleason1.0, "subQuery")) paste0("(", as.character(mri_targeted_gleason1.0), ")") else paste0("'", as.character(mri_targeted_gleason1.0), "'"))
 
   if (missing(mri_targeted_gleason1.0.1)) {
     mri_targeted_gleason1.0.1 <- defaults$mri_targeted_gleason1.0.1
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_targeted_gleason1.0.1')
   }
-  if (!is.null(mri_targeted_gleason1.0.1)) {
-    fields <- c(fields, "[mri_targeted_gleason1.0.1]")
-    values <- c(values, if (is.null(mri_targeted_gleason1.0.1)) "NULL" else if (is(mri_targeted_gleason1.0.1, "subQuery")) paste0("(", as.character(mri_targeted_gleason1.0.1), ")") else paste0("'", as.character(mri_targeted_gleason1.0.1), "'"))
-  }
+  fields <- c(fields, "[mri_targeted_gleason1.0.1]")
+  values <- c(values, if (is.null(mri_targeted_gleason1.0.1)) "NULL" else if (is(mri_targeted_gleason1.0.1, "subQuery")) paste0("(", as.character(mri_targeted_gleason1.0.1), ")") else paste0("'", as.character(mri_targeted_gleason1.0.1), "'"))
 
   if (missing(mri_lesion_positive.0)) {
     mri_lesion_positive.0 <- defaults$mri_lesion_positive.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_lesion_positive.0')
   }
-  if (!is.null(mri_lesion_positive.0)) {
-    fields <- c(fields, "[mri_lesion_positive.0]")
-    values <- c(values, if (is.null(mri_lesion_positive.0)) "NULL" else if (is(mri_lesion_positive.0, "subQuery")) paste0("(", as.character(mri_lesion_positive.0), ")") else paste0("'", as.character(mri_lesion_positive.0), "'"))
-  }
+  fields <- c(fields, "[mri_lesion_positive.0]")
+  values <- c(values, if (is.null(mri_lesion_positive.0)) "NULL" else if (is(mri_lesion_positive.0, "subQuery")) paste0("(", as.character(mri_lesion_positive.0), ")") else paste0("'", as.character(mri_lesion_positive.0), "'"))
 
   if (missing(mri_method_used.0)) {
     mri_method_used.0 <- defaults$mri_method_used.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_method_used.0')
   }
-  if (!is.null(mri_method_used.0)) {
-    fields <- c(fields, "[mri_method_used.0]")
-    values <- c(values, if (is.null(mri_method_used.0)) "NULL" else if (is(mri_method_used.0, "subQuery")) paste0("(", as.character(mri_method_used.0), ")") else paste0("'", as.character(mri_method_used.0), "'"))
-  }
+  fields <- c(fields, "[mri_method_used.0]")
+  values <- c(values, if (is.null(mri_method_used.0)) "NULL" else if (is(mri_method_used.0, "subQuery")) paste0("(", as.character(mri_method_used.0), ")") else paste0("'", as.character(mri_method_used.0), "'"))
 
   if (missing(mri_prostate_volume.0)) {
     mri_prostate_volume.0 <- defaults$mri_prostate_volume.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_prostate_volume.0')
   }
-  if (!is.null(mri_prostate_volume.0)) {
-    fields <- c(fields, "[mri_prostate_volume.0]")
-    values <- c(values, if (is.null(mri_prostate_volume.0)) "NULL" else if (is(mri_prostate_volume.0, "subQuery")) paste0("(", as.character(mri_prostate_volume.0), ")") else paste0("'", as.character(mri_prostate_volume.0), "'"))
-  }
+  fields <- c(fields, "[mri_prostate_volume.0]")
+  values <- c(values, if (is.null(mri_prostate_volume.0)) "NULL" else if (is(mri_prostate_volume.0, "subQuery")) paste0("(", as.character(mri_prostate_volume.0), ")") else paste0("'", as.character(mri_prostate_volume.0), "'"))
 
   if (missing(mri_prostate_volume_method.0)) {
     mri_prostate_volume_method.0 <- defaults$mri_prostate_volume_method.0
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_prostate_volume_method.0')
   }
-  if (!is.null(mri_prostate_volume_method.0)) {
-    fields <- c(fields, "[mri_prostate_volume_method.0]")
-    values <- c(values, if (is.null(mri_prostate_volume_method.0)) "NULL" else if (is(mri_prostate_volume_method.0, "subQuery")) paste0("(", as.character(mri_prostate_volume_method.0), ")") else paste0("'", as.character(mri_prostate_volume_method.0), "'"))
-  }
+  fields <- c(fields, "[mri_prostate_volume_method.0]")
+  values <- c(values, if (is.null(mri_prostate_volume_method.0)) "NULL" else if (is(mri_prostate_volume_method.0, "subQuery")) paste0("(", as.character(mri_prostate_volume_method.0), ")") else paste0("'", as.character(mri_prostate_volume_method.0), "'"))
 
   if (missing(age_diagnosis)) {
     age_diagnosis <- defaults$age_diagnosis
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.age_diagnosis')
   }
-  if (!is.null(age_diagnosis)) {
-    fields <- c(fields, "age_diagnosis")
-    values <- c(values, if (is.null(age_diagnosis)) "NULL" else if (is(age_diagnosis, "subQuery")) paste0("(", as.character(age_diagnosis), ")") else paste0("'", as.character(age_diagnosis), "'"))
-  }
+  fields <- c(fields, "age_diagnosis")
+  values <- c(values, if (is.null(age_diagnosis)) "NULL" else if (is(age_diagnosis, "subQuery")) paste0("(", as.character(age_diagnosis), ")") else paste0("'", as.character(age_diagnosis), "'"))
 
   if (missing(year_diagnosis)) {
     year_diagnosis <- defaults$year_diagnosis
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.year_diagnosis')
   }
-  if (!is.null(year_diagnosis)) {
-    fields <- c(fields, "year_diagnosis")
-    values <- c(values, if (is.null(year_diagnosis)) "NULL" else if (is(year_diagnosis, "subQuery")) paste0("(", as.character(year_diagnosis), ")") else paste0("'", as.character(year_diagnosis), "'"))
-  }
+  fields <- c(fields, "year_diagnosis")
+  values <- c(values, if (is.null(year_diagnosis)) "NULL" else if (is(year_diagnosis, "subQuery")) paste0("(", as.character(year_diagnosis), ")") else paste0("'", as.character(year_diagnosis), "'"))
 
   inserts <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, table = "basedata", fields = fields, values = values)
   frameworkContext$inserts[[length(frameworkContext$inserts) + 1]] <- inserts
@@ -1472,600 +1267,480 @@ add_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_cores_biop
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.p_id')
   }
-  if (!is.null(p_id)) {
-    fields <- c(fields, "p_id")
-    values <- c(values, if (is.null(p_id)) "NULL" else if (is(p_id, "subQuery")) paste0("(", as.character(p_id), ")") else paste0("'", as.character(p_id), "'"))
-  }
+  fields <- c(fields, "p_id")
+  values <- c(values, if (is.null(p_id)) "NULL" else if (is(p_id, "subQuery")) paste0("(", as.character(p_id), ")") else paste0("'", as.character(p_id), "'"))
 
   if (missing(time)) {
     time <- defaults$time
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.time')
   }
-  if (!is.null(time)) {
-    fields <- c(fields, "time")
-    values <- c(values, if (is.null(time)) "NULL" else if (is(time, "subQuery")) paste0("(", as.character(time), ")") else paste0("'", as.character(time), "'"))
-  }
+  fields <- c(fields, "time")
+  values <- c(values, if (is.null(time)) "NULL" else if (is(time, "subQuery")) paste0("(", as.character(time), ")") else paste0("'", as.character(time), "'"))
 
   if (missing(psa_fu)) {
     psa_fu <- defaults$psa_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.psa_fu')
   }
-  if (!is.null(psa_fu)) {
-    fields <- c(fields, "psa_fu")
-    values <- c(values, if (is.null(psa_fu)) "NULL" else if (is(psa_fu, "subQuery")) paste0("(", as.character(psa_fu), ")") else paste0("'", as.character(psa_fu), "'"))
-  }
+  fields <- c(fields, "psa_fu")
+  values <- c(values, if (is.null(psa_fu)) "NULL" else if (is(psa_fu, "subQuery")) paste0("(", as.character(psa_fu), ")") else paste0("'", as.character(psa_fu), "'"))
 
   if (missing(dre_fu)) {
     dre_fu <- defaults$dre_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.dre_fu')
   }
-  if (!is.null(dre_fu)) {
-    fields <- c(fields, "dre_fu")
-    values <- c(values, if (is.null(dre_fu)) "NULL" else if (is(dre_fu, "subQuery")) paste0("(", as.character(dre_fu), ")") else paste0("'", as.character(dre_fu), "'"))
-  }
+  fields <- c(fields, "dre_fu")
+  values <- c(values, if (is.null(dre_fu)) "NULL" else if (is(dre_fu, "subQuery")) paste0("(", as.character(dre_fu), ")") else paste0("'", as.character(dre_fu), "'"))
 
   if (missing(dre_fu_recode)) {
     dre_fu_recode <- defaults$dre_fu_recode
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.dre_fu_recode')
   }
-  if (!is.null(dre_fu_recode)) {
-    fields <- c(fields, "dre_fu_recode")
-    values <- c(values, if (is.null(dre_fu_recode)) "NULL" else if (is(dre_fu_recode, "subQuery")) paste0("(", as.character(dre_fu_recode), ")") else paste0("'", as.character(dre_fu_recode), "'"))
-  }
+  fields <- c(fields, "dre_fu_recode")
+  values <- c(values, if (is.null(dre_fu_recode)) "NULL" else if (is(dre_fu_recode, "subQuery")) paste0("(", as.character(dre_fu_recode), ")") else paste0("'", as.character(dre_fu_recode), "'"))
 
   if (missing(num_cores_biop_fu)) {
     num_cores_biop_fu <- defaults$num_cores_biop_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.num_cores_biop_fu')
   }
-  if (!is.null(num_cores_biop_fu)) {
-    fields <- c(fields, "num_cores_biop_fu")
-    values <- c(values, if (is.null(num_cores_biop_fu)) "NULL" else if (is(num_cores_biop_fu, "subQuery")) paste0("(", as.character(num_cores_biop_fu), ")") else paste0("'", as.character(num_cores_biop_fu), "'"))
-  }
+  fields <- c(fields, "num_cores_biop_fu")
+  values <- c(values, if (is.null(num_cores_biop_fu)) "NULL" else if (is(num_cores_biop_fu, "subQuery")) paste0("(", as.character(num_cores_biop_fu), ")") else paste0("'", as.character(num_cores_biop_fu), "'"))
 
   if (missing(num_cores_pc_fu)) {
     num_cores_pc_fu <- defaults$num_cores_pc_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.num_cores_pc_fu')
   }
-  if (!is.null(num_cores_pc_fu)) {
-    fields <- c(fields, "num_cores_pc_fu")
-    values <- c(values, if (is.null(num_cores_pc_fu)) "NULL" else if (is(num_cores_pc_fu, "subQuery")) paste0("(", as.character(num_cores_pc_fu), ")") else paste0("'", as.character(num_cores_pc_fu), "'"))
-  }
+  fields <- c(fields, "num_cores_pc_fu")
+  values <- c(values, if (is.null(num_cores_pc_fu)) "NULL" else if (is(num_cores_pc_fu, "subQuery")) paste0("(", as.character(num_cores_pc_fu), ")") else paste0("'", as.character(num_cores_pc_fu), "'"))
 
   if (missing(asa_fu)) {
     asa_fu <- defaults$asa_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.asa_fu')
   }
-  if (!is.null(asa_fu)) {
-    fields <- c(fields, "asa_fu")
-    values <- c(values, if (is.null(asa_fu)) "NULL" else if (is(asa_fu, "subQuery")) paste0("(", as.character(asa_fu), ")") else paste0("'", as.character(asa_fu), "'"))
-  }
+  fields <- c(fields, "asa_fu")
+  values <- c(values, if (is.null(asa_fu)) "NULL" else if (is(asa_fu, "subQuery")) paste0("(", as.character(asa_fu), ")") else paste0("'", as.character(asa_fu), "'"))
 
   if (missing(log2psa_fu)) {
     log2psa_fu <- defaults$log2psa_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.log2psa_fu')
   }
-  if (!is.null(log2psa_fu)) {
-    fields <- c(fields, "log2psa_fu")
-    values <- c(values, if (is.null(log2psa_fu)) "NULL" else if (is(log2psa_fu, "subQuery")) paste0("(", as.character(log2psa_fu), ")") else paste0("'", as.character(log2psa_fu), "'"))
-  }
+  fields <- c(fields, "log2psa_fu")
+  values <- c(values, if (is.null(log2psa_fu)) "NULL" else if (is(log2psa_fu, "subQuery")) paste0("(", as.character(log2psa_fu), ")") else paste0("'", as.character(log2psa_fu), "'"))
 
   if (missing(psadt)) {
     psadt <- defaults$psadt
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.psadt')
   }
-  if (!is.null(psadt)) {
-    fields <- c(fields, "psadt")
-    values <- c(values, if (is.null(psadt)) "NULL" else if (is(psadt, "subQuery")) paste0("(", as.character(psadt), ")") else paste0("'", as.character(psadt), "'"))
-  }
+  fields <- c(fields, "psadt")
+  values <- c(values, if (is.null(psadt)) "NULL" else if (is(psadt, "subQuery")) paste0("(", as.character(psadt), ")") else paste0("'", as.character(psadt), "'"))
 
   if (missing(gleason1_fu)) {
     gleason1_fu <- defaults$gleason1_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.gleason1_fu')
   }
-  if (!is.null(gleason1_fu)) {
-    fields <- c(fields, "gleason1_fu")
-    values <- c(values, if (is.null(gleason1_fu)) "NULL" else if (is(gleason1_fu, "subQuery")) paste0("(", as.character(gleason1_fu), ")") else paste0("'", as.character(gleason1_fu), "'"))
-  }
+  fields <- c(fields, "gleason1_fu")
+  values <- c(values, if (is.null(gleason1_fu)) "NULL" else if (is(gleason1_fu, "subQuery")) paste0("(", as.character(gleason1_fu), ")") else paste0("'", as.character(gleason1_fu), "'"))
 
   if (missing(gleason2_fu)) {
     gleason2_fu <- defaults$gleason2_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.gleason2_fu')
   }
-  if (!is.null(gleason2_fu)) {
-    fields <- c(fields, "gleason2_fu")
-    values <- c(values, if (is.null(gleason2_fu)) "NULL" else if (is(gleason2_fu, "subQuery")) paste0("(", as.character(gleason2_fu), ")") else paste0("'", as.character(gleason2_fu), "'"))
-  }
+  fields <- c(fields, "gleason2_fu")
+  values <- c(values, if (is.null(gleason2_fu)) "NULL" else if (is(gleason2_fu, "subQuery")) paste0("(", as.character(gleason2_fu), ")") else paste0("'", as.character(gleason2_fu), "'"))
 
   if (missing(gleason_sum_fu)) {
     gleason_sum_fu <- defaults$gleason_sum_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.gleason_sum_fu')
   }
-  if (!is.null(gleason_sum_fu)) {
-    fields <- c(fields, "gleason_sum_fu")
-    values <- c(values, if (is.null(gleason_sum_fu)) "NULL" else if (is(gleason_sum_fu, "subQuery")) paste0("(", as.character(gleason_sum_fu), ")") else paste0("'", as.character(gleason_sum_fu), "'"))
-  }
+  fields <- c(fields, "gleason_sum_fu")
+  values <- c(values, if (is.null(gleason_sum_fu)) "NULL" else if (is(gleason_sum_fu, "subQuery")) paste0("(", as.character(gleason_sum_fu), ")") else paste0("'", as.character(gleason_sum_fu), "'"))
 
   if (missing(slope)) {
     slope <- defaults$slope
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.slope')
   }
-  if (!is.null(slope)) {
-    fields <- c(fields, "slope")
-    values <- c(values, if (is.null(slope)) "NULL" else if (is(slope, "subQuery")) paste0("(", as.character(slope), ")") else paste0("'", as.character(slope), "'"))
-  }
+  fields <- c(fields, "slope")
+  values <- c(values, if (is.null(slope)) "NULL" else if (is(slope, "subQuery")) paste0("(", as.character(slope), ")") else paste0("'", as.character(slope), "'"))
 
   if (missing(free_psa_fu)) {
     free_psa_fu <- defaults$free_psa_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.free_psa_fu')
   }
-  if (!is.null(free_psa_fu)) {
-    fields <- c(fields, "free_psa_fu")
-    values <- c(values, if (is.null(free_psa_fu)) "NULL" else if (is(free_psa_fu, "subQuery")) paste0("(", as.character(free_psa_fu), ")") else paste0("'", as.character(free_psa_fu), "'"))
-  }
+  fields <- c(fields, "free_psa_fu")
+  values <- c(values, if (is.null(free_psa_fu)) "NULL" else if (is(free_psa_fu, "subQuery")) paste0("(", as.character(free_psa_fu), ")") else paste0("'", as.character(free_psa_fu), "'"))
 
   if (missing(pro_psa_fu)) {
     pro_psa_fu <- defaults$pro_psa_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.pro_psa_fu')
   }
-  if (!is.null(pro_psa_fu)) {
-    fields <- c(fields, "pro_psa_fu")
-    values <- c(values, if (is.null(pro_psa_fu)) "NULL" else if (is(pro_psa_fu, "subQuery")) paste0("(", as.character(pro_psa_fu), ")") else paste0("'", as.character(pro_psa_fu), "'"))
-  }
+  fields <- c(fields, "pro_psa_fu")
+  values <- c(values, if (is.null(pro_psa_fu)) "NULL" else if (is(pro_psa_fu, "subQuery")) paste0("(", as.character(pro_psa_fu), ")") else paste0("'", as.character(pro_psa_fu), "'"))
 
   if (missing(phi_fu)) {
     phi_fu <- defaults$phi_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.phi_fu')
   }
-  if (!is.null(phi_fu)) {
-    fields <- c(fields, "phi_fu")
-    values <- c(values, if (is.null(phi_fu)) "NULL" else if (is(phi_fu, "subQuery")) paste0("(", as.character(phi_fu), ")") else paste0("'", as.character(phi_fu), "'"))
-  }
+  fields <- c(fields, "phi_fu")
+  values <- c(values, if (is.null(phi_fu)) "NULL" else if (is(phi_fu, "subQuery")) paste0("(", as.character(phi_fu), ")") else paste0("'", as.character(phi_fu), "'"))
 
   if (missing(visit_action)) {
     visit_action <- defaults$visit_action
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.visit_action')
   }
-  if (!is.null(visit_action)) {
-    fields <- c(fields, "visit_action")
-    values <- c(values, if (is.null(visit_action)) "NULL" else if (is(visit_action, "subQuery")) paste0("(", as.character(visit_action), ")") else paste0("'", as.character(visit_action), "'"))
-  }
+  fields <- c(fields, "visit_action")
+  values <- c(values, if (is.null(visit_action)) "NULL" else if (is(visit_action, "subQuery")) paste0("(", as.character(visit_action), ")") else paste0("'", as.character(visit_action), "'"))
 
   if (missing(active_visit)) {
     active_visit <- defaults$active_visit
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.active_visit')
   }
-  if (!is.null(active_visit)) {
-    fields <- c(fields, "active_visit")
-    values <- c(values, if (is.null(active_visit)) "NULL" else if (is(active_visit, "subQuery")) paste0("(", as.character(active_visit), ")") else paste0("'", as.character(active_visit), "'"))
-  }
+  fields <- c(fields, "active_visit")
+  values <- c(values, if (is.null(active_visit)) "NULL" else if (is(active_visit, "subQuery")) paste0("(", as.character(active_visit), ")") else paste0("'", as.character(active_visit), "'"))
 
   if (missing(biopt_prob_type_fu)) {
     biopt_prob_type_fu <- defaults$biopt_prob_type_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_prob_type_fu')
   }
-  if (!is.null(biopt_prob_type_fu)) {
-    fields <- c(fields, "biopt_prob_type_fu")
-    values <- c(values, if (is.null(biopt_prob_type_fu)) "NULL" else if (is(biopt_prob_type_fu, "subQuery")) paste0("(", as.character(biopt_prob_type_fu), ")") else paste0("'", as.character(biopt_prob_type_fu), "'"))
-  }
+  fields <- c(fields, "biopt_prob_type_fu")
+  values <- c(values, if (is.null(biopt_prob_type_fu)) "NULL" else if (is(biopt_prob_type_fu, "subQuery")) paste0("(", as.character(biopt_prob_type_fu), ")") else paste0("'", as.character(biopt_prob_type_fu), "'"))
 
   if (missing(biopt_infection_fu)) {
     biopt_infection_fu <- defaults$biopt_infection_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_infection_fu')
   }
-  if (!is.null(biopt_infection_fu)) {
-    fields <- c(fields, "biopt_infection_fu")
-    values <- c(values, if (is.null(biopt_infection_fu)) "NULL" else if (is(biopt_infection_fu, "subQuery")) paste0("(", as.character(biopt_infection_fu), ")") else paste0("'", as.character(biopt_infection_fu), "'"))
-  }
+  fields <- c(fields, "biopt_infection_fu")
+  values <- c(values, if (is.null(biopt_infection_fu)) "NULL" else if (is(biopt_infection_fu, "subQuery")) paste0("(", as.character(biopt_infection_fu), ")") else paste0("'", as.character(biopt_infection_fu), "'"))
 
   if (missing(biopt_inf_urine_culture_fu)) {
     biopt_inf_urine_culture_fu <- defaults$biopt_inf_urine_culture_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_inf_urine_culture_fu')
   }
-  if (!is.null(biopt_inf_urine_culture_fu)) {
-    fields <- c(fields, "biopt_inf_urine_culture_fu")
-    values <- c(values, if (is.null(biopt_inf_urine_culture_fu)) "NULL" else if (is(biopt_inf_urine_culture_fu, "subQuery")) paste0("(", as.character(biopt_inf_urine_culture_fu), ")") else paste0("'", as.character(biopt_inf_urine_culture_fu), "'"))
-  }
+  fields <- c(fields, "biopt_inf_urine_culture_fu")
+  values <- c(values, if (is.null(biopt_inf_urine_culture_fu)) "NULL" else if (is(biopt_inf_urine_culture_fu, "subQuery")) paste0("(", as.character(biopt_inf_urine_culture_fu), ")") else paste0("'", as.character(biopt_inf_urine_culture_fu), "'"))
 
   if (missing(biopt_inf_urine_bacterium_fu)) {
     biopt_inf_urine_bacterium_fu <- defaults$biopt_inf_urine_bacterium_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_inf_urine_bacterium_fu')
   }
-  if (!is.null(biopt_inf_urine_bacterium_fu)) {
-    fields <- c(fields, "biopt_inf_urine_bacterium_fu")
-    values <- c(values, if (is.null(biopt_inf_urine_bacterium_fu)) "NULL" else if (is(biopt_inf_urine_bacterium_fu, "subQuery")) paste0("(", as.character(biopt_inf_urine_bacterium_fu), ")") else paste0("'", as.character(biopt_inf_urine_bacterium_fu), "'"))
-  }
+  fields <- c(fields, "biopt_inf_urine_bacterium_fu")
+  values <- c(values, if (is.null(biopt_inf_urine_bacterium_fu)) "NULL" else if (is(biopt_inf_urine_bacterium_fu, "subQuery")) paste0("(", as.character(biopt_inf_urine_bacterium_fu), ")") else paste0("'", as.character(biopt_inf_urine_bacterium_fu), "'"))
 
   if (missing(biopt_inf_unrine_resistant_fu)) {
     biopt_inf_unrine_resistant_fu <- defaults$biopt_inf_unrine_resistant_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_inf_unrine_resistant_fu')
   }
-  if (!is.null(biopt_inf_unrine_resistant_fu)) {
-    fields <- c(fields, "biopt_inf_unrine_resistant_fu")
-    values <- c(values, if (is.null(biopt_inf_unrine_resistant_fu)) "NULL" else if (is(biopt_inf_unrine_resistant_fu, "subQuery")) paste0("(", as.character(biopt_inf_unrine_resistant_fu), ")") else paste0("'", as.character(biopt_inf_unrine_resistant_fu), "'"))
-  }
+  fields <- c(fields, "biopt_inf_unrine_resistant_fu")
+  values <- c(values, if (is.null(biopt_inf_unrine_resistant_fu)) "NULL" else if (is(biopt_inf_unrine_resistant_fu, "subQuery")) paste0("(", as.character(biopt_inf_unrine_resistant_fu), ")") else paste0("'", as.character(biopt_inf_unrine_resistant_fu), "'"))
 
   if (missing(biopt_inf_antibiotic_therapy_fu)) {
     biopt_inf_antibiotic_therapy_fu <- defaults$biopt_inf_antibiotic_therapy_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_inf_antibiotic_therapy_fu')
   }
-  if (!is.null(biopt_inf_antibiotic_therapy_fu)) {
-    fields <- c(fields, "biopt_inf_antibiotic_therapy_fu")
-    values <- c(values, if (is.null(biopt_inf_antibiotic_therapy_fu)) "NULL" else if (is(biopt_inf_antibiotic_therapy_fu, "subQuery")) paste0("(", as.character(biopt_inf_antibiotic_therapy_fu), ")") else paste0("'", as.character(biopt_inf_antibiotic_therapy_fu), "'"))
-  }
+  fields <- c(fields, "biopt_inf_antibiotic_therapy_fu")
+  values <- c(values, if (is.null(biopt_inf_antibiotic_therapy_fu)) "NULL" else if (is(biopt_inf_antibiotic_therapy_fu, "subQuery")) paste0("(", as.character(biopt_inf_antibiotic_therapy_fu), ")") else paste0("'", as.character(biopt_inf_antibiotic_therapy_fu), "'"))
 
   if (missing(biopt_inf_antibiotic_type_fu)) {
     biopt_inf_antibiotic_type_fu <- defaults$biopt_inf_antibiotic_type_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_inf_antibiotic_type_fu')
   }
-  if (!is.null(biopt_inf_antibiotic_type_fu)) {
-    fields <- c(fields, "biopt_inf_antibiotic_type_fu")
-    values <- c(values, if (is.null(biopt_inf_antibiotic_type_fu)) "NULL" else if (is(biopt_inf_antibiotic_type_fu, "subQuery")) paste0("(", as.character(biopt_inf_antibiotic_type_fu), ")") else paste0("'", as.character(biopt_inf_antibiotic_type_fu), "'"))
-  }
+  fields <- c(fields, "biopt_inf_antibiotic_type_fu")
+  values <- c(values, if (is.null(biopt_inf_antibiotic_type_fu)) "NULL" else if (is(biopt_inf_antibiotic_type_fu, "subQuery")) paste0("(", as.character(biopt_inf_antibiotic_type_fu), ")") else paste0("'", as.character(biopt_inf_antibiotic_type_fu), "'"))
 
   if (missing(biopt_inf_hospitalisation_fu)) {
     biopt_inf_hospitalisation_fu <- defaults$biopt_inf_hospitalisation_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_inf_hospitalisation_fu')
   }
-  if (!is.null(biopt_inf_hospitalisation_fu)) {
-    fields <- c(fields, "biopt_inf_hospitalisation_fu")
-    values <- c(values, if (is.null(biopt_inf_hospitalisation_fu)) "NULL" else if (is(biopt_inf_hospitalisation_fu, "subQuery")) paste0("(", as.character(biopt_inf_hospitalisation_fu), ")") else paste0("'", as.character(biopt_inf_hospitalisation_fu), "'"))
-  }
+  fields <- c(fields, "biopt_inf_hospitalisation_fu")
+  values <- c(values, if (is.null(biopt_inf_hospitalisation_fu)) "NULL" else if (is(biopt_inf_hospitalisation_fu, "subQuery")) paste0("(", as.character(biopt_inf_hospitalisation_fu), ")") else paste0("'", as.character(biopt_inf_hospitalisation_fu), "'"))
 
   if (missing(biopt_inf_hospitalisation_days_fu)) {
     biopt_inf_hospitalisation_days_fu <- defaults$biopt_inf_hospitalisation_days_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_inf_hospitalisation_days_fu')
   }
-  if (!is.null(biopt_inf_hospitalisation_days_fu)) {
-    fields <- c(fields, "biopt_inf_hospitalisation_days_fu")
-    values <- c(values, if (is.null(biopt_inf_hospitalisation_days_fu)) "NULL" else if (is(biopt_inf_hospitalisation_days_fu, "subQuery")) paste0("(", as.character(biopt_inf_hospitalisation_days_fu), ")") else paste0("'", as.character(biopt_inf_hospitalisation_days_fu), "'"))
-  }
+  fields <- c(fields, "biopt_inf_hospitalisation_days_fu")
+  values <- c(values, if (is.null(biopt_inf_hospitalisation_days_fu)) "NULL" else if (is(biopt_inf_hospitalisation_days_fu, "subQuery")) paste0("(", as.character(biopt_inf_hospitalisation_days_fu), ")") else paste0("'", as.character(biopt_inf_hospitalisation_days_fu), "'"))
 
   if (missing(biopt_inf_outcome_fu)) {
     biopt_inf_outcome_fu <- defaults$biopt_inf_outcome_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_inf_outcome_fu')
   }
-  if (!is.null(biopt_inf_outcome_fu)) {
-    fields <- c(fields, "biopt_inf_outcome_fu")
-    values <- c(values, if (is.null(biopt_inf_outcome_fu)) "NULL" else if (is(biopt_inf_outcome_fu, "subQuery")) paste0("(", as.character(biopt_inf_outcome_fu), ")") else paste0("'", as.character(biopt_inf_outcome_fu), "'"))
-  }
+  fields <- c(fields, "biopt_inf_outcome_fu")
+  values <- c(values, if (is.null(biopt_inf_outcome_fu)) "NULL" else if (is(biopt_inf_outcome_fu, "subQuery")) paste0("(", as.character(biopt_inf_outcome_fu), ")") else paste0("'", as.character(biopt_inf_outcome_fu), "'"))
 
   if (missing(biopt_hematuria_fu)) {
     biopt_hematuria_fu <- defaults$biopt_hematuria_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_hematuria_fu')
   }
-  if (!is.null(biopt_hematuria_fu)) {
-    fields <- c(fields, "biopt_hematuria_fu")
-    values <- c(values, if (is.null(biopt_hematuria_fu)) "NULL" else if (is(biopt_hematuria_fu, "subQuery")) paste0("(", as.character(biopt_hematuria_fu), ")") else paste0("'", as.character(biopt_hematuria_fu), "'"))
-  }
+  fields <- c(fields, "biopt_hematuria_fu")
+  values <- c(values, if (is.null(biopt_hematuria_fu)) "NULL" else if (is(biopt_hematuria_fu, "subQuery")) paste0("(", as.character(biopt_hematuria_fu), ")") else paste0("'", as.character(biopt_hematuria_fu), "'"))
 
   if (missing(biopt_hemospermia_fu)) {
     biopt_hemospermia_fu <- defaults$biopt_hemospermia_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_hemospermia_fu')
   }
-  if (!is.null(biopt_hemospermia_fu)) {
-    fields <- c(fields, "biopt_hemospermia_fu")
-    values <- c(values, if (is.null(biopt_hemospermia_fu)) "NULL" else if (is(biopt_hemospermia_fu, "subQuery")) paste0("(", as.character(biopt_hemospermia_fu), ")") else paste0("'", as.character(biopt_hemospermia_fu), "'"))
-  }
+  fields <- c(fields, "biopt_hemospermia_fu")
+  values <- c(values, if (is.null(biopt_hemospermia_fu)) "NULL" else if (is(biopt_hemospermia_fu, "subQuery")) paste0("(", as.character(biopt_hemospermia_fu), ")") else paste0("'", as.character(biopt_hemospermia_fu), "'"))
 
   if (missing(biopt_pain_fu)) {
     biopt_pain_fu <- defaults$biopt_pain_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_pain_fu')
   }
-  if (!is.null(biopt_pain_fu)) {
-    fields <- c(fields, "biopt_pain_fu")
-    values <- c(values, if (is.null(biopt_pain_fu)) "NULL" else if (is(biopt_pain_fu, "subQuery")) paste0("(", as.character(biopt_pain_fu), ")") else paste0("'", as.character(biopt_pain_fu), "'"))
-  }
+  fields <- c(fields, "biopt_pain_fu")
+  values <- c(values, if (is.null(biopt_pain_fu)) "NULL" else if (is(biopt_pain_fu, "subQuery")) paste0("(", as.character(biopt_pain_fu), ")") else paste0("'", as.character(biopt_pain_fu), "'"))
 
   if (missing(biopt_route_fu)) {
     biopt_route_fu <- defaults$biopt_route_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_route_fu')
   }
-  if (!is.null(biopt_route_fu)) {
-    fields <- c(fields, "biopt_route_fu")
-    values <- c(values, if (is.null(biopt_route_fu)) "NULL" else if (is(biopt_route_fu, "subQuery")) paste0("(", as.character(biopt_route_fu), ")") else paste0("'", as.character(biopt_route_fu), "'"))
-  }
+  fields <- c(fields, "biopt_route_fu")
+  values <- c(values, if (is.null(biopt_route_fu)) "NULL" else if (is(biopt_route_fu, "subQuery")) paste0("(", as.character(biopt_route_fu), ")") else paste0("'", as.character(biopt_route_fu), "'"))
 
   if (missing(biopt_max_cancer_score_lenght_fu)) {
     biopt_max_cancer_score_lenght_fu <- defaults$biopt_max_cancer_score_lenght_fu
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.biopt_max_cancer_score_lenght_fu')
   }
-  if (!is.null(biopt_max_cancer_score_lenght_fu)) {
-    fields <- c(fields, "biopt_max_cancer_score_lenght_fu")
-    values <- c(values, if (is.null(biopt_max_cancer_score_lenght_fu)) "NULL" else if (is(biopt_max_cancer_score_lenght_fu, "subQuery")) paste0("(", as.character(biopt_max_cancer_score_lenght_fu), ")") else paste0("'", as.character(biopt_max_cancer_score_lenght_fu), "'"))
-  }
+  fields <- c(fields, "biopt_max_cancer_score_lenght_fu")
+  values <- c(values, if (is.null(biopt_max_cancer_score_lenght_fu)) "NULL" else if (is(biopt_max_cancer_score_lenght_fu, "subQuery")) paste0("(", as.character(biopt_max_cancer_score_lenght_fu), ")") else paste0("'", as.character(biopt_max_cancer_score_lenght_fu), "'"))
 
   if (missing(mri_taken)) {
     mri_taken <- defaults$mri_taken
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_taken')
   }
-  if (!is.null(mri_taken)) {
-    fields <- c(fields, "mri_taken")
-    values <- c(values, if (is.null(mri_taken)) "NULL" else if (is(mri_taken, "subQuery")) paste0("(", as.character(mri_taken), ")") else paste0("'", as.character(mri_taken), "'"))
-  }
+  fields <- c(fields, "mri_taken")
+  values <- c(values, if (is.null(mri_taken)) "NULL" else if (is(mri_taken, "subQuery")) paste0("(", as.character(mri_taken), ")") else paste0("'", as.character(mri_taken), "'"))
 
   if (missing(mri_lesions)) {
     mri_lesions <- defaults$mri_lesions
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_lesions')
   }
-  if (!is.null(mri_lesions)) {
-    fields <- c(fields, "mri_lesions")
-    values <- c(values, if (is.null(mri_lesions)) "NULL" else if (is(mri_lesions, "subQuery")) paste0("(", as.character(mri_lesions), ")") else paste0("'", as.character(mri_lesions), "'"))
-  }
+  fields <- c(fields, "mri_lesions")
+  values <- c(values, if (is.null(mri_lesions)) "NULL" else if (is(mri_lesions, "subQuery")) paste0("(", as.character(mri_lesions), ")") else paste0("'", as.character(mri_lesions), "'"))
 
   if (missing(mri_suspected_number)) {
     mri_suspected_number <- defaults$mri_suspected_number
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_suspected_number')
   }
-  if (!is.null(mri_suspected_number)) {
-    fields <- c(fields, "mri_suspected_number")
-    values <- c(values, if (is.null(mri_suspected_number)) "NULL" else if (is(mri_suspected_number, "subQuery")) paste0("(", as.character(mri_suspected_number), ")") else paste0("'", as.character(mri_suspected_number), "'"))
-  }
+  fields <- c(fields, "mri_suspected_number")
+  values <- c(values, if (is.null(mri_suspected_number)) "NULL" else if (is(mri_suspected_number, "subQuery")) paste0("(", as.character(mri_suspected_number), ")") else paste0("'", as.character(mri_suspected_number), "'"))
 
   if (missing(mri_pirads_1)) {
     mri_pirads_1 <- defaults$mri_pirads_1
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_pirads_1')
   }
-  if (!is.null(mri_pirads_1)) {
-    fields <- c(fields, "mri_pirads_1")
-    values <- c(values, if (is.null(mri_pirads_1)) "NULL" else if (is(mri_pirads_1, "subQuery")) paste0("(", as.character(mri_pirads_1), ")") else paste0("'", as.character(mri_pirads_1), "'"))
-  }
+  fields <- c(fields, "mri_pirads_1")
+  values <- c(values, if (is.null(mri_pirads_1)) "NULL" else if (is(mri_pirads_1, "subQuery")) paste0("(", as.character(mri_pirads_1), ")") else paste0("'", as.character(mri_pirads_1), "'"))
 
   if (missing(mri_largest_dia_1)) {
     mri_largest_dia_1 <- defaults$mri_largest_dia_1
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_largest_dia_1')
   }
-  if (!is.null(mri_largest_dia_1)) {
-    fields <- c(fields, "mri_largest_dia_1")
-    values <- c(values, if (is.null(mri_largest_dia_1)) "NULL" else if (is(mri_largest_dia_1, "subQuery")) paste0("(", as.character(mri_largest_dia_1), ")") else paste0("'", as.character(mri_largest_dia_1), "'"))
-  }
+  fields <- c(fields, "mri_largest_dia_1")
+  values <- c(values, if (is.null(mri_largest_dia_1)) "NULL" else if (is(mri_largest_dia_1, "subQuery")) paste0("(", as.character(mri_largest_dia_1), ")") else paste0("'", as.character(mri_largest_dia_1), "'"))
 
   if (missing(mri_location_1)) {
     mri_location_1 <- defaults$mri_location_1
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_location_1')
   }
-  if (!is.null(mri_location_1)) {
-    fields <- c(fields, "mri_location_1")
-    values <- c(values, if (is.null(mri_location_1)) "NULL" else if (is(mri_location_1, "subQuery")) paste0("(", as.character(mri_location_1), ")") else paste0("'", as.character(mri_location_1), "'"))
-  }
+  fields <- c(fields, "mri_location_1")
+  values <- c(values, if (is.null(mri_location_1)) "NULL" else if (is(mri_location_1, "subQuery")) paste0("(", as.character(mri_location_1), ")") else paste0("'", as.character(mri_location_1), "'"))
 
   if (missing(mri_location_free_1)) {
     mri_location_free_1 <- defaults$mri_location_free_1
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_location_free_1')
   }
-  if (!is.null(mri_location_free_1)) {
-    fields <- c(fields, "mri_location_free_1")
-    values <- c(values, if (is.null(mri_location_free_1)) "NULL" else if (is(mri_location_free_1, "subQuery")) paste0("(", as.character(mri_location_free_1), ")") else paste0("'", as.character(mri_location_free_1), "'"))
-  }
+  fields <- c(fields, "mri_location_free_1")
+  values <- c(values, if (is.null(mri_location_free_1)) "NULL" else if (is(mri_location_free_1, "subQuery")) paste0("(", as.character(mri_location_free_1), ")") else paste0("'", as.character(mri_location_free_1), "'"))
 
   if (missing(mri_pirads_2)) {
     mri_pirads_2 <- defaults$mri_pirads_2
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_pirads_2')
   }
-  if (!is.null(mri_pirads_2)) {
-    fields <- c(fields, "mri_pirads_2")
-    values <- c(values, if (is.null(mri_pirads_2)) "NULL" else if (is(mri_pirads_2, "subQuery")) paste0("(", as.character(mri_pirads_2), ")") else paste0("'", as.character(mri_pirads_2), "'"))
-  }
+  fields <- c(fields, "mri_pirads_2")
+  values <- c(values, if (is.null(mri_pirads_2)) "NULL" else if (is(mri_pirads_2, "subQuery")) paste0("(", as.character(mri_pirads_2), ")") else paste0("'", as.character(mri_pirads_2), "'"))
 
   if (missing(mri_largest_dia_2)) {
     mri_largest_dia_2 <- defaults$mri_largest_dia_2
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_largest_dia_2')
   }
-  if (!is.null(mri_largest_dia_2)) {
-    fields <- c(fields, "mri_largest_dia_2")
-    values <- c(values, if (is.null(mri_largest_dia_2)) "NULL" else if (is(mri_largest_dia_2, "subQuery")) paste0("(", as.character(mri_largest_dia_2), ")") else paste0("'", as.character(mri_largest_dia_2), "'"))
-  }
+  fields <- c(fields, "mri_largest_dia_2")
+  values <- c(values, if (is.null(mri_largest_dia_2)) "NULL" else if (is(mri_largest_dia_2, "subQuery")) paste0("(", as.character(mri_largest_dia_2), ")") else paste0("'", as.character(mri_largest_dia_2), "'"))
 
   if (missing(mri_location_2)) {
     mri_location_2 <- defaults$mri_location_2
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_location_2')
   }
-  if (!is.null(mri_location_2)) {
-    fields <- c(fields, "mri_location_2")
-    values <- c(values, if (is.null(mri_location_2)) "NULL" else if (is(mri_location_2, "subQuery")) paste0("(", as.character(mri_location_2), ")") else paste0("'", as.character(mri_location_2), "'"))
-  }
+  fields <- c(fields, "mri_location_2")
+  values <- c(values, if (is.null(mri_location_2)) "NULL" else if (is(mri_location_2, "subQuery")) paste0("(", as.character(mri_location_2), ")") else paste0("'", as.character(mri_location_2), "'"))
 
   if (missing(mri_location_free_2)) {
     mri_location_free_2 <- defaults$mri_location_free_2
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_location_free_2')
   }
-  if (!is.null(mri_location_free_2)) {
-    fields <- c(fields, "mri_location_free_2")
-    values <- c(values, if (is.null(mri_location_free_2)) "NULL" else if (is(mri_location_free_2, "subQuery")) paste0("(", as.character(mri_location_free_2), ")") else paste0("'", as.character(mri_location_free_2), "'"))
-  }
+  fields <- c(fields, "mri_location_free_2")
+  values <- c(values, if (is.null(mri_location_free_2)) "NULL" else if (is(mri_location_free_2, "subQuery")) paste0("(", as.character(mri_location_free_2), ")") else paste0("'", as.character(mri_location_free_2), "'"))
 
   if (missing(mri_pirads_3)) {
     mri_pirads_3 <- defaults$mri_pirads_3
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_pirads_3')
   }
-  if (!is.null(mri_pirads_3)) {
-    fields <- c(fields, "mri_pirads_3")
-    values <- c(values, if (is.null(mri_pirads_3)) "NULL" else if (is(mri_pirads_3, "subQuery")) paste0("(", as.character(mri_pirads_3), ")") else paste0("'", as.character(mri_pirads_3), "'"))
-  }
+  fields <- c(fields, "mri_pirads_3")
+  values <- c(values, if (is.null(mri_pirads_3)) "NULL" else if (is(mri_pirads_3, "subQuery")) paste0("(", as.character(mri_pirads_3), ")") else paste0("'", as.character(mri_pirads_3), "'"))
 
   if (missing(mri_largest_dia_3)) {
     mri_largest_dia_3 <- defaults$mri_largest_dia_3
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_largest_dia_3')
   }
-  if (!is.null(mri_largest_dia_3)) {
-    fields <- c(fields, "mri_largest_dia_3")
-    values <- c(values, if (is.null(mri_largest_dia_3)) "NULL" else if (is(mri_largest_dia_3, "subQuery")) paste0("(", as.character(mri_largest_dia_3), ")") else paste0("'", as.character(mri_largest_dia_3), "'"))
-  }
+  fields <- c(fields, "mri_largest_dia_3")
+  values <- c(values, if (is.null(mri_largest_dia_3)) "NULL" else if (is(mri_largest_dia_3, "subQuery")) paste0("(", as.character(mri_largest_dia_3), ")") else paste0("'", as.character(mri_largest_dia_3), "'"))
 
   if (missing(mri_location_3)) {
     mri_location_3 <- defaults$mri_location_3
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_location_3')
   }
-  if (!is.null(mri_location_3)) {
-    fields <- c(fields, "mri_location_3")
-    values <- c(values, if (is.null(mri_location_3)) "NULL" else if (is(mri_location_3, "subQuery")) paste0("(", as.character(mri_location_3), ")") else paste0("'", as.character(mri_location_3), "'"))
-  }
+  fields <- c(fields, "mri_location_3")
+  values <- c(values, if (is.null(mri_location_3)) "NULL" else if (is(mri_location_3, "subQuery")) paste0("(", as.character(mri_location_3), ")") else paste0("'", as.character(mri_location_3), "'"))
 
   if (missing(mri_location_free_3)) {
     mri_location_free_3 <- defaults$mri_location_free_3
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_location_free_3')
   }
-  if (!is.null(mri_location_free_3)) {
-    fields <- c(fields, "mri_location_free_3")
-    values <- c(values, if (is.null(mri_location_free_3)) "NULL" else if (is(mri_location_free_3, "subQuery")) paste0("(", as.character(mri_location_free_3), ")") else paste0("'", as.character(mri_location_free_3), "'"))
-  }
+  fields <- c(fields, "mri_location_free_3")
+  values <- c(values, if (is.null(mri_location_free_3)) "NULL" else if (is(mri_location_free_3, "subQuery")) paste0("(", as.character(mri_location_free_3), ")") else paste0("'", as.character(mri_location_free_3), "'"))
 
   if (missing(mri_progrssion_lesions)) {
     mri_progrssion_lesions <- defaults$mri_progrssion_lesions
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_progrssion_lesions')
   }
-  if (!is.null(mri_progrssion_lesions)) {
-    fields <- c(fields, "mri_progrssion_lesions")
-    values <- c(values, if (is.null(mri_progrssion_lesions)) "NULL" else if (is(mri_progrssion_lesions, "subQuery")) paste0("(", as.character(mri_progrssion_lesions), ")") else paste0("'", as.character(mri_progrssion_lesions), "'"))
-  }
+  fields <- c(fields, "mri_progrssion_lesions")
+  values <- c(values, if (is.null(mri_progrssion_lesions)) "NULL" else if (is(mri_progrssion_lesions, "subQuery")) paste0("(", as.character(mri_progrssion_lesions), ")") else paste0("'", as.character(mri_progrssion_lesions), "'"))
 
   if (missing(mri_targeted_biopsy)) {
     mri_targeted_biopsy <- defaults$mri_targeted_biopsy
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_targeted_biopsy')
   }
-  if (!is.null(mri_targeted_biopsy)) {
-    fields <- c(fields, "mri_targeted_biopsy")
-    values <- c(values, if (is.null(mri_targeted_biopsy)) "NULL" else if (is(mri_targeted_biopsy, "subQuery")) paste0("(", as.character(mri_targeted_biopsy), ")") else paste0("'", as.character(mri_targeted_biopsy), "'"))
-  }
+  fields <- c(fields, "mri_targeted_biopsy")
+  values <- c(values, if (is.null(mri_targeted_biopsy)) "NULL" else if (is(mri_targeted_biopsy, "subQuery")) paste0("(", as.character(mri_targeted_biopsy), ")") else paste0("'", as.character(mri_targeted_biopsy), "'"))
 
   if (missing(mri_targeted_cores)) {
     mri_targeted_cores <- defaults$mri_targeted_cores
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_targeted_cores')
   }
-  if (!is.null(mri_targeted_cores)) {
-    fields <- c(fields, "mri_targeted_cores")
-    values <- c(values, if (is.null(mri_targeted_cores)) "NULL" else if (is(mri_targeted_cores, "subQuery")) paste0("(", as.character(mri_targeted_cores), ")") else paste0("'", as.character(mri_targeted_cores), "'"))
-  }
+  fields <- c(fields, "mri_targeted_cores")
+  values <- c(values, if (is.null(mri_targeted_cores)) "NULL" else if (is(mri_targeted_cores, "subQuery")) paste0("(", as.character(mri_targeted_cores), ")") else paste0("'", as.character(mri_targeted_cores), "'"))
 
   if (missing(mri_targeted_taken)) {
     mri_targeted_taken <- defaults$mri_targeted_taken
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_targeted_taken')
   }
-  if (!is.null(mri_targeted_taken)) {
-    fields <- c(fields, "mri_targeted_taken")
-    values <- c(values, if (is.null(mri_targeted_taken)) "NULL" else if (is(mri_targeted_taken, "subQuery")) paste0("(", as.character(mri_targeted_taken), ")") else paste0("'", as.character(mri_targeted_taken), "'"))
-  }
+  fields <- c(fields, "mri_targeted_taken")
+  values <- c(values, if (is.null(mri_targeted_taken)) "NULL" else if (is(mri_targeted_taken, "subQuery")) paste0("(", as.character(mri_targeted_taken), ")") else paste0("'", as.character(mri_targeted_taken), "'"))
 
   if (missing(mri_targeted_gleason1)) {
     mri_targeted_gleason1 <- defaults$mri_targeted_gleason1
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_targeted_gleason1')
   }
-  if (!is.null(mri_targeted_gleason1)) {
-    fields <- c(fields, "mri_targeted_gleason1")
-    values <- c(values, if (is.null(mri_targeted_gleason1)) "NULL" else if (is(mri_targeted_gleason1, "subQuery")) paste0("(", as.character(mri_targeted_gleason1), ")") else paste0("'", as.character(mri_targeted_gleason1), "'"))
-  }
+  fields <- c(fields, "mri_targeted_gleason1")
+  values <- c(values, if (is.null(mri_targeted_gleason1)) "NULL" else if (is(mri_targeted_gleason1, "subQuery")) paste0("(", as.character(mri_targeted_gleason1), ")") else paste0("'", as.character(mri_targeted_gleason1), "'"))
 
   if (missing(mri_lesion_positive)) {
     mri_lesion_positive <- defaults$mri_lesion_positive
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_lesion_positive')
   }
-  if (!is.null(mri_lesion_positive)) {
-    fields <- c(fields, "mri_lesion_positive")
-    values <- c(values, if (is.null(mri_lesion_positive)) "NULL" else if (is(mri_lesion_positive, "subQuery")) paste0("(", as.character(mri_lesion_positive), ")") else paste0("'", as.character(mri_lesion_positive), "'"))
-  }
+  fields <- c(fields, "mri_lesion_positive")
+  values <- c(values, if (is.null(mri_lesion_positive)) "NULL" else if (is(mri_lesion_positive, "subQuery")) paste0("(", as.character(mri_lesion_positive), ")") else paste0("'", as.character(mri_lesion_positive), "'"))
 
   if (missing(mri_method_used)) {
     mri_method_used <- defaults$mri_method_used
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_method_used')
   }
-  if (!is.null(mri_method_used)) {
-    fields <- c(fields, "mri_method_used")
-    values <- c(values, if (is.null(mri_method_used)) "NULL" else if (is(mri_method_used, "subQuery")) paste0("(", as.character(mri_method_used), ")") else paste0("'", as.character(mri_method_used), "'"))
-  }
+  fields <- c(fields, "mri_method_used")
+  values <- c(values, if (is.null(mri_method_used)) "NULL" else if (is(mri_method_used, "subQuery")) paste0("(", as.character(mri_method_used), ")") else paste0("'", as.character(mri_method_used), "'"))
 
   if (missing(mri_prostate_volume)) {
     mri_prostate_volume <- defaults$mri_prostate_volume
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_prostate_volume')
   }
-  if (!is.null(mri_prostate_volume)) {
-    fields <- c(fields, "mri_prostate_volume")
-    values <- c(values, if (is.null(mri_prostate_volume)) "NULL" else if (is(mri_prostate_volume, "subQuery")) paste0("(", as.character(mri_prostate_volume), ")") else paste0("'", as.character(mri_prostate_volume), "'"))
-  }
+  fields <- c(fields, "mri_prostate_volume")
+  values <- c(values, if (is.null(mri_prostate_volume)) "NULL" else if (is(mri_prostate_volume, "subQuery")) paste0("(", as.character(mri_prostate_volume), ")") else paste0("'", as.character(mri_prostate_volume), "'"))
 
   if (missing(mri_prostate_volume_method)) {
     mri_prostate_volume_method <- defaults$mri_prostate_volume_method
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_prostate_volume_method')
   }
-  if (!is.null(mri_prostate_volume_method)) {
-    fields <- c(fields, "mri_prostate_volume_method")
-    values <- c(values, if (is.null(mri_prostate_volume_method)) "NULL" else if (is(mri_prostate_volume_method, "subQuery")) paste0("(", as.character(mri_prostate_volume_method), ")") else paste0("'", as.character(mri_prostate_volume_method), "'"))
-  }
+  fields <- c(fields, "mri_prostate_volume_method")
+  values <- c(values, if (is.null(mri_prostate_volume_method)) "NULL" else if (is(mri_prostate_volume_method, "subQuery")) paste0("(", as.character(mri_prostate_volume_method), ")") else paste0("'", as.character(mri_prostate_volume_method), "'"))
 
   if (missing(year_visit)) {
     year_visit <- defaults$year_visit
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.year_visit')
   }
-  if (!is.null(year_visit)) {
-    fields <- c(fields, "year_visit")
-    values <- c(values, if (is.null(year_visit)) "NULL" else if (is(year_visit, "subQuery")) paste0("(", as.character(year_visit), ")") else paste0("'", as.character(year_visit), "'"))
-  }
+  fields <- c(fields, "year_visit")
+  values <- c(values, if (is.null(year_visit)) "NULL" else if (is(year_visit, "subQuery")) paste0("(", as.character(year_visit), ")") else paste0("'", as.character(year_visit), "'"))
 
   if (missing(days_psa_diag)) {
     days_psa_diag <- defaults$days_psa_diag
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.days_psa_diag')
   }
-  if (!is.null(days_psa_diag)) {
-    fields <- c(fields, "days_psa_diag")
-    values <- c(values, if (is.null(days_psa_diag)) "NULL" else if (is(days_psa_diag, "subQuery")) paste0("(", as.character(days_psa_diag), ")") else paste0("'", as.character(days_psa_diag), "'"))
-  }
+  fields <- c(fields, "days_psa_diag")
+  values <- c(values, if (is.null(days_psa_diag)) "NULL" else if (is(days_psa_diag, "subQuery")) paste0("(", as.character(days_psa_diag), ")") else paste0("'", as.character(days_psa_diag), "'"))
 
   inserts <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, table = "fulong", fields = fields, values = values)
   frameworkContext$inserts[[length(frameworkContext$inserts) + 1]] <- inserts
@@ -2081,200 +1756,160 @@ add_enddata <- function(p_id, nr_fuvisits, discontinued, days_discontinued_diagn
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.p_id')
   }
-  if (!is.null(p_id)) {
-    fields <- c(fields, "p_id")
-    values <- c(values, if (is.null(p_id)) "NULL" else if (is(p_id, "subQuery")) paste0("(", as.character(p_id), ")") else paste0("'", as.character(p_id), "'"))
-  }
+  fields <- c(fields, "p_id")
+  values <- c(values, if (is.null(p_id)) "NULL" else if (is(p_id, "subQuery")) paste0("(", as.character(p_id), ")") else paste0("'", as.character(p_id), "'"))
 
   if (missing(nr_fuvisits)) {
     nr_fuvisits <- defaults$nr_fuvisits
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.nr_fuvisits')
   }
-  if (!is.null(nr_fuvisits)) {
-    fields <- c(fields, "nr_fuvisits")
-    values <- c(values, if (is.null(nr_fuvisits)) "NULL" else if (is(nr_fuvisits, "subQuery")) paste0("(", as.character(nr_fuvisits), ")") else paste0("'", as.character(nr_fuvisits), "'"))
-  }
+  fields <- c(fields, "nr_fuvisits")
+  values <- c(values, if (is.null(nr_fuvisits)) "NULL" else if (is(nr_fuvisits, "subQuery")) paste0("(", as.character(nr_fuvisits), ")") else paste0("'", as.character(nr_fuvisits), "'"))
 
   if (missing(discontinued)) {
     discontinued <- defaults$discontinued
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.discontinued')
   }
-  if (!is.null(discontinued)) {
-    fields <- c(fields, "discontinued")
-    values <- c(values, if (is.null(discontinued)) "NULL" else if (is(discontinued, "subQuery")) paste0("(", as.character(discontinued), ")") else paste0("'", as.character(discontinued), "'"))
-  }
+  fields <- c(fields, "discontinued")
+  values <- c(values, if (is.null(discontinued)) "NULL" else if (is(discontinued, "subQuery")) paste0("(", as.character(discontinued), ")") else paste0("'", as.character(discontinued), "'"))
 
   if (missing(days_discontinued_diagnosis)) {
     days_discontinued_diagnosis <- defaults$days_discontinued_diagnosis
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.days_discontinued_diagnosis')
   }
-  if (!is.null(days_discontinued_diagnosis)) {
-    fields <- c(fields, "days_discontinued_diagnosis")
-    values <- c(values, if (is.null(days_discontinued_diagnosis)) "NULL" else if (is(days_discontinued_diagnosis, "subQuery")) paste0("(", as.character(days_discontinued_diagnosis), ")") else paste0("'", as.character(days_discontinued_diagnosis), "'"))
-  }
+  fields <- c(fields, "days_discontinued_diagnosis")
+  values <- c(values, if (is.null(days_discontinued_diagnosis)) "NULL" else if (is(days_discontinued_diagnosis, "subQuery")) paste0("(", as.character(days_discontinued_diagnosis), ")") else paste0("'", as.character(days_discontinued_diagnosis), "'"))
 
   if (missing(reason_treatment)) {
     reason_treatment <- defaults$reason_treatment
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.reason_treatment')
   }
-  if (!is.null(reason_treatment)) {
-    fields <- c(fields, "reason_treatment")
-    values <- c(values, if (is.null(reason_treatment)) "NULL" else if (is(reason_treatment, "subQuery")) paste0("(", as.character(reason_treatment), ")") else paste0("'", as.character(reason_treatment), "'"))
-  }
+  fields <- c(fields, "reason_treatment")
+  values <- c(values, if (is.null(reason_treatment)) "NULL" else if (is(reason_treatment, "subQuery")) paste0("(", as.character(reason_treatment), ")") else paste0("'", as.character(reason_treatment), "'"))
 
   if (missing(days_surgery_diagnosis)) {
     days_surgery_diagnosis <- defaults$days_surgery_diagnosis
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.days_surgery_diagnosis')
   }
-  if (!is.null(days_surgery_diagnosis)) {
-    fields <- c(fields, "days_surgery_diagnosis")
-    values <- c(values, if (is.null(days_surgery_diagnosis)) "NULL" else if (is(days_surgery_diagnosis, "subQuery")) paste0("(", as.character(days_surgery_diagnosis), ")") else paste0("'", as.character(days_surgery_diagnosis), "'"))
-  }
+  fields <- c(fields, "days_surgery_diagnosis")
+  values <- c(values, if (is.null(days_surgery_diagnosis)) "NULL" else if (is(days_surgery_diagnosis, "subQuery")) paste0("(", as.character(days_surgery_diagnosis), ")") else paste0("'", as.character(days_surgery_diagnosis), "'"))
 
   if (missing(pt)) {
     pt <- defaults$pt
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.pt')
   }
-  if (!is.null(pt)) {
-    fields <- c(fields, "pt")
-    values <- c(values, if (is.null(pt)) "NULL" else if (is(pt, "subQuery")) paste0("(", as.character(pt), ")") else paste0("'", as.character(pt), "'"))
-  }
+  fields <- c(fields, "pt")
+  values <- c(values, if (is.null(pt)) "NULL" else if (is(pt, "subQuery")) paste0("(", as.character(pt), ")") else paste0("'", as.character(pt), "'"))
 
   if (missing(pn)) {
     pn <- defaults$pn
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.pn')
   }
-  if (!is.null(pn)) {
-    fields <- c(fields, "pn")
-    values <- c(values, if (is.null(pn)) "NULL" else if (is(pn, "subQuery")) paste0("(", as.character(pn), ")") else paste0("'", as.character(pn), "'"))
-  }
+  fields <- c(fields, "pn")
+  values <- c(values, if (is.null(pn)) "NULL" else if (is(pn, "subQuery")) paste0("(", as.character(pn), ")") else paste0("'", as.character(pn), "'"))
 
   if (missing(pm)) {
     pm <- defaults$pm
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.pm')
   }
-  if (!is.null(pm)) {
-    fields <- c(fields, "pm")
-    values <- c(values, if (is.null(pm)) "NULL" else if (is(pm, "subQuery")) paste0("(", as.character(pm), ")") else paste0("'", as.character(pm), "'"))
-  }
+  fields <- c(fields, "pm")
+  values <- c(values, if (is.null(pm)) "NULL" else if (is(pm, "subQuery")) paste0("(", as.character(pm), ")") else paste0("'", as.character(pm), "'"))
 
   if (missing(gleason1_rad_prost)) {
     gleason1_rad_prost <- defaults$gleason1_rad_prost
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.gleason1_rad_prost')
   }
-  if (!is.null(gleason1_rad_prost)) {
-    fields <- c(fields, "gleason1_rad_prost")
-    values <- c(values, if (is.null(gleason1_rad_prost)) "NULL" else if (is(gleason1_rad_prost, "subQuery")) paste0("(", as.character(gleason1_rad_prost), ")") else paste0("'", as.character(gleason1_rad_prost), "'"))
-  }
+  fields <- c(fields, "gleason1_rad_prost")
+  values <- c(values, if (is.null(gleason1_rad_prost)) "NULL" else if (is(gleason1_rad_prost, "subQuery")) paste0("(", as.character(gleason1_rad_prost), ")") else paste0("'", as.character(gleason1_rad_prost), "'"))
 
   if (missing(gleason2_rad_prost)) {
     gleason2_rad_prost <- defaults$gleason2_rad_prost
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.gleason2_rad_prost')
   }
-  if (!is.null(gleason2_rad_prost)) {
-    fields <- c(fields, "gleason2_rad_prost")
-    values <- c(values, if (is.null(gleason2_rad_prost)) "NULL" else if (is(gleason2_rad_prost, "subQuery")) paste0("(", as.character(gleason2_rad_prost), ")") else paste0("'", as.character(gleason2_rad_prost), "'"))
-  }
+  fields <- c(fields, "gleason2_rad_prost")
+  values <- c(values, if (is.null(gleason2_rad_prost)) "NULL" else if (is(gleason2_rad_prost, "subQuery")) paste0("(", as.character(gleason2_rad_prost), ")") else paste0("'", as.character(gleason2_rad_prost), "'"))
 
   if (missing(prostatevolume)) {
     prostatevolume <- defaults$prostatevolume
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.prostatevolume')
   }
-  if (!is.null(prostatevolume)) {
-    fields <- c(fields, "prostatevolume")
-    values <- c(values, if (is.null(prostatevolume)) "NULL" else if (is(prostatevolume, "subQuery")) paste0("(", as.character(prostatevolume), ")") else paste0("'", as.character(prostatevolume), "'"))
-  }
+  fields <- c(fields, "prostatevolume")
+  values <- c(values, if (is.null(prostatevolume)) "NULL" else if (is(prostatevolume, "subQuery")) paste0("(", as.character(prostatevolume), ")") else paste0("'", as.character(prostatevolume), "'"))
 
   if (missing(tumorvolume)) {
     tumorvolume <- defaults$tumorvolume
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.tumorvolume')
   }
-  if (!is.null(tumorvolume)) {
-    fields <- c(fields, "tumorvolume")
-    values <- c(values, if (is.null(tumorvolume)) "NULL" else if (is(tumorvolume, "subQuery")) paste0("(", as.character(tumorvolume), ")") else paste0("'", as.character(tumorvolume), "'"))
-  }
+  fields <- c(fields, "tumorvolume")
+  values <- c(values, if (is.null(tumorvolume)) "NULL" else if (is(tumorvolume, "subQuery")) paste0("(", as.character(tumorvolume), ")") else paste0("'", as.character(tumorvolume), "'"))
 
   if (missing(ece)) {
     ece <- defaults$ece
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.ece')
   }
-  if (!is.null(ece)) {
-    fields <- c(fields, "ece")
-    values <- c(values, if (is.null(ece)) "NULL" else if (is(ece, "subQuery")) paste0("(", as.character(ece), ")") else paste0("'", as.character(ece), "'"))
-  }
+  fields <- c(fields, "ece")
+  values <- c(values, if (is.null(ece)) "NULL" else if (is(ece, "subQuery")) paste0("(", as.character(ece), ")") else paste0("'", as.character(ece), "'"))
 
   if (missing(svi)) {
     svi <- defaults$svi
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.svi')
   }
-  if (!is.null(svi)) {
-    fields <- c(fields, "svi")
-    values <- c(values, if (is.null(svi)) "NULL" else if (is(svi, "subQuery")) paste0("(", as.character(svi), ")") else paste0("'", as.character(svi), "'"))
-  }
+  fields <- c(fields, "svi")
+  values <- c(values, if (is.null(svi)) "NULL" else if (is(svi, "subQuery")) paste0("(", as.character(svi), ")") else paste0("'", as.character(svi), "'"))
 
   if (missing(pos_surgical_margins)) {
     pos_surgical_margins <- defaults$pos_surgical_margins
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.pos_surgical_margins')
   }
-  if (!is.null(pos_surgical_margins)) {
-    fields <- c(fields, "pos_surgical_margins")
-    values <- c(values, if (is.null(pos_surgical_margins)) "NULL" else if (is(pos_surgical_margins, "subQuery")) paste0("(", as.character(pos_surgical_margins), ")") else paste0("'", as.character(pos_surgical_margins), "'"))
-  }
+  fields <- c(fields, "pos_surgical_margins")
+  values <- c(values, if (is.null(pos_surgical_margins)) "NULL" else if (is(pos_surgical_margins, "subQuery")) paste0("(", as.character(pos_surgical_margins), ")") else paste0("'", as.character(pos_surgical_margins), "'"))
 
   if (missing(postoperative_psa)) {
     postoperative_psa <- defaults$postoperative_psa
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.postoperative_psa')
   }
-  if (!is.null(postoperative_psa)) {
-    fields <- c(fields, "postoperative_psa")
-    values <- c(values, if (is.null(postoperative_psa)) "NULL" else if (is(postoperative_psa, "subQuery")) paste0("(", as.character(postoperative_psa), ")") else paste0("'", as.character(postoperative_psa), "'"))
-  }
+  fields <- c(fields, "postoperative_psa")
+  values <- c(values, if (is.null(postoperative_psa)) "NULL" else if (is(postoperative_psa, "subQuery")) paste0("(", as.character(postoperative_psa), ")") else paste0("'", as.character(postoperative_psa), "'"))
 
   if (missing(pathology_reported)) {
     pathology_reported <- defaults$pathology_reported
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.pathology_reported')
   }
-  if (!is.null(pathology_reported)) {
-    fields <- c(fields, "pathology_reported")
-    values <- c(values, if (is.null(pathology_reported)) "NULL" else if (is(pathology_reported, "subQuery")) paste0("(", as.character(pathology_reported), ")") else paste0("'", as.character(pathology_reported), "'"))
-  }
+  fields <- c(fields, "pathology_reported")
+  values <- c(values, if (is.null(pathology_reported)) "NULL" else if (is(pathology_reported, "subQuery")) paste0("(", as.character(pathology_reported), ")") else paste0("'", as.character(pathology_reported), "'"))
 
   if (missing(adjuvant_radiotherapy)) {
     adjuvant_radiotherapy <- defaults$adjuvant_radiotherapy
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.adjuvant_radiotherapy')
   }
-  if (!is.null(adjuvant_radiotherapy)) {
-    fields <- c(fields, "adjuvant_radiotherapy")
-    values <- c(values, if (is.null(adjuvant_radiotherapy)) "NULL" else if (is(adjuvant_radiotherapy, "subQuery")) paste0("(", as.character(adjuvant_radiotherapy), ")") else paste0("'", as.character(adjuvant_radiotherapy), "'"))
-  }
+  fields <- c(fields, "adjuvant_radiotherapy")
+  values <- c(values, if (is.null(adjuvant_radiotherapy)) "NULL" else if (is(adjuvant_radiotherapy, "subQuery")) paste0("(", as.character(adjuvant_radiotherapy), ")") else paste0("'", as.character(adjuvant_radiotherapy), "'"))
 
   if (missing(year_discontinued)) {
     year_discontinued <- defaults$year_discontinued
   } else {
     frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'enddata.year_discontinued')
   }
-  if (!is.null(year_discontinued)) {
-    fields <- c(fields, "year_discontinued")
-    values <- c(values, if (is.null(year_discontinued)) "NULL" else if (is(year_discontinued, "subQuery")) paste0("(", as.character(year_discontinued), ")") else paste0("'", as.character(year_discontinued), "'"))
-  }
+  fields <- c(fields, "year_discontinued")
+  values <- c(values, if (is.null(year_discontinued)) "NULL" else if (is(year_discontinued, "subQuery")) paste0("(", as.character(year_discontinued), ")") else paste0("'", as.character(year_discontinued), "'"))
 
   inserts <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, table = "enddata", fields = fields, values = values)
   frameworkContext$inserts[[length(frameworkContext$inserts) + 1]] <- inserts
@@ -3585,7 +3220,7 @@ expect_specimen <- function(specimen_id, person_id, specimen_concept_id, specime
   invisible(NULL)
 }
 
-expect_visit_detail <- function(visit_detail_id, person_id, visit_concept_id, visit_start_date, visit_start_datetime, visit_end_date, visit_end_datetime, visit_type_concept_id, provider_id, care_site_id, visit_source_value, visit_source_concept_id, admitting_source_value, admitting_source_concept_id, admitted_from_source_value, admitted_from_concept_id, preceding_visit_detail_id, visit_detail_parent_id, visit_occurrence_id) {
+expect_visit_detail <- function(visit_detail_id, person_id, visit_detail_concept_id, visit_detail_start_date, visit_detail_start_datetime, visit_detail_end_date, visit_detail_end_datetime, visit_detail_type_concept_id, provider_id, care_site_id, visit_detail_source_value, visit_detail_source_concept_id, admitting_source_value, admitting_source_concept_id, admitted_from_source_value, admitted_from_concept_id, preceding_visit_detail_id, visit_detail_parent_id, visit_occurrence_id) {
   fields <- c()
   values <- c()
   if (!missing(visit_detail_id)) {
@@ -3600,40 +3235,40 @@ expect_visit_detail <- function(visit_detail_id, person_id, visit_concept_id, vi
     frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.person_id')
   }
 
-  if (!missing(visit_concept_id)) {
-    fields <- c(fields, "visit_concept_id")
-    values <- c(values, if (is.null(visit_concept_id)) "NULL" else if (is(visit_concept_id, "subQuery")) paste0("(", as.character(visit_concept_id), ")") else paste0("'", as.character(visit_concept_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_concept_id')
+  if (!missing(visit_detail_concept_id)) {
+    fields <- c(fields, "visit_detail_concept_id")
+    values <- c(values, if (is.null(visit_detail_concept_id)) "NULL" else if (is(visit_detail_concept_id, "subQuery")) paste0("(", as.character(visit_detail_concept_id), ")") else paste0("'", as.character(visit_detail_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_concept_id')
   }
 
-  if (!missing(visit_start_date)) {
-    fields <- c(fields, "visit_start_date")
-    values <- c(values, if (is.null(visit_start_date)) "NULL" else if (is(visit_start_date, "subQuery")) paste0("(", as.character(visit_start_date), ")") else paste0("'", as.character(visit_start_date), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_start_date')
+  if (!missing(visit_detail_start_date)) {
+    fields <- c(fields, "visit_detail_start_date")
+    values <- c(values, if (is.null(visit_detail_start_date)) "NULL" else if (is(visit_detail_start_date, "subQuery")) paste0("(", as.character(visit_detail_start_date), ")") else paste0("'", as.character(visit_detail_start_date), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_start_date')
   }
 
-  if (!missing(visit_start_datetime)) {
-    fields <- c(fields, "visit_start_datetime")
-    values <- c(values, if (is.null(visit_start_datetime)) "NULL" else if (is(visit_start_datetime, "subQuery")) paste0("(", as.character(visit_start_datetime), ")") else paste0("'", as.character(visit_start_datetime), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_start_datetime')
+  if (!missing(visit_detail_start_datetime)) {
+    fields <- c(fields, "visit_detail_start_datetime")
+    values <- c(values, if (is.null(visit_detail_start_datetime)) "NULL" else if (is(visit_detail_start_datetime, "subQuery")) paste0("(", as.character(visit_detail_start_datetime), ")") else paste0("'", as.character(visit_detail_start_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_start_datetime')
   }
 
-  if (!missing(visit_end_date)) {
-    fields <- c(fields, "visit_end_date")
-    values <- c(values, if (is.null(visit_end_date)) "NULL" else if (is(visit_end_date, "subQuery")) paste0("(", as.character(visit_end_date), ")") else paste0("'", as.character(visit_end_date), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_end_date')
+  if (!missing(visit_detail_end_date)) {
+    fields <- c(fields, "visit_detail_end_date")
+    values <- c(values, if (is.null(visit_detail_end_date)) "NULL" else if (is(visit_detail_end_date, "subQuery")) paste0("(", as.character(visit_detail_end_date), ")") else paste0("'", as.character(visit_detail_end_date), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_end_date')
   }
 
-  if (!missing(visit_end_datetime)) {
-    fields <- c(fields, "visit_end_datetime")
-    values <- c(values, if (is.null(visit_end_datetime)) "NULL" else if (is(visit_end_datetime, "subQuery")) paste0("(", as.character(visit_end_datetime), ")") else paste0("'", as.character(visit_end_datetime), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_end_datetime')
+  if (!missing(visit_detail_end_datetime)) {
+    fields <- c(fields, "visit_detail_end_datetime")
+    values <- c(values, if (is.null(visit_detail_end_datetime)) "NULL" else if (is(visit_detail_end_datetime, "subQuery")) paste0("(", as.character(visit_detail_end_datetime), ")") else paste0("'", as.character(visit_detail_end_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_end_datetime')
   }
 
-  if (!missing(visit_type_concept_id)) {
-    fields <- c(fields, "visit_type_concept_id")
-    values <- c(values, if (is.null(visit_type_concept_id)) "NULL" else if (is(visit_type_concept_id, "subQuery")) paste0("(", as.character(visit_type_concept_id), ")") else paste0("'", as.character(visit_type_concept_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_type_concept_id')
+  if (!missing(visit_detail_type_concept_id)) {
+    fields <- c(fields, "visit_detail_type_concept_id")
+    values <- c(values, if (is.null(visit_detail_type_concept_id)) "NULL" else if (is(visit_detail_type_concept_id, "subQuery")) paste0("(", as.character(visit_detail_type_concept_id), ")") else paste0("'", as.character(visit_detail_type_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_type_concept_id')
   }
 
   if (!missing(provider_id)) {
@@ -3648,16 +3283,16 @@ expect_visit_detail <- function(visit_detail_id, person_id, visit_concept_id, vi
     frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.care_site_id')
   }
 
-  if (!missing(visit_source_value)) {
-    fields <- c(fields, "visit_source_value")
-    values <- c(values, if (is.null(visit_source_value)) "NULL" else if (is(visit_source_value, "subQuery")) paste0("(", as.character(visit_source_value), ")") else paste0("'", as.character(visit_source_value), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_source_value')
+  if (!missing(visit_detail_source_value)) {
+    fields <- c(fields, "visit_detail_source_value")
+    values <- c(values, if (is.null(visit_detail_source_value)) "NULL" else if (is(visit_detail_source_value, "subQuery")) paste0("(", as.character(visit_detail_source_value), ")") else paste0("'", as.character(visit_detail_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_source_value')
   }
 
-  if (!missing(visit_source_concept_id)) {
-    fields <- c(fields, "visit_source_concept_id")
-    values <- c(values, if (is.null(visit_source_concept_id)) "NULL" else if (is(visit_source_concept_id, "subQuery")) paste0("(", as.character(visit_source_concept_id), ")") else paste0("'", as.character(visit_source_concept_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_source_concept_id')
+  if (!missing(visit_detail_source_concept_id)) {
+    fields <- c(fields, "visit_detail_source_concept_id")
+    values <- c(values, if (is.null(visit_detail_source_concept_id)) "NULL" else if (is(visit_detail_source_concept_id, "subQuery")) paste0("(", as.character(visit_detail_source_concept_id), ")") else paste0("'", as.character(visit_detail_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_source_concept_id')
   }
 
   if (!missing(admitting_source_value)) {
@@ -3999,7 +3634,7 @@ expect_cost <- function(cost_id, person_id, cost_event_id, cost_event_field_conc
   invisible(NULL)
 }
 
-expect_payer_plan_period <- function(payer_plan_period_id, person_id, contract_person_id, payer_plan_period_start_date, payer_plan_period_end_date, payer_concept_id, payer_source_value, payer_source_concept_id, plan_concept_id, plan_source_value, plan_source_concept_id, contract_person_id, contract_person_id, contract_person_id, sponsor_concept_id, sponsor_source_value, sponsor_source_concept_id*, family_source_value, stop_reason_concept_id, stop_reason_source_value, stop_reason_source_concept_id) {
+expect_payer_plan_period <- function(payer_plan_period_id, person_id, contract_person_id, payer_plan_period_start_date, payer_plan_period_end_date, payer_concept_id, payer_source_value, payer_source_concept_id, plan_concept_id, plan_source_value, plan_source_concept_id, contract_concept_id, contract_source_value, contract_source_concept_id, sponsor_concept_id, sponsor_source_value, sponsor_source_concept_id, family_source_value, stop_reason_concept_id, stop_reason_source_value, stop_reason_source_concept_id) {
   fields <- c()
   values <- c()
   if (!missing(payer_plan_period_id)) {
@@ -4068,22 +3703,22 @@ expect_payer_plan_period <- function(payer_plan_period_id, person_id, contract_p
     frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.plan_source_concept_id')
   }
 
-  if (!missing(contract_person_id)) {
-    fields <- c(fields, "contract_person_id")
-    values <- c(values, if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_person_id')
+  if (!missing(contract_concept_id)) {
+    fields <- c(fields, "contract_concept_id")
+    values <- c(values, if (is.null(contract_concept_id)) "NULL" else if (is(contract_concept_id, "subQuery")) paste0("(", as.character(contract_concept_id), ")") else paste0("'", as.character(contract_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_concept_id')
   }
 
-  if (!missing(contract_person_id)) {
-    fields <- c(fields, "contract_person_id")
-    values <- c(values, if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_person_id')
+  if (!missing(contract_source_value)) {
+    fields <- c(fields, "contract_source_value")
+    values <- c(values, if (is.null(contract_source_value)) "NULL" else if (is(contract_source_value, "subQuery")) paste0("(", as.character(contract_source_value), ")") else paste0("'", as.character(contract_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_source_value')
   }
 
-  if (!missing(contract_person_id)) {
-    fields <- c(fields, "contract_person_id")
-    values <- c(values, if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_person_id')
+  if (!missing(contract_source_concept_id)) {
+    fields <- c(fields, "contract_source_concept_id")
+    values <- c(values, if (is.null(contract_source_concept_id)) "NULL" else if (is(contract_source_concept_id, "subQuery")) paste0("(", as.character(contract_source_concept_id), ")") else paste0("'", as.character(contract_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_source_concept_id')
   }
 
   if (!missing(sponsor_concept_id)) {
@@ -4098,10 +3733,10 @@ expect_payer_plan_period <- function(payer_plan_period_id, person_id, contract_p
     frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.sponsor_source_value')
   }
 
-  if (!missing(sponsor_source_concept_id*)) {
-    fields <- c(fields, "sponsor_source_concept_id*")
-    values <- c(values, if (is.null(sponsor_source_concept_id*)) "NULL" else if (is(sponsor_source_concept_id*, "subQuery")) paste0("(", as.character(sponsor_source_concept_id*), ")") else paste0("'", as.character(sponsor_source_concept_id*), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.sponsor_source_concept_id*')
+  if (!missing(sponsor_source_concept_id)) {
+    fields <- c(fields, "sponsor_source_concept_id")
+    values <- c(values, if (is.null(sponsor_source_concept_id)) "NULL" else if (is(sponsor_source_concept_id, "subQuery")) paste0("(", as.character(sponsor_source_concept_id), ")") else paste0("'", as.character(sponsor_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.sponsor_source_concept_id')
   }
 
   if (!missing(family_source_value)) {
@@ -5805,7 +5440,7 @@ expect_no_specimen <- function(specimen_id, person_id, specimen_concept_id, spec
   invisible(NULL)
 }
 
-expect_no_visit_detail <- function(visit_detail_id, person_id, visit_concept_id, visit_start_date, visit_start_datetime, visit_end_date, visit_end_datetime, visit_type_concept_id, provider_id, care_site_id, visit_source_value, visit_source_concept_id, admitting_source_value, admitting_source_concept_id, admitted_from_source_value, admitted_from_concept_id, preceding_visit_detail_id, visit_detail_parent_id, visit_occurrence_id) {
+expect_no_visit_detail <- function(visit_detail_id, person_id, visit_detail_concept_id, visit_detail_start_date, visit_detail_start_datetime, visit_detail_end_date, visit_detail_end_datetime, visit_detail_type_concept_id, provider_id, care_site_id, visit_detail_source_value, visit_detail_source_concept_id, admitting_source_value, admitting_source_concept_id, admitted_from_source_value, admitted_from_concept_id, preceding_visit_detail_id, visit_detail_parent_id, visit_occurrence_id) {
   fields <- c()
   values <- c()
   if (!missing(visit_detail_id)) {
@@ -5818,34 +5453,34 @@ expect_no_visit_detail <- function(visit_detail_id, person_id, visit_concept_id,
     values <- c(values, if (is.null(person_id)) "NULL" else if (is(person_id, "subQuery")) paste0("(", as.character(person_id), ")") else paste0("'", as.character(person_id), "'"))
   }
 
-  if (!missing(visit_concept_id)) {
-    fields <- c(fields, "visit_concept_id")
-    values <- c(values, if (is.null(visit_concept_id)) "NULL" else if (is(visit_concept_id, "subQuery")) paste0("(", as.character(visit_concept_id), ")") else paste0("'", as.character(visit_concept_id), "'"))
+  if (!missing(visit_detail_concept_id)) {
+    fields <- c(fields, "visit_detail_concept_id")
+    values <- c(values, if (is.null(visit_detail_concept_id)) "NULL" else if (is(visit_detail_concept_id, "subQuery")) paste0("(", as.character(visit_detail_concept_id), ")") else paste0("'", as.character(visit_detail_concept_id), "'"))
   }
 
-  if (!missing(visit_start_date)) {
-    fields <- c(fields, "visit_start_date")
-    values <- c(values, if (is.null(visit_start_date)) "NULL" else if (is(visit_start_date, "subQuery")) paste0("(", as.character(visit_start_date), ")") else paste0("'", as.character(visit_start_date), "'"))
+  if (!missing(visit_detail_start_date)) {
+    fields <- c(fields, "visit_detail_start_date")
+    values <- c(values, if (is.null(visit_detail_start_date)) "NULL" else if (is(visit_detail_start_date, "subQuery")) paste0("(", as.character(visit_detail_start_date), ")") else paste0("'", as.character(visit_detail_start_date), "'"))
   }
 
-  if (!missing(visit_start_datetime)) {
-    fields <- c(fields, "visit_start_datetime")
-    values <- c(values, if (is.null(visit_start_datetime)) "NULL" else if (is(visit_start_datetime, "subQuery")) paste0("(", as.character(visit_start_datetime), ")") else paste0("'", as.character(visit_start_datetime), "'"))
+  if (!missing(visit_detail_start_datetime)) {
+    fields <- c(fields, "visit_detail_start_datetime")
+    values <- c(values, if (is.null(visit_detail_start_datetime)) "NULL" else if (is(visit_detail_start_datetime, "subQuery")) paste0("(", as.character(visit_detail_start_datetime), ")") else paste0("'", as.character(visit_detail_start_datetime), "'"))
   }
 
-  if (!missing(visit_end_date)) {
-    fields <- c(fields, "visit_end_date")
-    values <- c(values, if (is.null(visit_end_date)) "NULL" else if (is(visit_end_date, "subQuery")) paste0("(", as.character(visit_end_date), ")") else paste0("'", as.character(visit_end_date), "'"))
+  if (!missing(visit_detail_end_date)) {
+    fields <- c(fields, "visit_detail_end_date")
+    values <- c(values, if (is.null(visit_detail_end_date)) "NULL" else if (is(visit_detail_end_date, "subQuery")) paste0("(", as.character(visit_detail_end_date), ")") else paste0("'", as.character(visit_detail_end_date), "'"))
   }
 
-  if (!missing(visit_end_datetime)) {
-    fields <- c(fields, "visit_end_datetime")
-    values <- c(values, if (is.null(visit_end_datetime)) "NULL" else if (is(visit_end_datetime, "subQuery")) paste0("(", as.character(visit_end_datetime), ")") else paste0("'", as.character(visit_end_datetime), "'"))
+  if (!missing(visit_detail_end_datetime)) {
+    fields <- c(fields, "visit_detail_end_datetime")
+    values <- c(values, if (is.null(visit_detail_end_datetime)) "NULL" else if (is(visit_detail_end_datetime, "subQuery")) paste0("(", as.character(visit_detail_end_datetime), ")") else paste0("'", as.character(visit_detail_end_datetime), "'"))
   }
 
-  if (!missing(visit_type_concept_id)) {
-    fields <- c(fields, "visit_type_concept_id")
-    values <- c(values, if (is.null(visit_type_concept_id)) "NULL" else if (is(visit_type_concept_id, "subQuery")) paste0("(", as.character(visit_type_concept_id), ")") else paste0("'", as.character(visit_type_concept_id), "'"))
+  if (!missing(visit_detail_type_concept_id)) {
+    fields <- c(fields, "visit_detail_type_concept_id")
+    values <- c(values, if (is.null(visit_detail_type_concept_id)) "NULL" else if (is(visit_detail_type_concept_id, "subQuery")) paste0("(", as.character(visit_detail_type_concept_id), ")") else paste0("'", as.character(visit_detail_type_concept_id), "'"))
   }
 
   if (!missing(provider_id)) {
@@ -5858,14 +5493,14 @@ expect_no_visit_detail <- function(visit_detail_id, person_id, visit_concept_id,
     values <- c(values, if (is.null(care_site_id)) "NULL" else if (is(care_site_id, "subQuery")) paste0("(", as.character(care_site_id), ")") else paste0("'", as.character(care_site_id), "'"))
   }
 
-  if (!missing(visit_source_value)) {
-    fields <- c(fields, "visit_source_value")
-    values <- c(values, if (is.null(visit_source_value)) "NULL" else if (is(visit_source_value, "subQuery")) paste0("(", as.character(visit_source_value), ")") else paste0("'", as.character(visit_source_value), "'"))
+  if (!missing(visit_detail_source_value)) {
+    fields <- c(fields, "visit_detail_source_value")
+    values <- c(values, if (is.null(visit_detail_source_value)) "NULL" else if (is(visit_detail_source_value, "subQuery")) paste0("(", as.character(visit_detail_source_value), ")") else paste0("'", as.character(visit_detail_source_value), "'"))
   }
 
-  if (!missing(visit_source_concept_id)) {
-    fields <- c(fields, "visit_source_concept_id")
-    values <- c(values, if (is.null(visit_source_concept_id)) "NULL" else if (is(visit_source_concept_id, "subQuery")) paste0("(", as.character(visit_source_concept_id), ")") else paste0("'", as.character(visit_source_concept_id), "'"))
+  if (!missing(visit_detail_source_concept_id)) {
+    fields <- c(fields, "visit_detail_source_concept_id")
+    values <- c(values, if (is.null(visit_detail_source_concept_id)) "NULL" else if (is(visit_detail_source_concept_id, "subQuery")) paste0("(", as.character(visit_detail_source_concept_id), ")") else paste0("'", as.character(visit_detail_source_concept_id), "'"))
   }
 
   if (!missing(admitting_source_value)) {
@@ -6158,7 +5793,7 @@ expect_no_cost <- function(cost_id, person_id, cost_event_id, cost_event_field_c
   invisible(NULL)
 }
 
-expect_no_payer_plan_period <- function(payer_plan_period_id, person_id, contract_person_id, payer_plan_period_start_date, payer_plan_period_end_date, payer_concept_id, payer_source_value, payer_source_concept_id, plan_concept_id, plan_source_value, plan_source_concept_id, contract_person_id, contract_person_id, contract_person_id, sponsor_concept_id, sponsor_source_value, sponsor_source_concept_id*, family_source_value, stop_reason_concept_id, stop_reason_source_value, stop_reason_source_concept_id) {
+expect_no_payer_plan_period <- function(payer_plan_period_id, person_id, contract_person_id, payer_plan_period_start_date, payer_plan_period_end_date, payer_concept_id, payer_source_value, payer_source_concept_id, plan_concept_id, plan_source_value, plan_source_concept_id, contract_concept_id, contract_source_value, contract_source_concept_id, sponsor_concept_id, sponsor_source_value, sponsor_source_concept_id, family_source_value, stop_reason_concept_id, stop_reason_source_value, stop_reason_source_concept_id) {
   fields <- c()
   values <- c()
   if (!missing(payer_plan_period_id)) {
@@ -6216,19 +5851,19 @@ expect_no_payer_plan_period <- function(payer_plan_period_id, person_id, contrac
     values <- c(values, if (is.null(plan_source_concept_id)) "NULL" else if (is(plan_source_concept_id, "subQuery")) paste0("(", as.character(plan_source_concept_id), ")") else paste0("'", as.character(plan_source_concept_id), "'"))
   }
 
-  if (!missing(contract_person_id)) {
-    fields <- c(fields, "contract_person_id")
-    values <- c(values, if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
+  if (!missing(contract_concept_id)) {
+    fields <- c(fields, "contract_concept_id")
+    values <- c(values, if (is.null(contract_concept_id)) "NULL" else if (is(contract_concept_id, "subQuery")) paste0("(", as.character(contract_concept_id), ")") else paste0("'", as.character(contract_concept_id), "'"))
   }
 
-  if (!missing(contract_person_id)) {
-    fields <- c(fields, "contract_person_id")
-    values <- c(values, if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
+  if (!missing(contract_source_value)) {
+    fields <- c(fields, "contract_source_value")
+    values <- c(values, if (is.null(contract_source_value)) "NULL" else if (is(contract_source_value, "subQuery")) paste0("(", as.character(contract_source_value), ")") else paste0("'", as.character(contract_source_value), "'"))
   }
 
-  if (!missing(contract_person_id)) {
-    fields <- c(fields, "contract_person_id")
-    values <- c(values, if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
+  if (!missing(contract_source_concept_id)) {
+    fields <- c(fields, "contract_source_concept_id")
+    values <- c(values, if (is.null(contract_source_concept_id)) "NULL" else if (is(contract_source_concept_id, "subQuery")) paste0("(", as.character(contract_source_concept_id), ")") else paste0("'", as.character(contract_source_concept_id), "'"))
   }
 
   if (!missing(sponsor_concept_id)) {
@@ -6241,9 +5876,9 @@ expect_no_payer_plan_period <- function(payer_plan_period_id, person_id, contrac
     values <- c(values, if (is.null(sponsor_source_value)) "NULL" else if (is(sponsor_source_value, "subQuery")) paste0("(", as.character(sponsor_source_value), ")") else paste0("'", as.character(sponsor_source_value), "'"))
   }
 
-  if (!missing(sponsor_source_concept_id*)) {
-    fields <- c(fields, "sponsor_source_concept_id*")
-    values <- c(values, if (is.null(sponsor_source_concept_id*)) "NULL" else if (is(sponsor_source_concept_id*, "subQuery")) paste0("(", as.character(sponsor_source_concept_id*), ")") else paste0("'", as.character(sponsor_source_concept_id*), "'"))
+  if (!missing(sponsor_source_concept_id)) {
+    fields <- c(fields, "sponsor_source_concept_id")
+    values <- c(values, if (is.null(sponsor_source_concept_id)) "NULL" else if (is(sponsor_source_concept_id, "subQuery")) paste0("(", as.character(sponsor_source_concept_id), ")") else paste0("'", as.character(sponsor_source_concept_id), "'"))
   }
 
   if (!missing(family_source_value)) {
@@ -8072,7 +7707,7 @@ expect_count_specimen <- function(rowCount, specimen_id, person_id, specimen_con
   invisible(NULL)
 }
 
-expect_count_visit_detail <- function(rowCount, visit_detail_id, person_id, visit_concept_id, visit_start_date, visit_start_datetime, visit_end_date, visit_end_datetime, visit_type_concept_id, provider_id, care_site_id, visit_source_value, visit_source_concept_id, admitting_source_value, admitting_source_concept_id, admitted_from_source_value, admitted_from_concept_id, preceding_visit_detail_id, visit_detail_parent_id, visit_occurrence_id) {
+expect_count_visit_detail <- function(rowCount, visit_detail_id, person_id, visit_detail_concept_id, visit_detail_start_date, visit_detail_start_datetime, visit_detail_end_date, visit_detail_end_datetime, visit_detail_type_concept_id, provider_id, care_site_id, visit_detail_source_value, visit_detail_source_concept_id, admitting_source_value, admitting_source_concept_id, admitted_from_source_value, admitted_from_concept_id, preceding_visit_detail_id, visit_detail_parent_id, visit_occurrence_id) {
   fields <- c()
   values <- c()
   if (!missing(visit_detail_id)) {
@@ -8087,40 +7722,40 @@ expect_count_visit_detail <- function(rowCount, visit_detail_id, person_id, visi
     frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.person_id')
   }
 
-  if (!missing(visit_concept_id)) {
-    fields <- c(fields, "visit_concept_id")
-    values <- c(values, if (is.null(visit_concept_id)) "NULL" else if (is(visit_concept_id, "subQuery")) paste0("(", as.character(visit_concept_id), ")") else paste0("'", as.character(visit_concept_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_concept_id')
+  if (!missing(visit_detail_concept_id)) {
+    fields <- c(fields, "visit_detail_concept_id")
+    values <- c(values, if (is.null(visit_detail_concept_id)) "NULL" else if (is(visit_detail_concept_id, "subQuery")) paste0("(", as.character(visit_detail_concept_id), ")") else paste0("'", as.character(visit_detail_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_concept_id')
   }
 
-  if (!missing(visit_start_date)) {
-    fields <- c(fields, "visit_start_date")
-    values <- c(values, if (is.null(visit_start_date)) "NULL" else if (is(visit_start_date, "subQuery")) paste0("(", as.character(visit_start_date), ")") else paste0("'", as.character(visit_start_date), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_start_date')
+  if (!missing(visit_detail_start_date)) {
+    fields <- c(fields, "visit_detail_start_date")
+    values <- c(values, if (is.null(visit_detail_start_date)) "NULL" else if (is(visit_detail_start_date, "subQuery")) paste0("(", as.character(visit_detail_start_date), ")") else paste0("'", as.character(visit_detail_start_date), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_start_date')
   }
 
-  if (!missing(visit_start_datetime)) {
-    fields <- c(fields, "visit_start_datetime")
-    values <- c(values, if (is.null(visit_start_datetime)) "NULL" else if (is(visit_start_datetime, "subQuery")) paste0("(", as.character(visit_start_datetime), ")") else paste0("'", as.character(visit_start_datetime), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_start_datetime')
+  if (!missing(visit_detail_start_datetime)) {
+    fields <- c(fields, "visit_detail_start_datetime")
+    values <- c(values, if (is.null(visit_detail_start_datetime)) "NULL" else if (is(visit_detail_start_datetime, "subQuery")) paste0("(", as.character(visit_detail_start_datetime), ")") else paste0("'", as.character(visit_detail_start_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_start_datetime')
   }
 
-  if (!missing(visit_end_date)) {
-    fields <- c(fields, "visit_end_date")
-    values <- c(values, if (is.null(visit_end_date)) "NULL" else if (is(visit_end_date, "subQuery")) paste0("(", as.character(visit_end_date), ")") else paste0("'", as.character(visit_end_date), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_end_date')
+  if (!missing(visit_detail_end_date)) {
+    fields <- c(fields, "visit_detail_end_date")
+    values <- c(values, if (is.null(visit_detail_end_date)) "NULL" else if (is(visit_detail_end_date, "subQuery")) paste0("(", as.character(visit_detail_end_date), ")") else paste0("'", as.character(visit_detail_end_date), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_end_date')
   }
 
-  if (!missing(visit_end_datetime)) {
-    fields <- c(fields, "visit_end_datetime")
-    values <- c(values, if (is.null(visit_end_datetime)) "NULL" else if (is(visit_end_datetime, "subQuery")) paste0("(", as.character(visit_end_datetime), ")") else paste0("'", as.character(visit_end_datetime), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_end_datetime')
+  if (!missing(visit_detail_end_datetime)) {
+    fields <- c(fields, "visit_detail_end_datetime")
+    values <- c(values, if (is.null(visit_detail_end_datetime)) "NULL" else if (is(visit_detail_end_datetime, "subQuery")) paste0("(", as.character(visit_detail_end_datetime), ")") else paste0("'", as.character(visit_detail_end_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_end_datetime')
   }
 
-  if (!missing(visit_type_concept_id)) {
-    fields <- c(fields, "visit_type_concept_id")
-    values <- c(values, if (is.null(visit_type_concept_id)) "NULL" else if (is(visit_type_concept_id, "subQuery")) paste0("(", as.character(visit_type_concept_id), ")") else paste0("'", as.character(visit_type_concept_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_type_concept_id')
+  if (!missing(visit_detail_type_concept_id)) {
+    fields <- c(fields, "visit_detail_type_concept_id")
+    values <- c(values, if (is.null(visit_detail_type_concept_id)) "NULL" else if (is(visit_detail_type_concept_id, "subQuery")) paste0("(", as.character(visit_detail_type_concept_id), ")") else paste0("'", as.character(visit_detail_type_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_type_concept_id')
   }
 
   if (!missing(provider_id)) {
@@ -8135,16 +7770,16 @@ expect_count_visit_detail <- function(rowCount, visit_detail_id, person_id, visi
     frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.care_site_id')
   }
 
-  if (!missing(visit_source_value)) {
-    fields <- c(fields, "visit_source_value")
-    values <- c(values, if (is.null(visit_source_value)) "NULL" else if (is(visit_source_value, "subQuery")) paste0("(", as.character(visit_source_value), ")") else paste0("'", as.character(visit_source_value), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_source_value')
+  if (!missing(visit_detail_source_value)) {
+    fields <- c(fields, "visit_detail_source_value")
+    values <- c(values, if (is.null(visit_detail_source_value)) "NULL" else if (is(visit_detail_source_value, "subQuery")) paste0("(", as.character(visit_detail_source_value), ")") else paste0("'", as.character(visit_detail_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_source_value')
   }
 
-  if (!missing(visit_source_concept_id)) {
-    fields <- c(fields, "visit_source_concept_id")
-    values <- c(values, if (is.null(visit_source_concept_id)) "NULL" else if (is(visit_source_concept_id, "subQuery")) paste0("(", as.character(visit_source_concept_id), ")") else paste0("'", as.character(visit_source_concept_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_source_concept_id')
+  if (!missing(visit_detail_source_concept_id)) {
+    fields <- c(fields, "visit_detail_source_concept_id")
+    values <- c(values, if (is.null(visit_detail_source_concept_id)) "NULL" else if (is(visit_detail_source_concept_id, "subQuery")) paste0("(", as.character(visit_detail_source_concept_id), ")") else paste0("'", as.character(visit_detail_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'visit_detail.visit_detail_source_concept_id')
   }
 
   if (!missing(admitting_source_value)) {
@@ -8492,7 +8127,7 @@ expect_count_cost <- function(rowCount, cost_id, person_id, cost_event_id, cost_
   invisible(NULL)
 }
 
-expect_count_payer_plan_period <- function(rowCount, payer_plan_period_id, person_id, contract_person_id, payer_plan_period_start_date, payer_plan_period_end_date, payer_concept_id, payer_source_value, payer_source_concept_id, plan_concept_id, plan_source_value, plan_source_concept_id, contract_person_id, contract_person_id, contract_person_id, sponsor_concept_id, sponsor_source_value, sponsor_source_concept_id*, family_source_value, stop_reason_concept_id, stop_reason_source_value, stop_reason_source_concept_id) {
+expect_count_payer_plan_period <- function(rowCount, payer_plan_period_id, person_id, contract_person_id, payer_plan_period_start_date, payer_plan_period_end_date, payer_concept_id, payer_source_value, payer_source_concept_id, plan_concept_id, plan_source_value, plan_source_concept_id, contract_concept_id, contract_source_value, contract_source_concept_id, sponsor_concept_id, sponsor_source_value, sponsor_source_concept_id, family_source_value, stop_reason_concept_id, stop_reason_source_value, stop_reason_source_concept_id) {
   fields <- c()
   values <- c()
   if (!missing(payer_plan_period_id)) {
@@ -8561,22 +8196,22 @@ expect_count_payer_plan_period <- function(rowCount, payer_plan_period_id, perso
     frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.plan_source_concept_id')
   }
 
-  if (!missing(contract_person_id)) {
-    fields <- c(fields, "contract_person_id")
-    values <- c(values, if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_person_id')
+  if (!missing(contract_concept_id)) {
+    fields <- c(fields, "contract_concept_id")
+    values <- c(values, if (is.null(contract_concept_id)) "NULL" else if (is(contract_concept_id, "subQuery")) paste0("(", as.character(contract_concept_id), ")") else paste0("'", as.character(contract_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_concept_id')
   }
 
-  if (!missing(contract_person_id)) {
-    fields <- c(fields, "contract_person_id")
-    values <- c(values, if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_person_id')
+  if (!missing(contract_source_value)) {
+    fields <- c(fields, "contract_source_value")
+    values <- c(values, if (is.null(contract_source_value)) "NULL" else if (is(contract_source_value, "subQuery")) paste0("(", as.character(contract_source_value), ")") else paste0("'", as.character(contract_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_source_value')
   }
 
-  if (!missing(contract_person_id)) {
-    fields <- c(fields, "contract_person_id")
-    values <- c(values, if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_person_id')
+  if (!missing(contract_source_concept_id)) {
+    fields <- c(fields, "contract_source_concept_id")
+    values <- c(values, if (is.null(contract_source_concept_id)) "NULL" else if (is(contract_source_concept_id, "subQuery")) paste0("(", as.character(contract_source_concept_id), ")") else paste0("'", as.character(contract_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.contract_source_concept_id')
   }
 
   if (!missing(sponsor_concept_id)) {
@@ -8591,10 +8226,10 @@ expect_count_payer_plan_period <- function(rowCount, payer_plan_period_id, perso
     frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.sponsor_source_value')
   }
 
-  if (!missing(sponsor_source_concept_id*)) {
-    fields <- c(fields, "sponsor_source_concept_id*")
-    values <- c(values, if (is.null(sponsor_source_concept_id*)) "NULL" else if (is(sponsor_source_concept_id*, "subQuery")) paste0("(", as.character(sponsor_source_concept_id*), ")") else paste0("'", as.character(sponsor_source_concept_id*), "'"))
-    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.sponsor_source_concept_id*')
+  if (!missing(sponsor_source_concept_id)) {
+    fields <- c(fields, "sponsor_source_concept_id")
+    values <- c(values, if (is.null(sponsor_source_concept_id)) "NULL" else if (is(sponsor_source_concept_id, "subQuery")) paste0("(", as.character(sponsor_source_concept_id), ")") else paste0("'", as.character(sponsor_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'payer_plan_period.sponsor_source_concept_id')
   }
 
   if (!missing(family_source_value)) {
@@ -11094,7 +10729,7 @@ lookup_specimen <- function(fetchField, specimen_id, person_id, specimen_concept
   return(statement)
 }
 
-lookup_visit_detail <- function(fetchField, visit_detail_id, person_id, visit_concept_id, visit_start_date, visit_start_datetime, visit_end_date, visit_end_datetime, visit_type_concept_id, provider_id, care_site_id, visit_source_value, visit_source_concept_id, admitting_source_value, admitting_source_concept_id, admitted_from_source_value, admitted_from_concept_id, preceding_visit_detail_id, visit_detail_parent_id, visit_occurrence_id) {
+lookup_visit_detail <- function(fetchField, visit_detail_id, person_id, visit_detail_concept_id, visit_detail_start_date, visit_detail_start_datetime, visit_detail_end_date, visit_detail_end_datetime, visit_detail_type_concept_id, provider_id, care_site_id, visit_detail_source_value, visit_detail_source_concept_id, admitting_source_value, admitting_source_concept_id, admitted_from_source_value, admitted_from_concept_id, preceding_visit_detail_id, visit_detail_parent_id, visit_occurrence_id) {
   statement <- paste0('SELECT ', fetchField , ' FROM @cdm_database_schema.visit_detail WHERE')
   first <- TRUE
   if (!missing(visit_detail_id)) {
@@ -11115,58 +10750,58 @@ lookup_visit_detail <- function(fetchField, visit_detail_id, person_id, visit_co
     statement <- paste0(statement, " person_id = ", if (is.null(person_id)) "NULL" else if (is(person_id, "subQuery")) paste0("(", as.character(person_id), ")") else paste0("'", as.character(person_id), "'"))
   }
 
-  if (!missing(visit_concept_id)) {
+  if (!missing(visit_detail_concept_id)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " visit_concept_id = ", if (is.null(visit_concept_id)) "NULL" else if (is(visit_concept_id, "subQuery")) paste0("(", as.character(visit_concept_id), ")") else paste0("'", as.character(visit_concept_id), "'"))
+    statement <- paste0(statement, " visit_detail_concept_id = ", if (is.null(visit_detail_concept_id)) "NULL" else if (is(visit_detail_concept_id, "subQuery")) paste0("(", as.character(visit_detail_concept_id), ")") else paste0("'", as.character(visit_detail_concept_id), "'"))
   }
 
-  if (!missing(visit_start_date)) {
+  if (!missing(visit_detail_start_date)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " visit_start_date = ", if (is.null(visit_start_date)) "NULL" else if (is(visit_start_date, "subQuery")) paste0("(", as.character(visit_start_date), ")") else paste0("'", as.character(visit_start_date), "'"))
+    statement <- paste0(statement, " visit_detail_start_date = ", if (is.null(visit_detail_start_date)) "NULL" else if (is(visit_detail_start_date, "subQuery")) paste0("(", as.character(visit_detail_start_date), ")") else paste0("'", as.character(visit_detail_start_date), "'"))
   }
 
-  if (!missing(visit_start_datetime)) {
+  if (!missing(visit_detail_start_datetime)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " visit_start_datetime = ", if (is.null(visit_start_datetime)) "NULL" else if (is(visit_start_datetime, "subQuery")) paste0("(", as.character(visit_start_datetime), ")") else paste0("'", as.character(visit_start_datetime), "'"))
+    statement <- paste0(statement, " visit_detail_start_datetime = ", if (is.null(visit_detail_start_datetime)) "NULL" else if (is(visit_detail_start_datetime, "subQuery")) paste0("(", as.character(visit_detail_start_datetime), ")") else paste0("'", as.character(visit_detail_start_datetime), "'"))
   }
 
-  if (!missing(visit_end_date)) {
+  if (!missing(visit_detail_end_date)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " visit_end_date = ", if (is.null(visit_end_date)) "NULL" else if (is(visit_end_date, "subQuery")) paste0("(", as.character(visit_end_date), ")") else paste0("'", as.character(visit_end_date), "'"))
+    statement <- paste0(statement, " visit_detail_end_date = ", if (is.null(visit_detail_end_date)) "NULL" else if (is(visit_detail_end_date, "subQuery")) paste0("(", as.character(visit_detail_end_date), ")") else paste0("'", as.character(visit_detail_end_date), "'"))
   }
 
-  if (!missing(visit_end_datetime)) {
+  if (!missing(visit_detail_end_datetime)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " visit_end_datetime = ", if (is.null(visit_end_datetime)) "NULL" else if (is(visit_end_datetime, "subQuery")) paste0("(", as.character(visit_end_datetime), ")") else paste0("'", as.character(visit_end_datetime), "'"))
+    statement <- paste0(statement, " visit_detail_end_datetime = ", if (is.null(visit_detail_end_datetime)) "NULL" else if (is(visit_detail_end_datetime, "subQuery")) paste0("(", as.character(visit_detail_end_datetime), ")") else paste0("'", as.character(visit_detail_end_datetime), "'"))
   }
 
-  if (!missing(visit_type_concept_id)) {
+  if (!missing(visit_detail_type_concept_id)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " visit_type_concept_id = ", if (is.null(visit_type_concept_id)) "NULL" else if (is(visit_type_concept_id, "subQuery")) paste0("(", as.character(visit_type_concept_id), ")") else paste0("'", as.character(visit_type_concept_id), "'"))
+    statement <- paste0(statement, " visit_detail_type_concept_id = ", if (is.null(visit_detail_type_concept_id)) "NULL" else if (is(visit_detail_type_concept_id, "subQuery")) paste0("(", as.character(visit_detail_type_concept_id), ")") else paste0("'", as.character(visit_detail_type_concept_id), "'"))
   }
 
   if (!missing(provider_id)) {
@@ -11187,22 +10822,22 @@ lookup_visit_detail <- function(fetchField, visit_detail_id, person_id, visit_co
     statement <- paste0(statement, " care_site_id = ", if (is.null(care_site_id)) "NULL" else if (is(care_site_id, "subQuery")) paste0("(", as.character(care_site_id), ")") else paste0("'", as.character(care_site_id), "'"))
   }
 
-  if (!missing(visit_source_value)) {
+  if (!missing(visit_detail_source_value)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " visit_source_value = ", if (is.null(visit_source_value)) "NULL" else if (is(visit_source_value, "subQuery")) paste0("(", as.character(visit_source_value), ")") else paste0("'", as.character(visit_source_value), "'"))
+    statement <- paste0(statement, " visit_detail_source_value = ", if (is.null(visit_detail_source_value)) "NULL" else if (is(visit_detail_source_value, "subQuery")) paste0("(", as.character(visit_detail_source_value), ")") else paste0("'", as.character(visit_detail_source_value), "'"))
   }
 
-  if (!missing(visit_source_concept_id)) {
+  if (!missing(visit_detail_source_concept_id)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " visit_source_concept_id = ", if (is.null(visit_source_concept_id)) "NULL" else if (is(visit_source_concept_id, "subQuery")) paste0("(", as.character(visit_source_concept_id), ")") else paste0("'", as.character(visit_source_concept_id), "'"))
+    statement <- paste0(statement, " visit_detail_source_concept_id = ", if (is.null(visit_detail_source_concept_id)) "NULL" else if (is(visit_detail_source_concept_id, "subQuery")) paste0("(", as.character(visit_detail_source_concept_id), ")") else paste0("'", as.character(visit_detail_source_concept_id), "'"))
   }
 
   if (!missing(admitting_source_value)) {
@@ -11685,7 +11320,7 @@ lookup_cost <- function(fetchField, cost_id, person_id, cost_event_id, cost_even
   return(statement)
 }
 
-lookup_payer_plan_period <- function(fetchField, payer_plan_period_id, person_id, contract_person_id, payer_plan_period_start_date, payer_plan_period_end_date, payer_concept_id, payer_source_value, payer_source_concept_id, plan_concept_id, plan_source_value, plan_source_concept_id, contract_person_id, contract_person_id, contract_person_id, sponsor_concept_id, sponsor_source_value, sponsor_source_concept_id*, family_source_value, stop_reason_concept_id, stop_reason_source_value, stop_reason_source_concept_id) {
+lookup_payer_plan_period <- function(fetchField, payer_plan_period_id, person_id, contract_person_id, payer_plan_period_start_date, payer_plan_period_end_date, payer_concept_id, payer_source_value, payer_source_concept_id, plan_concept_id, plan_source_value, plan_source_concept_id, contract_concept_id, contract_source_value, contract_source_concept_id, sponsor_concept_id, sponsor_source_value, sponsor_source_concept_id, family_source_value, stop_reason_concept_id, stop_reason_source_value, stop_reason_source_concept_id) {
   statement <- paste0('SELECT ', fetchField , ' FROM @cdm_database_schema.payer_plan_period WHERE')
   first <- TRUE
   if (!missing(payer_plan_period_id)) {
@@ -11787,31 +11422,31 @@ lookup_payer_plan_period <- function(fetchField, payer_plan_period_id, person_id
     statement <- paste0(statement, " plan_source_concept_id = ", if (is.null(plan_source_concept_id)) "NULL" else if (is(plan_source_concept_id, "subQuery")) paste0("(", as.character(plan_source_concept_id), ")") else paste0("'", as.character(plan_source_concept_id), "'"))
   }
 
-  if (!missing(contract_person_id)) {
+  if (!missing(contract_concept_id)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " contract_person_id = ", if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
+    statement <- paste0(statement, " contract_concept_id = ", if (is.null(contract_concept_id)) "NULL" else if (is(contract_concept_id, "subQuery")) paste0("(", as.character(contract_concept_id), ")") else paste0("'", as.character(contract_concept_id), "'"))
   }
 
-  if (!missing(contract_person_id)) {
+  if (!missing(contract_source_value)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " contract_person_id = ", if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
+    statement <- paste0(statement, " contract_source_value = ", if (is.null(contract_source_value)) "NULL" else if (is(contract_source_value, "subQuery")) paste0("(", as.character(contract_source_value), ")") else paste0("'", as.character(contract_source_value), "'"))
   }
 
-  if (!missing(contract_person_id)) {
+  if (!missing(contract_source_concept_id)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " contract_person_id = ", if (is.null(contract_person_id)) "NULL" else if (is(contract_person_id, "subQuery")) paste0("(", as.character(contract_person_id), ")") else paste0("'", as.character(contract_person_id), "'"))
+    statement <- paste0(statement, " contract_source_concept_id = ", if (is.null(contract_source_concept_id)) "NULL" else if (is(contract_source_concept_id, "subQuery")) paste0("(", as.character(contract_source_concept_id), ")") else paste0("'", as.character(contract_source_concept_id), "'"))
   }
 
   if (!missing(sponsor_concept_id)) {
@@ -11832,13 +11467,13 @@ lookup_payer_plan_period <- function(fetchField, payer_plan_period_id, person_id
     statement <- paste0(statement, " sponsor_source_value = ", if (is.null(sponsor_source_value)) "NULL" else if (is(sponsor_source_value, "subQuery")) paste0("(", as.character(sponsor_source_value), ")") else paste0("'", as.character(sponsor_source_value), "'"))
   }
 
-  if (!missing(sponsor_source_concept_id*)) {
+  if (!missing(sponsor_source_concept_id)) {
     if (first) {
       first <- FALSE
     } else {
       statement <- paste0(statement, " AND")
     }
-    statement <- paste0(statement, " sponsor_source_concept_id* = ", if (is.null(sponsor_source_concept_id*)) "NULL" else if (is(sponsor_source_concept_id*, "subQuery")) paste0("(", as.character(sponsor_source_concept_id*), ")") else paste0("'", as.character(sponsor_source_concept_id*), "'"))
+    statement <- paste0(statement, " sponsor_source_concept_id = ", if (is.null(sponsor_source_concept_id)) "NULL" else if (is(sponsor_source_concept_id, "subQuery")) paste0("(", as.character(sponsor_source_concept_id), ")") else paste0("'", as.character(sponsor_source_concept_id), "'"))
   }
 
   if (!missing(family_source_value)) {
@@ -12724,12 +12359,14 @@ generateInsertSql <- function(databaseSchema = NULL) {
   return(insertSql)
 }
 
-generateSourceCsv <- function(directory = NULL, separator = ',') {
+writeSourceCsv <- function(directory = NULL, separator = ',') {
   clean_value <- function(x) {
+    if (x == 'NULL') {
+      return('')
+    }
     value <- substring(x, 2, nchar(x)-1)
     value <- gsub('"', '""', value)
-    # Introduce quotes if comma in value
-    if (grepl(",", value)) {
+    if (grepl(separator, value)) {
       return(paste0('"', value, '"'))
     }
     return(value)
@@ -12809,44 +12446,68 @@ generateTestSql <- function(databaseSchema = NULL) {
   return(testSql)
 }
 
-exportCases <- function(filename) {
+getTestsOverview <- function() {
   df <- data.frame(
     testId = sapply(frameworkContext$expects, function(x) x$testId),
     testDescription = sapply(frameworkContext$expects, function(x) x$testDescription),
     testType = sapply(frameworkContext$expects, extractTestTypeString),
     testTable = sapply(frameworkContext$expects, function(x) x$table)
   )
+  return(df)
+}
+
+exportTestsOverviewToFile <- function(filename) {
+  df <- getTestsOverview()
   write.csv(unique(df), filename, row.names=F)
 }
 
 summary.frameworkContext <- function(object, ...) {
-  formatPercent <- function(numerator, denominator) {
-    sprintf('%2.1f%% (%d/%d)', 100*numerator/denominator, numerator, denominator)
-  }
   nSourceFieldsTested <- length(intersect(object$sourceFieldsMapped, object$sourceFieldsTested))
   nTargetFieldsTested <- length(intersect(object$targetFieldsMapped, object$targetFieldsTested))
   nTotalSourceFields <- length(object$sourceFieldsMapped)
   nTotalTargetFields <- length(object$targetFieldsMapped)
-  cat('-- Test Framework Summary --
-')
-  cat(sprintf('Total number of defined cases: %d
-', length(unique(sapply(object$expects, function(x) x$testId)))))
-  cat(sprintf('Total number of tests: %d
-', length(object$expects)))
-  cat('-- Unit testing coverage --
-')
-  cat('-- (percentage of defined source/target fields that covered in at least one test case) --
-')
-  cat(sprintf('Source rule coverage: %s
-', formatPercent(nSourceFieldsTested, nTotalSourceFields)))
-  cat(sprintf('Target rule coverage: %s
-', formatPercent(nTargetFieldsTested, nTotalTargetFields)))
-  cat(sprintf('Total coverage: %s
-', formatPercent(nSourceFieldsTested+nTargetFieldsTested, nTotalSourceFields+nTotalTargetFields)))
+  summary <- c(
+    length(object$expects),
+    length(unique(sapply(object$expects, function(x) x$testId))),
+    nSourceFieldsTested,
+    nTotalSourceFields,
+    round(100*nSourceFieldsTested/nTotalSourceFields, 2),
+    nTargetFieldsTested,
+    nTotalTargetFields,
+    round(100*nTargetFieldsTested/nTotalTargetFields, 2)
+  )
+  names(summary) <- c('n_tests', 'n_cases', 'n_source_fields_tested', 'n_source_fields_mapped_from', 'source_coverage (%)', 'n_target_fields_tested', 'n_target_fields_mapped_to', 'target_coverage (%)')
+  return(as.data.frame(summary))
 }
+
+summaryTestFramework <- function() {
+  return(summary(frameworkContext));
+}
+
 getUntestedSourceFields <- function() {
   sort(setdiff(frameworkContext$sourceFieldsMapped, frameworkContext$sourceFieldsTested))
 }
+
 getUntestedTargetFields <- function() {
   sort(setdiff(frameworkContext$targetFieldsMapped, frameworkContext$targetFieldsTested))
 }
+
+outputTestResultsSummary <- function(connection, databaseSchema = NULL) {
+  suppressWarnings(require(DatabaseConnector, quietly = TRUE))
+  query = 'SELECT * FROM @cdm_database_schema.test_results;'
+  if (is.null(databaseSchema)) {
+    query <- gsub('@cdm_database_schema.', '', query)
+  } else {
+    query <- gsub('@cdm_database_schema', databaseSchema, query)
+  }
+  df_results <- DatabaseConnector::querySql(connection, query)
+  n_tests <- nrow(df_results)
+  n_failed_tests <- sum(df_results$'STATUS' == 'FAIL')
+  if (n_failed_tests > 0) {
+    write(sprintf('FAILED unit tests: %d/%d (%.1f%%)', n_failed_tests, n_tests, n_failed_tests/n_tests * 100), file='')
+    print(df_results[df_results$'STATUS' == 'FAIL',])
+  } else {
+    write(sprintf('All %d tests PASSED', n_tests), file='')
+  }
+}
+

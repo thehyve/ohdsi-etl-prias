@@ -1,1 +1,2 @@
 from src.main.python.transformation.basedata_to_person import basedata_to_person
+from src.main.python.transformation.basedata_to_stem_table import basedata_to_stem_table

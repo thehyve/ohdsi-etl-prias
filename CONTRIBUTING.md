@@ -44,15 +44,8 @@ Another option is to add this call as the first line of the `self.run()`, follow
 4. Test regularly!
 
 
-## Adding a new source to concept map
-1. Create new file in `./resources/mapping_tables`. Naming convention: `stcm_<source_vocabulary_id>.csv`
-2. Copy header from other stcm file
-3. Add mappings from `source_code` to `target_concept_id` (target can be a custom concept)
-   1. `source_description` can be same as `source_code` if no description available
-   2. `source_concept_id` = 0
-   3. `valid_start/end_date` default to `2019-01-01,2099-12-31`
-4. Load the mapping script in wrapper before the transformations
-   1. e.g. `self.load_source_to_concept_map_from_csv('./resources/mapping_tables/stcm_erspc_death.csv')`
+## Adding a new mapping
+TODO
 
    
 ## Adding custom concepts

@@ -42,7 +42,7 @@ if __name__ == '__main__':
     from src.main.python.wrapper import Wrapper
 
     db = Database(f'postgresql://postgres@localhost:5432/postgres')  # A mock database object
-    w = Wrapper(db, '../../../../resources/source_data')
+    w = Wrapper(db, '../../../../resources/source_data', '../../../../resources/mapping_tables')
 
     for x in basedata_to_person(w):
         print(x.__dict__)

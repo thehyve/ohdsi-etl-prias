@@ -13,6 +13,7 @@
 # GNU General Public License for more details.
 
 # After the ETL has run, this last phase will create the test results.
+source('TestFrameWork.R')
 library(DatabaseConnector)
 library(yaml)
 config <- yaml.load_file('config.yml')
@@ -32,30 +33,8 @@ testSql[1] <- sprintf('DROP TABLE IF EXISTS %s.test_results;', config$cdmSchema)
 executeSql(connection, paste(testSql, collapse='\n'))
 
 # Display test results ----------------------------------------------------
-df_results <- querySql(connection, sprintf('SELECT * FROM %s.test_results;', config$cdmSchema))
-n_tests <- nrow(df_results)
-n_failed_tests <- sum(df_results$'STATUS' == 'FAIL')
-if (n_failed_tests > 0) {
-    write("\nPrinting FAILED unit tests:", file="")
-    print(df_results[df_results$'STATUS' == 'FAIL',])
-    success_message <- sprintf("Number of FAILED unit tests: %d/%d (%.1f%%)", n_failed_tests, n_tests, n_failed_tests/n_tests * 100)
-} else {
-    success_message <- sprintf("All %d tests PASSED", n_tests)
-}
-write('\n', file="")
-write(success_message, file="")
+outputTestResultsSummary(connection, config$cdmSchema)
 
-# Write test results, with metadata ---------------------------------------
-git_commit_hash <- system("git rev-parse --short HEAD", intern = TRUE)
-df_results <- df_results[,-1]  # remove test_ids
-df_results <- rbind(c(paste(Sys.Date(), '- HEAD on:', git_commit_hash), '', success_message), df_results)
+# Write full test results to file ---------------------------------------
+df_results <- DatabaseConnector::querySql(connection, gsub('@cdm_database_schema', config$cdmSchema, 'SELECT * FROM @cdm_database_schema.test_results;'))
 write.csv(df_results, "unittest_results.csv", row.names = FALSE, quote = c(1))
-
-# Export test cases https://github.com/OHDSI/WhiteRabbit/issues/124 -----------------------
-source('TestFrameWork.R')
-exportCases('all_test_cases.csv');
-
-# Coverage of Fields tested ------------------------
-summary(frameworkContext)
-print(getUntestedSourceFields())
-print(getUntestedTargetFields())

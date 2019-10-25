@@ -13,11 +13,12 @@
 # GNU General Public License for more details.
 
 # !/usr/bin/env python3
-import pathlib
+from pathlib import Path
 import logging
 
 from src.main.python.model import EtlWrapper
 from src.main.python.model.SourceData import SourceData
+from src.main.python.util import VariableConceptMapper
 from src.main.python.model.cdm import *
 from src.main.python.transformation import *
 
@@ -26,9 +27,10 @@ logger = logging.getLogger(__name__)
 
 class Wrapper(EtlWrapper):
 
-    def __init__(self, database, source_folder):
+    def __init__(self, database, source_folder, mapping_tables_folder):
         super().__init__(database=database, source_schema='')
-        self.source_folder = pathlib.Path(source_folder)
+        self.source_folder = Path(source_folder)
+        self.variable_mapper = VariableConceptMapper(Path(mapping_tables_folder))
         self.person_id_lookup = None
         self.source_table_basedata = None
         self.source_table_fulong = None
@@ -56,6 +58,7 @@ class Wrapper(EtlWrapper):
         # Transformations
         logger.info('{:-^100}'.format(' ETL '))
         self.execute_transformation(basedata_to_person)
+        self.execute_transformation(basedata_to_stem_table)
 
         self.create_person_lookup()
 
@@ -118,7 +121,7 @@ class Wrapper(EtlWrapper):
 
     def get_basedata(self):
         if not self.source_table_basedata:
-             self.source_table_basedata = SourceData(self.source_folder / 'basedata.csv')
+            self.source_table_basedata = SourceData(self.source_folder / 'basedata.csv')
 
         return self.source_table_basedata
 

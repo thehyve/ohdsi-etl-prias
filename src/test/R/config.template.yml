@@ -5,5 +5,5 @@ connectionDetails:
   server: localhost/my_data
   port: 5432
 cdmSchema: omopcdm
-sourceDataDir: test_intermediates/source_data_e2e_test
+sourceDataDir: test_intermediates/source_data
 testQueryFileName: test_intermediates/test_query.sql

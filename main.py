@@ -57,7 +57,7 @@ def main(database, username, password, hostname, port, source, debug):
         return
 
     db = Database(uri)
-    etl = Wrapper(db, source)
+    etl = Wrapper(db, source, './resources/mapping_tables')
 
     logger.info('ETL version {}'.format(__version__))
     if etl.is_git_repo():

@@ -24,6 +24,7 @@ initFramework()
 
 # Import test cases ------------------------------------------------------------
 source('test_cases/test_person.R')
+source('test_cases/test_basedata.R')
 
 # Generate source csv files -----------------------------------------------------
 dir.create(config$sourceDataDir, recursive=T, showWarnings = F)
@@ -35,3 +36,11 @@ testSql <- generateTestSql('omopcdm')
 dir.create(dirname(config$testQueryFileName), recursive=T, showWarnings = F)
 write(testSql, config$testQueryFileName)
 print(paste0('Test queries written to ', config$testQueryFileName))
+
+# Test coverages -----------------------------------------------------------
+print(summaryTestFramework())
+print(getUntestedSourceFields())
+print(getUntestedTargetFields())
+
+# List all test cases ----------------------------------------------------------
+exportTestsOverviewToFile('all_test_cases.csv');

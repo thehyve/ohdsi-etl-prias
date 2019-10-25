@@ -36,6 +36,6 @@ if __name__ == '__main__':
 
     db = Database(f'postgresql://postgres@localhost:5432/postgres')  # A mock database object
     w = Wrapper(db, '../../../../resources/source_data')
-    w.person_id_lookup = {}
+    # w.person_id_lookup = {}
     for x in _skeleton(w):
         print(x.__dict__)
