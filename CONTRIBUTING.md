@@ -45,8 +45,26 @@ Another option is to add this call as the first line of the `self.run()`, follow
 
 
 ## Adding a new mapping
-TODO
+There are four lookup tables:
+  - [variable_mapping](resources/mapping_tables/variable_mapping.csv)
+    
+    Maps a column name (variable) to a concept. This concept will be used to populate the main `concept_id` field (e.g. a `measurement_concept_id`).
+  - [value_mapping](resources/mapping_tables/value_mapping.csv)
+    
+    Maps the value of a column to a concept. This concept will be used to populate the `value_as_concept_id` column.
+  - [variable_value_mapping](resources/mapping_tables/variable_value_mapping.csv)
+    
+    Maps the combination of column and value to a concept. This concept will be used to populate the main `concept_id` field (e.g. a `measurement_concept_id`).
+  - [unit_mapping](resources/mapping_tables/unit_mapping.csv)
+    
+    Maps the column name to the unit concept. This concept will be used to populate the main `unit_concept_id` field of a measurement.
 
+For given a variable/value pair, the lookups are used to get the target concept_id, value_as_concept_id, value_as_number and unit_concept_id.
+The mapping can be one of three types:
+        1. Only concept. Variable and value together map to one concept_id. Uses the `variable_value_mapping`. If combination of variable and value not found in that lookup, default to variable_mapping.
+        2. Categorical. Variable maps to a concept_id, value maps to a value_as_concept_id. Uses both the `variable_mapping` for the main concept_id and the `value_mapping` for the `value_as_concept_id`.
+        3. Numeric. If no mapping for value found, the value is assumed to be numeric. Variable maps to concept_id and unit_concept_id. Value is converted to float. Uses the `variable_mapping` and `unit_mapping`.
+        
    
 ## Adding custom concepts
 1. Add new row to `./resources/custom_vocabulary/2b_concepts.csv`
