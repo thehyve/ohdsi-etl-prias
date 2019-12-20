@@ -124,8 +124,8 @@ Most variables map the same as basedata variables.
 | id |  |  |  |
 | person_id | p_id |  |  |
 | visit_occurrence_id |  |  |  |
-| concept_id | discontinued<br>reason_treatment<br>pt<br>gleason1_rad_prost<br>gleason2_rad_prost<br>prostatevolume<br>tumorvolume<br>ece<br>svi<br>pos_surgical_margins<br>postoperative_psa<br>adjuvant_radiotherapy |  | Discontinued (every record, concept_id for 'not in study')<br><br><br>Same as base/fu gleason, but by pathologist<br><br>Volume same as for basedata, strip ml<br><br><br><br><br><br><br> |
-| value_as_number | prostatevolume<br>tumorvolume<br>postoperative_psa |  | Remove &lt (operator)<br> |
+| concept_id | discontinued<br>reason_treatment<br>pt<br>gleason1_rad_prost<br>gleason2_rad_prost<br>prostatevolume<br>tumorvolume<br>ece<br>svi<br>pos_surgical_margins<br>postoperative_psa<br>adjuvant_radiotherapy |  | Discontinued (every record, concept_id for 'not in study')<br><br><br>Same as base/fu gleason, but by pathologist. Exception in mapping script: Take sum of gleason1_rad_prost and gleason2_rad_prost as value. Example: gleason1 = 3 and gleason2 = 4, take "3+4" as value_as_string (because it is important to capture the order), 7 as value_as_number, and map to concept_id for value_as_concept_id as well. Concatenate gleason1_rad_prost + _ + gleason2_rad_prost as variable <br><br>Volume same as for basedata, strip ml<br> Do not map ece values 0 and 9, and svi values 0 and 9. Only map if 1 (=yes) <br><br><br><br><br><br> |
+| value_as_number | prostatevolume<br>tumorvolume<br>postoperative_psa |  | Remove &lt (operator)<br>Remove ml from Prostatevolume value when present |
 | unit_concept_id |  |  |  |
 | value_as_concept_id | reason_treatment<br>pt<br>ece<br>svi<br>pos_surgical_margins |  | Reason for discontinuation<br><br><br><br><br> |
 | visit_detail_id |  |  |  |

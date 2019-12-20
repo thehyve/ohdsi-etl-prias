@@ -1,3 +1,6 @@
 variable_source_code,value_source_code,source_code_description,target_concept_id,target_concept_name,valid_start_date,valid_end_date,invalid_reason
-biopt_route,1,Transrectal,4339403,Transrectal biopsy of prostate,2019-10-22,2099-12-31,
-biopt_route,2,Transperineal,4142388,Transperineal needle biopsy of prostate,2019-10-22,2099-12-31,
+Biopt_route,1,Transrectal,4339403,Transrectal biopsy of prostate,2019-10-22,2099-12-31,
+Biopt_route,2,Transperineal,4142388,Transperineal needle biopsy of prostate,2019-10-22,2099-12-31,
+ECE,1,yes,4241310,T3a: Prostate tumor with extracapsular extension,1970-01-01,2099-12-31,
+SVI,1,yes,4240691,T3b: Prostate tumor invades the semical vesicle(s)1970-01-01,2099-12-31,
+Adjuvant_radiotherapy,1,yes,35919395,Radiation after surgery,1970-01-01,2099-12-31,
