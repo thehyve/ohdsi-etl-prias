@@ -2,7 +2,7 @@
 layout: default
 title: Person
 nav_order: 2
-------------
+---
 
 # person
 

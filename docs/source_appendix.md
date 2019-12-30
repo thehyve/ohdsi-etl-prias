@@ -1,10 +1,19 @@
 ---
 layout: default
-title: Home
+title: "Appendix: Source Tables"
 nav_order: 14
 ---
 
 # Appendix: source tables
+{: .no_toc }
+
+## Tables
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 ## Table: basedata.csv
 

@@ -2,9 +2,10 @@
 layout: default
 title: Home
 nav_order: 1
+permalink: /
 ---
 
-# Prias to OMOP CDM v6
+# PRIAS to OMOP CDM v6
 
 ![](index_files/image1.png)
 

@@ -1,10 +1,19 @@
 ---
 layout: default
 title: Stem Table
-nav_order: 13
--------------
+nav_order: 4.1
+---
 
 # stem_table
+{: .no_toc }
+
+## Reading From
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 ## Reading from basedata.csv
 
