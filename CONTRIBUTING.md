@@ -3,13 +3,13 @@
 ## Setup database
 1. Download the vocabulary files from Athena
 2. Create a new postgres database
-3. Run the init at https://github.com/thehyve/OHDSI-CommonDataModel/tree/cdm-auto-create-v6/PostgreSQL
+3. Run the init at <https://github.com/thehyve/OHDSI-CommonDataModel/tree/cdm-auto-create-v6/PostgreSQL>
 
 ## Adding a new transformation
 1. Copy [_skeleton.py](src/main/python/transformation/_skeleton.py) and rename using the following convention: `<source_table>_to_<target_omop_table>.py` 
 2. In the new file, rename function and replace calls to source and target tables.
 3. Implement the transformation logic.
-   1) In parallel, also update [the markdown documentation](resources/docs) for this transformation.
+   1) In parallel, also update [the markdown documentation](docs) for this transformation.
    2) Also in parallel, create [unit tests](#adding-a-new-r-unit-test).
 4. Add import of the created function in the [`__init__.py`](src/main/python/transformation/__init__.py) 
 5. Add the call to the function in main pipeline of [wrapper.py](src/main/python/wrapper.py). 
@@ -18,10 +18,11 @@ Example:
 1. `basedata_to_observation.py`
 2. ```python
    def basedata_to_observation(wrapper):
-   ...
+       ...
        source_data = wrapper.get_source_basedata()
-   ...
+       ...
        record = Observation(
+       )
    ```
 3. |
 4. `__init__.py`: 
@@ -38,9 +39,9 @@ Another option is to add this call as the first line of the `self.run()`, follow
 
 
 ## Adding a new R unit test
-1. Copy [_test_skeleton.R](src/test/R/test_cases/_test_skeleton.py) and rename
+1. Copy [_test_skeleton.R](/src/test/R/test_cases) and rename
 2. Implement the testing logic by adding source data and expects. Tip: source the 'TestFramework.R' for method auto-complete, works best in RStudio.
-3. Add import of the created test cases in [main1_create_tests.R](src/test/R/main1_create_tests.R) 
+3. Add import of the created test cases in [main1_create_tests.R](/src/test/R)
 4. Test regularly!
 
 
@@ -60,10 +61,11 @@ There are four lookup tables:
     Maps the column name to the unit concept. This concept will be used to populate the main `unit_concept_id` field of a measurement.
 
 For given a variable/value pair, the lookups are used to get the target concept_id, value_as_concept_id, value_as_number and unit_concept_id.
+
 The mapping can be one of three types:
-        1. Only concept. Variable and value together map to one concept_id. Uses the `variable_value_mapping`. If combination of variable and value not found in that lookup, default to variable_mapping.
-        2. Categorical. Variable maps to a concept_id, value maps to a value_as_concept_id. Uses both the `variable_mapping` for the main concept_id and the `value_mapping` for the `value_as_concept_id`.
-        3. Numeric. If no mapping for value found, the value is assumed to be numeric. Variable maps to concept_id and unit_concept_id. Value is converted to float. Uses the `variable_mapping` and `unit_mapping`.
+ 1. Only concept. Variable and value together map to one concept_id. Uses the `variable_value_mapping`. If combination of variable and value not found in that lookup, default to variable_mapping.
+ 2. Categorical. Variable maps to a concept_id, value maps to a value_as_concept_id. Uses both the `variable_mapping` for the main concept_id and the `value_mapping` for the `value_as_concept_id`.
+ 3. Numeric. If no mapping for value found, the value is assumed to be numeric. Variable maps to concept_id and unit_concept_id. Value is converted to float. Uses the `variable_mapping` and `unit_mapping`.
         
    
 ## Adding custom concepts
