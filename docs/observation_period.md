@@ -1,26 +1,32 @@
-## Table name: observation_period
+---
+layout: default
+title: Observation Period
+nav_order: 3
+---
 
-### Reading from basedata.csv
+# observation_period
+
+## Reading from basedata.csv
 
 ![](index_files/image3.png)
 
-| Destination Field | Source field | Logic | Comment field |
-| --- | --- | --- | --- |
-| observation_period_id |  |  |  |
-| person_id | p_id |  |  |
-| observation_period_start_date | year_diagnosis |  | year-07-01<br> |
-| observation_period_end_date |  |  | If not provided in enddata, take extraction date. |
-| period_type_concept_id |  |  |  |
+| Destination Field             | Source field   | Logic | Comment field                                     |
+|:------------------------------|:---------------|:------|:--------------------------------------------------|
+| observation_period_id         |                |       |                                                   |
+| person_id                     | p_id           |       |                                                   |
+| observation_period_start_date | year_diagnosis |       | year-07-01<br>                                    |
+| observation_period_end_date   |                |       | If not provided in enddata, take extraction date. |
+| period_type_concept_id        |                |       |                                                   |
 
-### Reading from enddata.csv
+## Reading from enddata.csv
 
 ![](index_files/image4.png)
 
-| Destination Field | Source field | Logic | Comment field |
-| --- | --- | --- | --- |
-| observation_period_id |  |  |  |
-| person_id |  |  |  |
-| observation_period_start_date |  |  |  |
-| observation_period_end_date | year_discontinued |  | year-07-01  There could be data after year_discontinued (follow up after active surveilance),  not given in data extract.<br>If not provided in enddata, take extraction date. |
-| period_type_concept_id |  |  |  |
+| Destination Field             | Source field      | Logic | Comment field                                                                                                                                                                  |
+|:------------------------------|:------------------|:------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| observation_period_id         |                   |       |                                                                                                                                                                                |
+| person_id                     |                   |       |                                                                                                                                                                                |
+| observation_period_start_date |                   |       |                                                                                                                                                                                |
+| observation_period_end_date   | year_discontinued |       | year-07-01  There could be data after year_discontinued (follow up after active surveillance),  not given in data extract.<br>If not provided in enddata, take extraction date. |
+| period_type_concept_id        |                   |       |                                                                                                                                                                                |
 

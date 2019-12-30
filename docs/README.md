@@ -1,32 +1,12 @@
-# Source Data Mapping Approach to CDMV6.0
+---
+layout: default
+title: Home
+nav_order: 1
+---
+
+# Prias to OMOP CDM v6
 
 ![](index_files/image1.png)
-
-## Contents
-
-[person](person.md)
-
-[observation_period](observation_period.md)
-
-[visit_occurrence](visit_occurrence.md)
-
-[stem_table](stem_table.md)
-
-[condition_occurrence](condition_occurrence.md)
-
-[device_exposure](device_exposure.md)
-
-[drug_exposure](drug_exposure.md)
-
-[measurement](measurement.md)
-
-[observation](observation.md)
-
-[procedure_occurrence](procedure_occurrence.md)
-
-[specimen](specimen.md)
-
-[source_appendix](source_appendix.md)
 
 ## Introduction
 Active surveillance of early prostate cancer.
