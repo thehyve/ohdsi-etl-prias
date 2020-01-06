@@ -18,3 +18,5 @@ Gleason1_Rad_Prost_Gleason2_Rad_Prost,35918021,Gleason's Score on Prostatectomy/
 Prostatevolume,Prostate volume as by pathologist,4096978,Size of prostate,1970-01-01,2099-12-31,
 Tumorvolume,Volume in of tumor in ml,4121185,Tumor volume,1970-01-01,2099-12-31,
 Pos_surgical_margins,Positive surgical margins,3000370,Surgical margins cancer involvement,1970-01-01,2099-12-31,
+Postoperative_PSA,PSA level after surgery,2000000000,Total PSA level - post operative,1970-01-01,2099-12-31,
+Adjuvant_radiotherapy,Radiotherapy after surgery,3000178,Surgery-radiation sequence Cancer,1970-01-01,2099-12-31,

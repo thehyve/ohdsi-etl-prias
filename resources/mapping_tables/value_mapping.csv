@@ -13,7 +13,7 @@ Discontinued,Watchful waiting,Watchful waiting,4190466,No anti-cancer treatment 
 Discontinued,Open radical prostatectomy,Open radical prostatectomy,4096783,Radical prostatectomy,1970-01-01,2099-12-31,
 Discontinued,Laparoscopic Radical Prostatectomy,Laparoscopic Radical Prostatectomy,44809585,Laparoscopic radical prostatectomy,2014-04-01,2099-12-31,
 Discontinued,Other or unknown treatment,Other or unknown treatment,9177,Other,1970-01-01,2099-12-31,
-Discontinued,Brachytherapy Low-dose rate,,Brachytherapy Low-dose rate,4040610,Low dose rate brachytherapy,1970-01-01,2099-12-31,
+Discontinued,Brachytherapy Low-dose rate,Brachytherapy Low-dose rate,4040610,Low dose rate brachytherapy,1970-01-01,2099-12-31,
 Discontinued,Lost to FU,Lost to FU,4163894,Lost to follow-up,1970-01-01,2099-12-31,
 Discontinued,Died,Died,4306655,Death,1970-01-01,2099-12-31,
 Discontinued,Brachytherapy dose rate unknown,Brachytherapy dose rate unknown,40317890,Brachytherapy,1970-01-01,2099-12-31,
@@ -54,3 +54,4 @@ Gleason1_Rad_Prost_Gleason2_Rad_Prost,9,4+5 or 5+4 or 3+6 or 6+3 or 2+7 or 7+2 o
 Gleason1_Rad_Prost_Gleason2_Rad_Prost,10,5+5 or 6+4 or 4+6 or 3+7 or 7+3 or 8+2 or 2+8 or 9+ or 1+9 or 10+0 or 0+10,35928355,Grade Group 5: Gleason score 9 or 10,1970-01-01,2099-12-31,
 Pos_surgical_margins,0,no,45881006,All margins negative,1970-01-01,2099-12-31,
 Pos_surgical_margins,1,yes,45882793,Margins Involved, NOS,1970-01-01,2099-12-31,
+Adjuvant_radiotherapy,1,yes,45881386,Rad After Surgery,1970-01-01,2099-12-31,
