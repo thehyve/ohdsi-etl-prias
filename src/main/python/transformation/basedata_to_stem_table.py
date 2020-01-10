@@ -30,8 +30,10 @@ def basedata_to_stem_table(wrapper) -> list:
             if variable in ['p_id', 'year_diagnosis', 'year_birth']:
                 continue
 
-            if variable.startswith('biopt_') or variable.startswith('mri_'):
-                # TODO: separate transformation script for biopt_xx and mri_xx variables, which only should be captured if biopt or mri taken, respectively
+            # TODO: exception for biopt_xx and mri_xx variables, only should be captured if biopt or mri taken, respectively
+            if row['num_cores'] = '0' and variable.startswith('biopt_'):
+                continue
+            if row['mri.taken.0'] = '0' and variable.startswith('mri_'):
                 continue
 
             # TODO: skip variables not to be mapped (e.g. gleason_sum, pro_psa, etc.)

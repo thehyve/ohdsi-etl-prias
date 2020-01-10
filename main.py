@@ -20,7 +20,7 @@ import traceback
 
 import click
 
-from src.main.python.setup_logging import setup_logging
+from src.main.python.model.setup_logging import setup_logging
 from src.main.python.database.database import Database
 from src.main.python.wrapper import Wrapper
 
