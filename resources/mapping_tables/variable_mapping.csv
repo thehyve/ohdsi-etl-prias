@@ -3,7 +3,7 @@ Adjuvant_radiotherapy,Radiotherapy after surgery,3000178,Surgery-radiation seque
 age_diagnosis,Age at diagnosis,4265453,Age,1970-01-01,2099-12-31,
 ASA_FU,Charlson Comorbidity Index,42538860,Charlson Comorbidity Index,2018-01-31,2099-12-31,
 Biopt_inf_unrine_resistant,Antibiotic resistance of bacteria in urine,2000000003,Antibiotic resistance,1970-01-01,2099-12-31,
-Biopt_inf_unrine_resistant_FU ,Antibiotic resistance of bacteria in urine,2000000004,Antibiotic resistance,1970-01-01,2099-12-32,
+Biopt_inf_unrine_resistant_FU ,Antibiotic resistance of bacteria in urine,2000000003,Antibiotic resistance,1970-01-01,2099-12-32,
 Biopt_inf_urine_bacterium,Type of urine bacterium measured,36304419,Bacteria [Presence] in Urine,2018-06-15,2099-12-31,
 Biopt_inf_urine_bacterium_FU,Type of urine bacterium measured,36304419,Bacteria [Presence] in Urine,2018-06-15,2099-12-31,
 Biopt_inf_urine_culture,Urine culture measured,4024509,Urine culture,1970-01-01,2099-12-31,
