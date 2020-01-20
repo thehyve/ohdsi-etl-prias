@@ -57,23 +57,23 @@ class VariableConceptMapper:
 
     def _load_variable_map(self, file_path: Path):
         for row in self._load_map(file_path):
-            variable = row['variable_source_code']
+            variable = row['variable_source_code'].lower()
             target_concept_id = row['target_concept_id']
 
             self.variable_to_concept[variable] = int(target_concept_id)
 
     def _load_variable_value_map(self, file_path: Path):
         for row in self._load_map(file_path):
-            variable = row['variable_source_code']
-            value = row['value_source_code']
+            variable = row['variable_source_code'].lower()
+            value = row['value_source_code'].lower()
             target_concept_id = row['target_concept_id']
 
             self.variable_value_to_concept.setdefault(variable, {})[value] = int(target_concept_id)
 
     def _load_value_map(self, file_path: Path):
         for row in self._load_map(file_path):
-            variable = row['variable_source_code']
-            value = row['value_source_code']
+            variable = row['variable_source_code'].lower()
+            value = row['value_source_code'].lower()
             target_concept_id = row['target_concept_id']
 
             if not self.has_mapping_for_variable(variable):
@@ -83,7 +83,7 @@ class VariableConceptMapper:
 
     def _load_unit_map(self, file_path: Path):
         for row in self._load_map(file_path):
-            variable = row['variable_source_code']
+            variable = row['variable_source_code'].lower()
             target_concept_id = row['target_concept_id']
 
             if not self.has_mapping_for_variable(variable):
@@ -100,7 +100,7 @@ class VariableConceptMapper:
                 yield row
 
     def has_mapping_for_variable(self, variable: str):
-        return variable in self.variable_to_concept or variable in self.variable_value_to_value
+        return variable in self.variable_to_concept or variable in self.variable_value_to_concept
 
     def lookup(self, variable: str, value: str) -> Target:
         """
@@ -141,7 +141,7 @@ class VariableConceptMapper:
 
 
 if __name__ == '__main__':
-    mapper = VariableConceptMapper(Path('./resources/mapping_tables'))
+    mapper = VariableConceptMapper(Path('.\resources\mapping_tables'))
 
     # Some simple tests
     a = mapper.lookup('biopt_route', '1')
