@@ -141,7 +141,7 @@ class VariableConceptMapper:
 
 
 if __name__ == '__main__':
-    mapper = VariableConceptMapper(Path('.\resources\mapping_tables'))
+    mapper = VariableConceptMapper(Path('./resources/mapping_tables'))
 
     # Some simple tests
     a = mapper.lookup('biopt_route', '1')
