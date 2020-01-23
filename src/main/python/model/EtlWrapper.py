@@ -265,7 +265,7 @@ class EtlWrapper:
 
                 # Set all variables
                 for key, value in row.items():
-                    setattr(concept, key, value)
+                    setattr(concept, key, value if value else None)
 
                 session.add(concept)
         session.commit()
