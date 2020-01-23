@@ -32,6 +32,8 @@ class Wrapper(EtlWrapper):
         self.source_folder = Path(source_folder)
         self.variable_mapper = VariableConceptMapper(Path(mapping_tables_folder))
         self.person_id_lookup = None
+        self.basedata_by_pid_lookup = None
+        self.enddata_by_pid_lookup = None
         self.source_table_basedata = None
         self.source_table_fulong = None
         self.source_table_enddata = None
@@ -53,14 +55,16 @@ class Wrapper(EtlWrapper):
         logger.info('Clinical CDM tables created')
 
         # Load custom concepts and stcm
-        # self.load_concept_from_csv('./resources/custom_vocabulary/2b_concepts.csv')
+        self.load_concept_from_csv('./resources/custom_vocabulary/2b_concepts.csv')
 
         # Transformations
         logger.info('{:-^100}'.format(' ETL '))
         self.execute_transformation(basedata_to_person)
-        self.execute_transformation(basedata_to_stem_table)
+        #self.execute_transformation(basedata_to_stem_table)
+        self.execute_transformation(basedata_to_visit)
+        self.execute_transformation(fulong_to_visit)
 
-        self.stem_table_to_domains()
+        #self.stem_table_to_domains()
 
         # self.create_person_lookup()
 
@@ -75,8 +79,8 @@ class Wrapper(EtlWrapper):
         """Drops clinical tables, if they exist"""
         logger.info('Dropping OMOP CDM (non-vocabulary) tables if existing')
         self.db.base.metadata.drop_all(self.db.engine, tables=[
-            clinical_data.Episode.__table__,
-            clinical_data.EpisodeEvent.__table__,
+            #clinical_data.Episode.__table__,
+            #clinical_data.EpisodeEvent.__table__,
             clinical_data.ConditionOccurrence.__table__,
             clinical_data.DeviceExposure.__table__,
             clinical_data.DrugExposure.__table__,
@@ -124,6 +128,42 @@ class Wrapper(EtlWrapper):
             raise Exception('Person source value "{}" not found in lookup.'.format(person_source_value))
 
         return self.person_id_lookup[person_source_value]
+
+    def create_basedata_by_pid_lookup(self):
+        """
+        Initialize the basedata lookup
+        Per person, get the person specific record
+        :return:
+        """
+        self.basedata_by_pid_lookup = {x['p_id']: x for x in self.get_basedata()}
+
+    def lookup_basedata_by_pid(self, p_id):
+        if self.basedata_by_pid_lookup is None:
+            self.create_basedata_by_pid_lookup()
+
+        if p_id not in self.basedata_by_pid_lookup:
+            print(self.basedata_by_pid_lookup.keys())
+            raise Exception('Person id "{}" not found in lookup.'.format(p_id))
+
+        return self.basedata_by_pid_lookup[p_id]
+
+    def create_enddata_by_pid_lookup(self):
+        """
+        Initialize the enddata lookup
+        Per person, get the person specific record
+        :return:
+        """
+        self.enddata_by_pid_lookup = {x['p_id']: x for x in self.get_enddata()}
+
+    def lookup_enddata_by_pid(self, p_id):
+        if self.enddata_by_pid_lookup is None:
+            self.create_enddata_by_pid_lookup()
+
+        if p_id not in self.enddata_by_pid_lookup:
+            print(self.enddata_by_pid_lookup.keys())
+            raise Exception('Person id "{}" not found in lookup.'.format(p_id))
+
+        return self.enddata_by_pid_lookup[p_id]
 
     def get_basedata(self):
         if not self.source_table_basedata:
