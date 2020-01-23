@@ -15,19 +15,33 @@
 # !/usr/bin/env python3
 from src.main.python.model.cdm import VisitOccurrence
 from datetime import datetime
+from datetime import timedelta
 from src.main.python.util.number_conversion import to_int
 
-def basedata_to_visit(wrapper) -> list:
-    basedata = wrapper.get_basedata()
+def fulong_to_visit(wrapper) -> list:
+    fulong = wrapper.get_fulong()
 
     records_to_insert = []
-    for row in basedata:
+    for row in fulong:
 
-        start_date = datetime(to_int(row['year_diagnosis']), 7, 1)
+        # Extract variables and values
+        variable = 'time'
+        value = row[variable]
+        target = wrapper.variable_mapper.lookup(variable, value)
+
+        # Calculate proxy date
+        basedata_record = wrapper.lookup_basedata_by_pid(row['p_id'])
+        basedata_date_diagnosis = datetime(to_int(basedata_record['year_diagnosis']), 7, 1)
+        fulong_days_psa_diag = row['days_psa_diag']
+
+        if fulong_days_psa_diag != '':
+            start_date = basedata_date_diagnosis + timedelta(days=float(fulong_days_psa_diag))
+        else:
+            start_date = basedata_date_diagnosis
 
         record = VisitOccurrence(
             person_id=int(row['p_id']),
-            visit_concept_id=2000000027,  # Baseline Visit
+            visit_concept_id=target.concept_id,
             visit_source_concept_id=0,
             visit_start_date=start_date.date(),
             visit_start_datetime=start_date,
