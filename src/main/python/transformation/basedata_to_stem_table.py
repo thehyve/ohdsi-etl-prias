@@ -41,7 +41,7 @@ def basedata_to_stem_table(wrapper) -> list:
             if variable != 'biopt_max_cancer_score_lenght' and variable.startswith('biopt_'):
                 if value == '0':
                     continue
-            if variable in ['mri_taken.0', 'mri_lesions.0', 'mri_pirads_1.0', 'mri_targeted_biopty.0',
+            if variable in ['mri_taken.0', 'mri_lesions.0', 'mri_pirads_1.0', 'mri_targeted_biopsy.0',
                             'mri_method_used.0', 'mri_prostate_volume_method.0']:
                 if value == '0':
                     continue
@@ -51,7 +51,7 @@ def basedata_to_stem_table(wrapper) -> list:
                 continue
 
             # Exception: Only mri_targeted_taken.0 is 1, map mri_method_used.0
-            if variable == 'mri_method_used.0' and row['mri_targeted_taken.0'] != 1:
+            if variable == 'mri_method_used.0' and row['mri_targeted_biopsy.0'] != 1:
                 continue
 
             # Exception: If num_cores < 8, take num_cores2, num_cores_pc2 and gleason1_2 and gleason2_2

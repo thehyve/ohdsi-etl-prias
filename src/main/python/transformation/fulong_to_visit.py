@@ -31,6 +31,7 @@ def fulong_to_visit(wrapper) -> list:
 
         # Calculate proxy date
         basedata_record = wrapper.lookup_basedata_by_pid(row['p_id'])
+
         basedata_date_diagnosis = datetime(to_int(basedata_record['year_diagnosis']), 7, 1)
         fulong_days_psa_diag = row['days_psa_diag']
 
@@ -63,5 +64,5 @@ if __name__ == '__main__':
     db = Database(f'postgresql://postgres@localhost:5432/postgres')  # A mock database object
     w = Wrapper(db, '../../../../resources/source_data')
     # w.person_id_lookup = {}
-    for x in _skeleton(w):
+    for x in fulong_to_visit(w):
         print(x.__dict__)
