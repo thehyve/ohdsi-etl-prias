@@ -114,12 +114,13 @@ class VariableConceptMapper:
         :return: Target
         """
         target = Target()
+        variable = variable.lower()
 
         if not self.has_mapping_for_variable(variable):
             target.concept_id = 0
             return target
 
-        value = str(value)
+        value = str(value).lower()
 
         # Get concept_id from variable and value or only from variable (in that order of priority)
         target.concept_id = self.variable_value_to_concept.get(variable, {}).get(value) or \
@@ -135,7 +136,7 @@ class VariableConceptMapper:
                     target.value_as_number = float(value)
                 except ValueError:
                     raise ValueError(f'"{variable}" recognised as numeric variable, but could not convert value to float: "{value}"')
-            target.unit_concept_id = self.variable_to_unit.get(variable)
+        target.unit_concept_id = self.variable_to_unit.get(variable)
 
         return target
 
@@ -154,3 +155,5 @@ if __name__ == '__main__':
     print(d)  # c_id = 4278515 (the backup mapping if combo var+val not found)
     e = mapper.lookup('unknown', '99')
     print(e)  # None
+    f = mapper.lookup('dre', 'T1c')
+    print(f)
