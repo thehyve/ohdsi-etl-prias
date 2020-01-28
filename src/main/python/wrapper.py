@@ -62,7 +62,6 @@ class Wrapper(EtlWrapper):
         # Transformations
         logger.info('{:-^100}'.format(' ETL '))
         self.execute_transformation(basedata_to_person)
-        self.execute_transformation(basedata_to_observation_period)
         #self.execute_transformation(basedata_to_stem_table)
         self.execute_transformation(basedata_to_visit)
         self.execute_transformation(fulong_to_visit)
