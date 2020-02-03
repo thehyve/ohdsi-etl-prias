@@ -12359,6 +12359,51 @@ generateInsertSql <- function(databaseSchema = NULL) {
   return(insertSql)
 }
 
+generateSourceCsv <- function(directory = NULL) {
+  clean_value <- function(x) {
+    # Remove quotes
+    value <- substring(x, 2, nchar(x)-1)
+    # Escape quotes
+    value <- gsub('"', '""', value)
+    # Introduce quotes if comma in value
+    if (grepl(",", value)) {
+      return(paste0('"', value, '"'))
+    }
+    return(value)
+  }
+  clean_column <- function(x) {
+    # Remove leading and trailing [], if present
+    if (grepl("^\\[.+?\\]$", x)) {
+      return(substring(x, 2, nchar(x)-1))
+    }
+    return(x)
+  }
+  dir.create(directory, showWarnings = F)
+  
+  # Write values
+  seen_tables <- c()
+  for (insert in frameworkContext$inserts) {
+    if (!(insert$table %in% seen_tables)) {
+      # Initialize all new source files with header. Overwrites existing source files from previous runs in the directory.
+      filename <- file.path(directory, paste0(insert$table, ".csv"))
+      write(paste(sapply(insert$fields, clean_column), collapse = ","), filename, append=F)
+      seen_tables <- c(seen_tables, insert$table)
+    }
+    filename <- file.path(directory, paste0(insert$table, ".csv"))
+    # TODO: if a value is set to NULL, the value is skipped. This leads to a wrong number of columns in the output.
+    # Temporary fix; do not assign a value to NULL, but use empty string instead
+    write(paste(sapply(insert$values, clean_value), collapse = ","), filename, append=T)
+  }
+  
+  # Create source files for which there are no inserts
+  for (table_name in names(frameworkContext$defaultValues)) {
+    if (!(table_name %in% seen_tables)) {
+      filename <- file.path(directory, paste0(table_name, ".csv"))
+      write(paste(names(frameworkContext$defaultValues[[table_name]]), collapse = ","), filename, append=F)
+    }
+  }
+}
+
 writeSourceCsv <- function(directory = NULL, separator = ',') {
   clean_value <- function(x) {
     if (x == 'NULL') {

@@ -1,5 +1,9 @@
 # Exclude the config yml
 src/test/R/config.yml
+src/test/R/all_test_cases.csv
+src/test/R/unittest_results.csv
+src/test/R/test_intermediates/source_data/
+src/test/R/test_intermediates/test_query.sql
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

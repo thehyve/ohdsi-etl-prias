@@ -31,9 +31,9 @@ def basedata_to_stem_table(wrapper) -> list:
                 continue
 
             # TODO: exception for biopt_xx and mri_xx variables, only should be captured if biopt or mri taken, respectively
-            if row['num_cores'] = '0' and variable.startswith('biopt_'):
+            if row['num_cores'] == '0' and variable.startswith('biopt_'):
                 continue
-            if row['mri.taken.0'] = '0' and variable.startswith('mri_'):
+            if row['mri.taken.0'] == '0' and variable.startswith('mri_'):
                 continue
 
             # TODO: skip variables not to be mapped (e.g. gleason_sum, pro_psa, etc.)
