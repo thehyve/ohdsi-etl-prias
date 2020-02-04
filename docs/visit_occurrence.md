@@ -25,17 +25,17 @@ nav_order: 4
 | person_id                     | p_id           |       |                                                                                                                                                |
 | visit_concept_id              |                |       | Map to custom concept 'Baseline Visit' - 2000000027                                                                                            |
 | visit_start_date              | year_diagnosis |       | year-07-01<br>                                                                                                                                 |
-| visit_start_datetime          |                |       |                                                                                                                                                |
+| visit_start_datetime          | year_diagnosis |       | year-07-01<br> 00:00:00                                                                                                                        |
 | visit_end_date                | year_diagnosis |       | year-07-01<br>                                                                                                                                 |
-| visit_end_datetime            |                |       |                                                                                                                                                |
+| visit_end_datetime            | year_diagnosis |       | year-07-01<br> 00:00:00                                                                                                                        |
 | visit_type_concept_id         |                |       | Clinical Study visit - 44818519                                                                                                                |
 | provider_id                   |                |       |                                                                                                                                                |
 | care_site_id                  |                |       |                                                                                                                                                |
 | visit_source_value            |                |       |                                                                                                                                                |
-| visit_source_concept_id       |                |       | 0                                                                                                                                               |
-| admitted_from_concept_id      |                |       | 0                                                                                                                                               |
+| visit_source_concept_id       |                |       | 0                                                                                                                                              |
+| admitted_from_concept_id      |                |       | 0                                                                                                                                              |
 | admitted_from_source_value    |                |       |                                                                                                                                                |
-| discharge_to_concept_id       |                |       | 0                                                                                                                                               |
+| discharge_to_concept_id       |                |       | 0                                                                                                                                              |
 | discharge_to_source_value     |                |       |                                                                                                                                                |
 | preceding_visit_occurrence_id |                |       |                                                                                                                                                |
 
@@ -47,19 +47,19 @@ nav_order: 4
 |:------------------------------|:--------------|:------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
 | visit_occurrence_id           |               |       | Auto-increment                                                                                                                                 |
 | person_id                     | p_id          |       |                                                                                                                                                |
-| visit_concept_id              | time          |       | basedata visit -> baseline  followup visit -> visit 1 t/m xx (eventueel onderscheid lab/biopsy/evaluation/dre visit onderscheid, zie protocol) |
-| visit_start_date              | days_psa_diag |       | year_diag + days_psa_diag<br>                                                                                                                  |
-| visit_start_datetime          |               |       |                                                                                                                                                |
-| visit_end_date                | days_psa_diag |       | same as visit start<br>                                                                                                                        |
-| visit_end_datetime            |               |       |                                                                                                                                                |
-| visit_type_concept_id         |               |       | todo                                                                                                                                           |
+| visit_concept_id              | time          |       | Map to custom concepts (as variable_value_mapping)                                                                                             |
+| visit_start_date              | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br>                                                                                                  |
+| visit_start_datetime          | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br>                                                                                                  |
+| visit_end_date                | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br>                                                                                                  |
+| visit_end_datetime            | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br>                                                                                                  |
+| visit_type_concept_id         |               |       | Clinical Study visit - 44818519                                                                                                                |
 | provider_id                   |               |       |                                                                                                                                                |
 | care_site_id                  |               |       |                                                                                                                                                |
 | visit_source_value            |               |       |                                                                                                                                                |
-| visit_source_concept_id       |               |       |                                                                                                                                                |
-| admitted_from_concept_id      |               |       |                                                                                                                                                |
+| visit_source_concept_id       |               |       | 0                                                                                                                                              |
+| admitted_from_concept_id      |               |       | 0                                                                                                                                              |
 | admitted_from_source_value    |               |       |                                                                                                                                                |
-| discharge_to_concept_id       |               |       |                                                                                                                                                |
+| discharge_to_concept_id       |               |       | 0                                                                                                                                              |
 | discharge_to_source_value     |               |       |                                                                                                                                                |
 | preceding_visit_occurrence_id |               |       |                                                                                                                                                |
 
