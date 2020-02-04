@@ -1,5 +1,5 @@
 from src.main.python.transformation.basedata_to_person import basedata_to_person
-# from src.main.python.transformation.basedata_to_stem_table import basedata_to_stem_table
+from src.main.python.transformation.enddata_to_stem_table import enddata_to_stem_table
 from src.main.python.transformation.basedata_to_visit import basedata_to_visit
 from src.main.python.transformation.fulong_to_visit import fulong_to_visit
 from src.main.python.transformation.enddata_to_observation_period import enddata_to_observation_period
