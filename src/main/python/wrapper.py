@@ -14,6 +14,7 @@
 
 # !/usr/bin/env python3
 from pathlib import Path
+from datetime import date
 import logging
 
 from src.main.python.model import EtlWrapper
@@ -37,6 +38,7 @@ class Wrapper(EtlWrapper):
         self.source_table_basedata = None
         self.source_table_fulong = None
         self.source_table_enddata = None
+        self.extraction_date = date(2080, 7, 1)
 
     def run(self):
         """Run PRIAS to OMOP V6.0 ETL"""
@@ -60,9 +62,10 @@ class Wrapper(EtlWrapper):
         # Transformations
         logger.info('{:-^100}'.format(' ETL '))
         self.execute_transformation(basedata_to_person)
-        #self.execute_transformation(basedata_to_stem_table)
+        self.execute_transformation(enddata_to_stem_table)
         self.execute_transformation(basedata_to_visit)
         self.execute_transformation(fulong_to_visit)
+        self.execute_transformation(enddata_to_observation_period)
 
         #self.stem_table_to_domains()
 
