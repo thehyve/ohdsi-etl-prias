@@ -32,6 +32,7 @@ class Wrapper(EtlWrapper):
         self.source_folder = Path(source_folder)
         self.variable_mapper = VariableConceptMapper(Path(mapping_tables_folder))
         self.person_id_lookup = None
+        self.visit_id_lookup = None
         self.basedata_by_pid_lookup = None
         self.enddata_by_pid_lookup = None
         self.source_table_basedata = None
@@ -60,10 +61,13 @@ class Wrapper(EtlWrapper):
         # Transformations
         logger.info('{:-^100}'.format(' ETL '))
         self.execute_transformation(basedata_to_person)
-        #self.execute_transformation(basedata_to_stem_table)
         self.execute_transformation(basedata_to_visit)
         self.execute_transformation(fulong_to_visit)
-
+        self.execute_transformation(basedata_to_stem_table)
+        self.execute_transformation(fulong_to_stem_table)
+        self.execute_transformation(basedata_diagnosis_to_stem_table)
+        self.execute_transformation(basedata_dre_to_stem_table)
+        self.execute_transformation(fulong_dre_to_stem_table)
         #self.stem_table_to_domains()
 
         # self.create_person_lookup()
@@ -129,6 +133,18 @@ class Wrapper(EtlWrapper):
 
         return self.person_id_lookup[person_source_value]
 
+    def create_visit_lookup(self):
+        """Initialize the visit lookup"""
+        with self.db.session_scope() as session:
+            # Create lookup of the Visit Occurrence table
+            query = session.query(clinical_data.VisitOccurrence).all()
+            self.visit_id_lookup = {x.visit_occurrence_id: [x.person_id, x.visit_source_value] for x in query}
+
+    def lookup_visit_id(self):
+        if self.visit_id_lookup is None:
+            self.create_visit_lookup()
+        return self.visit_id_lookup
+
     def create_basedata_by_pid_lookup(self):
         """
         Initialize the basedata lookup
@@ -164,6 +180,23 @@ class Wrapper(EtlWrapper):
             raise Exception('Person id "{}" not found in lookup.'.format(p_id))
 
         return self.enddata_by_pid_lookup[p_id]
+
+    def gleason_sum(self, row, gleason_score1, gleason_score2):
+        """
+        :param row:
+        :param gleason_score1:
+        :param gleason_score2:
+        :return variable, value:
+        """
+        variable = gleason_score1 + "_" + gleason_score2
+
+        if row[gleason_score1] == '3' and row[gleason_score2] == '4':
+            value = '3+4'
+        elif row[gleason_score1] == '4' and row[gleason_score2] == '3':
+            value = '4+3'
+        else:
+            value = int(row[gleason_score1]) + int(row[gleason_score2])
+        return variable, value
 
     def get_basedata(self):
         if not self.source_table_basedata:
