@@ -15,7 +15,7 @@
 # !/usr/bin/env python3
 from src.main.python.model.cdm import StemTable
 from datetime import date, datetime
-
+import logging
 
 def basedata_to_stem_table(wrapper) -> list:
     basedata = wrapper.get_basedata()
@@ -24,9 +24,15 @@ def basedata_to_stem_table(wrapper) -> list:
 
     for row in basedata:
 
+        # Get visit occurrence id
+        visit_record = wrapper.lookup_visit_id()
+        for visit_occurrence_id, [person_id, visit_source_value] in visit_record.items():
+            if person_id == int(row['p_id']) and visit_source_value == None:
+                visit_id = visit_occurrence_id
+
         for variable, value in row.items():
 
-            # Skip columns not containing variables
+            # Ignore the following columns for mapping
             if variable in ['p_id', 'year_diagnosis', 'year_birth', 'asa',
                             'log2psa', 'gleason_sum', 'pro_psa', 'tnm', 'method_detection',
                             'no_co_morbidity', 'active_visit', 'mri_included',
@@ -38,19 +44,25 @@ def basedata_to_stem_table(wrapper) -> list:
                 continue
 
             # Skip 0 values for specific biopt_ and mri_ variables
-            if variable != 'biopt_max_cancer_score_lenght' and variable.startswith('biopt_'):
-                if value == '0':
-                    continue
+            if variable.startswith('biopt_') and variable != 'biopt_max_cancer_score_lenght' and value == '0':
+                continue
             if variable in ['mri_taken.0', 'mri_lesions.0', 'mri_pirads_1.0', 'mri_targeted_biopsy.0',
-                            'mri_method_used.0', 'mri_prostate_volume_method.0']:
-                if value == '0':
-                    continue
-
-            # mri_xx variables should only be captured if mri is taken
-            if row['mri_taken.0'] != "1" and variable.startswith('mri_'):
+                            'mri_method_used.0', 'mri_prostate_volume_method.0'] and value == '0':
                 continue
 
-            # Exception: Only mri_targeted_taken.0 is 1, map mri_method_used.0
+            # Do not map biopt_hematuria, biopt_hemospermia and biopt_pain when value is 2
+            if variable in ['biopt_hematuria', 'biopt_hemospermia', 'biopt_pain'] and value == '2':
+                continue
+
+            # mri_xx variables should only be captured if mri is taken
+            if variable.startswith('mri_') and row['mri_taken.0'] != "1":
+                continue
+
+            # Do not map mri_lesions.0 and mri_targeted_biopsy.0 when value is 2
+            if variable in ['mri_lesions.0', 'mri_targeted_biopsy.0'] and value == '2':
+                continue
+
+            # Exception: Only if mri_targeted_taken.0 is 1, map mri_method_used.0
             if variable == 'mri_method_used.0' and row['mri_targeted_biopsy.0'] != 1:
                 continue
 
@@ -73,40 +85,21 @@ def basedata_to_stem_table(wrapper) -> list:
                               'num_cores2', 'num_cores_pc2', 'gleason1_2', 'gleason2_2']:
                 continue
 
-            # TODO: make gleason sum code more efficient (combine all three in one code block)
             # Exception: Map sum of gleason1 and gleason2
             if variable == 'gleason1':
-                variable = 'gleason1_gleason2'
-                if row['gleason1'] == "3" and row['gleason2'] == "4":
-                    value = "3+4"
-                elif row['gleason1'] == "4" and row['gleason2'] == "3":
-                    value = "4+3"
-                else:
-                    value = int(row['gleason1']) + int(row['gleason2'])
+                variable, value = wrapper.gleason_sum(row, 'gleason1', 'gleason2')
             if variable == 'gleason2':
                 continue
 
             # Exception: Map sum of gleason1_2 and gleason2_2
             if variable == 'gleason1_2':
-                variable = 'gleason1_2_gleason2_2'
-                if row['gleason1_2'] == "3" and row['gleason2_2'] == "4":
-                    value = "3+4"
-                elif row['gleason1_2'] == "4" and row['gleason2_2'] == "3":
-                    value = "4+3"
-                else:
-                    value = int(row['gleason1_2']) + int(row['gleason2_2'])
+                variable, value = wrapper.gleason_sum(row, 'gleason1_2', 'gleason2_2')
             if variable == 'gleason2_2':
                 continue
 
             # Exception: Map sum of mri_targeted_gleason1.0 and mri_targeted_gleason1.0.1
             if variable == 'mri_targeted_gleason1.0':
-                variable = 'mri_targeted_gleason1.0_mri_targeted_gleason1.0.1'
-                if row['mri_targeted_gleason1.0'] == "3" and row['mri_targeted_gleason1.0.1'] == "4":
-                    value = "3+4"
-                elif row['mri_targeted_gleason1.0'] == "4" and row['mri_targeted_gleason1.0.1'] == "3":
-                    value = "4+3"
-                else:
-                    value = int(row['mri_targeted_gleason1.0']) + int(row['mri_targeted_gleason1.0.1'])
+                variable, value = wrapper.gleason_sum(row, 'mri_targeted_gleason1.0', 'mri_targeted_gleason1.0.1')
             if variable == 'mri_targeted_gleason1.0.1':
                 continue
 
@@ -139,13 +132,13 @@ def basedata_to_stem_table(wrapper) -> list:
                 else:
                     continue
 
-            # TODO: check if this is the best practice
-            # Do not map if there is no variable mapping
-            if (target.concept_id == None) or (target.concept_id == 0):
-                continue
+            # Give warning when vocabulary mapping is missing
+            if target.concept_id == None:
+                logging.warning('There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
 
             record = StemTable(
                 person_id=int(row['p_id']),
+                visit_occurrence_id=visit_id,
                 start_date=date(int(row['year_diagnosis']), 7, 1),
                 start_datetime=datetime(int(row['year_diagnosis']), 7, 1),
                 concept_id=concept_id,
@@ -159,29 +152,6 @@ def basedata_to_stem_table(wrapper) -> list:
             )
 
             records_to_insert.append(record)
-
-        # Exception: Map both variable and value of dre separately
-        if row['dre'] != '':
-            record = StemTable(
-                person_id=int(row['p_id']),
-                start_date=date(int(row['year_diagnosis']), 7, 1),
-                start_datetime=datetime(int(row['year_diagnosis']), 7, 1),
-                concept_id=4254766,  # Digital rectal examination
-                source_value='dre',
-                type_concept_id=0  # TODO
-            )
-            records_to_insert.append(record)
-
-        # Exception: For each person, add
-        record = StemTable(
-            person_id=int(row['p_id']),
-            start_date=date(int(row['year_diagnosis']), 7, 1),
-            start_datetime=datetime(int(row['year_diagnosis']), 7, 1),
-            concept_id=4116087,  # Carcinoma of prostate
-            source_value='dre',
-            type_concept_id=0  # TODO
-        )
-        records_to_insert.append(record)
 
     return records_to_insert
 
