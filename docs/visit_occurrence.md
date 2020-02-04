@@ -49,9 +49,9 @@ nav_order: 4
 | person_id                     | p_id          |       |                                                                                                                                                |
 | visit_concept_id              | time          |       | Map to custom concepts (as variable_value_mapping)                                                                                             |
 | visit_start_date              | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br>                                                                                                  |
-| visit_start_datetime          | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br>                                                                                                  |
+| visit_start_datetime          | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br> + 00:00:00                                                                                       |
 | visit_end_date                | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br>                                                                                                  |
-| visit_end_datetime            | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br>                                                                                                  |
+| visit_end_datetime            | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br> + 00:00:00                                                                                       |
 | visit_type_concept_id         |               |       | Clinical Study visit - 44818519                                                                                                                |
 | provider_id                   |               |       |                                                                                                                                                |
 | care_site_id                  |               |       |                                                                                                                                                |
