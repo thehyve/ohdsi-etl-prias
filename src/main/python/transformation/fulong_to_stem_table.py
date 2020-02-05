@@ -24,6 +24,10 @@ def fulong_to_stem_table(wrapper) -> list:
     fulong = wrapper.get_fulong()
 
     records_to_insert = []
+
+    # Set operator_concept_id to None until proven otherwise
+    operator_concept_id = None
+
     for row in fulong:
 
         # Get visit occurrence id
@@ -52,29 +56,42 @@ def fulong_to_stem_table(wrapper) -> list:
             if value == '' or value == None:
                 continue
 
-            # Skip 0 values for specific biopt_ and mri_ variables
+            # Skip 0 values for specific biopt_ values
             if variable.startswith('biopt_') and variable != 'biopt_max_cancer_score_lenght_fu' and value == '0':
                 continue
-            if variable in ['mri_taken', 'mri_lesions', 'mri_pirads_1', 'mri_targeted_biopsy',
-                            'mri_method_used', 'mri_prostate_volume_method'] and value == '0':
+
+            # Only map variables when value is 1
+            if variable in ['biopt_inf_antibiotic_therapy_fu', 'biopt_inf_hospitalisation_fu',
+                            'biopt_hematuria_fu', 'biopt_hemospermia_fu', 'biopt_pain_fu'] and value != '1':
                 continue
 
-            # Do not map biopt_hematuria_fu, biopt_hemospermia_fu and biopt_pain_fu when value is 2
-            if variable in ['biopt_hematuria_fu', 'biopt_hemospermia_fu', 'biopt_pain_fu'] and value == '2':
+            # Skip 0 values for specific mri_ values
+            if variable in ['mri_taken', 'mri_lesions', 'mri_pirads_1', 'mri_pirads_2', 'mri_pirads_3',
+                            'mri_location_1', 'mri_location_2', 'mri_location_3', 'mri_progrssion_lesions',
+                            'mri_targeted_biopsy', 'mri_method_used', 'mri_prostate_volume_method'] and value == '0':
                 continue
 
             # mri_xx variables should only be captured if mri is taken
             if variable.startswith('mri_') and row['mri_taken'] != "1":
                 continue
 
-            # Do not map mri_lesions and mri_targeted_biopsy when value is 2
-            if variable in ['mri_lesions', 'mri_targeted_biopsy'] and value == '2':
+            # Only map mri_lesions and mri_targeted_biopsy when value is 1
+            if variable in ['mri_lesions', 'mri_targeted_biopsy'] and value != '1':
                 continue
 
-            # Exception: Only mri_targeted_taken.0 is 1, map mri_method_used.0
+            # Exception: Only if mri_targeted_taken is 1, map mri_method_used
             if variable == 'mri_method_used' and row['mri_targeted_biopsy'] != 1:
                 continue
 
+            # Exception: Only if mri_targeted_biopsy is 1, map mri_targeted_cores
+            if variable == 'mri_targeted_cores' and row['mri_targeted_biopsy']:
+                continue
+
+            # Exception: When value of mri_suspected_number is 4, value should be '>3'
+            if variable == 'mri_suspected_number':
+                if value == '4':
+                    value = '3'
+                    operator_concept_id = 4172704  # >
 
             # Exception: Map sum of gleason1_fu and gleason2_fu
             if variable == 'gleason1_fu':
@@ -113,7 +130,7 @@ def fulong_to_stem_table(wrapper) -> list:
 
             # TODO: check if this is the best practice
             # Do not map if there is no variable mapping
-            if target.concept_id == None:
+            if target.concept_id is None:
                 logging.warning('There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
 
             record = StemTable(
@@ -128,6 +145,7 @@ def fulong_to_stem_table(wrapper) -> list:
                 source_value=variable,
                 value_source_value=value,
                 unit_source_value=unit_concept_id if unit_concept_id else None,
+                operator_concept_id=operator_concept_id,
                 type_concept_id=0  # TODO
             )
 

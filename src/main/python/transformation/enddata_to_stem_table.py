@@ -2,87 +2,93 @@ from src.main.python.model.cdm import StemTable
 from datetime import datetime
 from datetime import timedelta
 import re
+import logging
 
 def enddata_to_stem_table(wrapper) -> list:
     enddata = wrapper.get_enddata()
 
     records_to_insert = []
+
+    # Set operator_concept_id to None until proven otherwise
+    operator_concept_id = None
+
     for row in enddata:
 
         basedata_record = wrapper.lookup_basedata_by_pid(row['p_id'])
 
+        # Get date of discontinuation
         basedata_date_diagnosis = datetime(int(basedata_record['year_diagnosis']), 7, 1)
         enddata_days_discontinued = row['days_discontinued_diagnosis']
 
-        operator_post_psa = 0
-
-        if '&lt;' in row['postoperative_psa']:
-            operator_post_psa = 4171756
-
-        if enddata_days_discontinued != '':
-            end_date = basedata_date_diagnosis + timedelta(days=float(enddata_days_discontinued))
-        else:
-            end_date = basedata_date_diagnosis
+        start_datetime = basedata_date_diagnosis + timedelta(days=float(enddata_days_discontinued))
 
         for variable, value in row.items():
-            if variable in ['p_id', 'nr_fuvisits', 'pos_surgical_margins', 'pathology_reported']:
+
+            # Ignore the following columns for mapping
+            if variable in ['p_id', 'nr_fuvisits', 'pos_surgical_margins', 'pathology_reported',
+                            'days_discontinued_diagnosis', 'year_discontinued', 'days_surgery_diagnosis']:
                 continue
+
             # Skip empty string values
             if value == '' or value == None:
                 continue
 
-            #ece and svi only if =1
-            if variable == 'ece' and value != 1:
-                continue
-            if variable == 'svi' and value != 1:
+            # Exception: Map ece, svi and adjuvant_radiotherapy only if value is 1
+            if variable in ['ece', 'svi', 'adjuvant_radiotherapy'] and value != '1':
                 continue
 
-            #Combine gleason_rad_prost in one value
-            if variable == 'gleason1_rad_prost' and row['gleason1_rad_prost'] != '' and row['gleason2_rad_prost'] != '':
-                variable = 'gleason1_rad_prost_gleason2_rad_prost'
-                if row['gleason1_rad_prost'] == "3" and row['gleason2_rad_prost'] == "4":
-                    value = "3+4"
-                elif row['gleason1_rad_prost'] == "4" and row['gleason2_rad_prost'] == "3":
-                    value = "4+3"
-                else:
-                    value = float(row['gleason1_rad_prost']) + float(row['gleason2_rad_prost'])
-                print(variable, value)
+            # Exception: Do not map pos_surgical_margins when value is 9
+            if variable == 'pos_surgical_margins' and value == '9':
+                continue
+
+            # Exception: Map sum of gleason1_rad_prost and gleason2_rad_prost
+            if variable == 'gleason1_rad_prost':
+                # TODO: What to do if one of the gleason scores is empty?
+                if row['gleason1_rad_prost'] == '' or row['gleason2_rad_prost'] == '':
+                    logging.warning('One of the gleason scores is empty (gleason1_rad_prost or gleason2_rad_prost)')
+                    continue
+                variable, value = wrapper.gleason_sum(row, 'gleason1_rad_prost', 'gleason2_rad_prost')
             if variable == 'gleason2_rad_prost':
                 continue
 
-            #prostate_volume strip 'ml'
+            # Exception: prostate_volume strip 'ml'
             if variable == 'prostatevolume':
                 value = re.sub(r'\D', '', value)
 
-            #postoperative_psa strip '&lt;'
+            # Exception: postoperative_psa strip '&lt;'
             if variable == 'postoperative_psa':
-                value = re.sub('&lt;', '', re.sub(',', '.', value))
+                if '&lt;' in value:
+                    operator_concept_id = 4171756  # <
+                    value = re.sub('&lt;', '', value)
+                value = re.sub(',', '.', value)
 
             # Extract variable and value form mapping tables
             target = wrapper.variable_mapper.lookup(variable, value)
-            #print(target)
 
             # Set stem table values
             concept_id = target.concept_id
             value_as_concept_id = target.value_as_concept_id
             value_as_number = target.value_as_number
 
-            # Do not map if there is no variable mapping
-            if (target.concept_id == None) or (target.concept_id == 0):
-                continue
+            # Give warning when vocabulary mapping is missing
+            if target.concept_id is None:
+                logging.warning('There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
 
             record = StemTable(
                 person_id=int(row['p_id']),
-                start_datetime=basedata_date_diagnosis,
+                start_date=start_datetime.date(),
+                start_datetime=start_datetime,
+                end_date=start_datetime.date(),
+                end_datetime=start_datetime,
                 concept_id=concept_id,
                 value_as_number=value_as_number,
                 value_as_concept_id=value_as_concept_id,
-                source_value=variable, # TODO variable name
+                source_value=variable,
                 value_source_value=value,
-                end_date=end_date,
-                operator_concept_id=operator_post_psa,
-                type_concept_id=0
+                operator_concept_id=operator_concept_id,
+                type_concept_id=0  # TODO
             )
+
             records_to_insert.append(record)
 
     return records_to_insert

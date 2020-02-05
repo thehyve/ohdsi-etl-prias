@@ -18,23 +18,24 @@ from datetime import date
 
 def enddata_to_observation_period(wrapper) -> list:
     source_data = wrapper.get_enddata()
+    extraction_date = date(2099, 7, 1)
 
     records_to_insert = []
     for row in source_data:
 
-        base_record = wrapper.lookup_basedata_by_pid(row['p_id'])
-        base_start_date = date(int(base_record['year_diagnosis']), 7, 1)
+        basedata_record = wrapper.lookup_basedata_by_pid(row['p_id'])
+        basedata_start_date = date(int(basedata_record['year_diagnosis']), 7, 1)
 
-        if  row['year_discontinued'] != '':
+        if row['year_discontinued'] != '':
             date_discontinued = date(int(row['year_discontinued']), 7, 1)
         else:
-            date_discontinued = wrapper.extraction_date
+            date_discontinued = extraction_date
 
         record = ObservationPeriod(
             person_id=int(row['p_id']),
-            observation_period_start_date = base_start_date,
-            observation_period_end_date = date_discontinued,
-            period_type_concept_id=0
+            observation_period_start_date=basedata_start_date,
+            observation_period_end_date=date_discontinued,
+            period_type_concept_id=44814723  # Period while enrolled in study
         )
         records_to_insert.append(record)
 

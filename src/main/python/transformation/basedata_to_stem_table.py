@@ -23,6 +23,9 @@ def basedata_to_stem_table(wrapper) -> list:
 
     records_to_insert = []
 
+    # Set operator_concept_id to None until proven otherwise
+    operator_concept_id = None
+
     for row in basedata:
 
         # Get visit occurrence id
@@ -42,28 +45,43 @@ def basedata_to_stem_table(wrapper) -> list:
             if value == '' or value == None:
                 continue
 
-            # Skip 0 values for specific biopt_ and mri_ variables
+            # Skip 0 values for specific biopt_ variables
             if variable.startswith('biopt_') and variable != 'biopt_max_cancer_score_lenght' and value == '0':
                 continue
-            if variable in ['mri_taken.0', 'mri_lesions.0', 'mri_pirads_1.0', 'mri_targeted_biopsy.0',
+
+            # Only map variables when value is 1
+            if variable in ['biopt_inf_antibiotic_therapy', 'biopt_inf_hospitalisation',
+                            'biopt_hematuria', 'biopt_hemospermia', 'biopt_pain'] and value != '1':
+                continue
+
+            #  Skip 0 values for specific mri_ variables
+            if variable in ['mri_taken.0', 'mri_lesions.0', 'mri_pirads_1.0', 'mri_pirads_2.0',
+                            'mri_pirads_3.0', 'mri_location_1.0', 'mri_location_2.0',
+                            'mri_location_3.0', 'mri_progrssion_lesions.0', 'mri_targeted_biopsy.0',
                             'mri_method_used.0', 'mri_prostate_volume_method.0'] and value == '0':
                 continue
 
-            # Do not map biopt_hematuria, biopt_hemospermia and biopt_pain when value is 2
-            if variable in ['biopt_hematuria', 'biopt_hemospermia', 'biopt_pain'] and value == '2':
-                continue
-
             # mri_xx variables should only be captured if mri is taken
-            if variable.startswith('mri_') and row['mri_taken.0'] != "1":
+            if variable.startswith('mri_') and row['mri_taken.0'] != '1':
                 continue
 
-            # Do not map mri_lesions.0 and mri_targeted_biopsy.0 when value is 2
-            if variable in ['mri_lesions.0', 'mri_targeted_biopsy.0'] and value == '2':
+            # Only map mri_lesions.0 and mri_targeted_biopsy.0 when value is 1
+            if variable in ['mri_lesions.0', 'mri_targeted_biopsy.0'] and value != '1':
                 continue
 
             # Exception: Only if mri_targeted_taken.0 is 1, map mri_method_used.0
             if variable == 'mri_method_used.0' and row['mri_targeted_biopsy.0'] != 1:
                 continue
+
+            # Exception: Only if mri_targeted_biopsy.0is 1, map mri_targeted_cores.0
+            if variable == 'mri_targeted_cores.0' and row['mri_targeted_biopsy.0']:
+                continue
+
+            # Exception: When value of mri_suspected_number.0 is 4, value should be '>3'
+            if variable == 'mri_suspected_number.0':
+                if value == '4':
+                    value = '3'
+                    operator_concept_id = 4172704  # >
 
             # Exception: If num_cores < 8, take num_cores2, num_cores_pc2 and gleason1_2 and gleason2_2
             # instead of num_cores, num_cores_pc2, gleason1 and gleason2
@@ -83,6 +101,16 @@ def basedata_to_stem_table(wrapper) -> list:
             elif variable in ['num_cores', 'num_cores_pc', 'gleason1', 'gleason2',
                               'num_cores2', 'num_cores_pc2', 'gleason1_2', 'gleason2_2']:
                 continue
+
+            # Exception: Do not map length if < 50
+            if variable == 'length':
+                if float(value) < 50:
+                    continue
+
+            # Exception: Do not map weight if 0
+            if variable == 'weight':
+                if float(value) == 0:
+                    continue
 
             # Exception: Map sum of gleason1 and gleason2
             if variable == 'gleason1':
@@ -132,7 +160,7 @@ def basedata_to_stem_table(wrapper) -> list:
                     continue
 
             # Give warning when vocabulary mapping is missing
-            if target.concept_id == None:
+            if target.concept_id is None:
                 logging.warning('There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
 
             record = StemTable(
@@ -147,6 +175,7 @@ def basedata_to_stem_table(wrapper) -> list:
                 source_value=variable,
                 value_source_value=value,
                 unit_source_value=unit_concept_id if unit_concept_id else None,
+                operator_concept_id=operator_concept_id,
                 type_concept_id=0  # TODO
             )
 

@@ -21,19 +21,20 @@ def basedata_to_person(wrapper) -> list:
     base_data = wrapper.get_basedata()
 
     records_to_insert = []
+
     for row in base_data:
 
         death_record = wrapper.lookup_enddata_by_pid(row['p_id'])
         if death_record['discontinued'] == 'Died':
-            date_death = datetime(int(death_record['year_discontinued']), 7, 1)
+            death_datetime = datetime(int(death_record['year_discontinued']), 7, 1)
         else:
-            date_death = None
+            death_datetime = None
 
         record = Person(
             person_id=int(row['p_id']),
             person_source_value=row['p_id'],
             year_of_birth=int(row['year_birth']),
-            death_datetime=date_death,
+            death_datetime=death_datetime,
             gender_concept_id=8507,  # Always male
             race_concept_id=0,
             ethnicity_concept_id=0,
