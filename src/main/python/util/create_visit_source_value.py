@@ -12,7 +12,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-
 def create_basedata_visit_source_value(person_id):
     return _create_visit_source_value(person_id)
 

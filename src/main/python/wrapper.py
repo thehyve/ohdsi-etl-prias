@@ -68,7 +68,9 @@ class Wrapper(EtlWrapper):
         self.execute_transformation(basedata_diagnosis_to_stem_table)
         self.execute_transformation(basedata_dre_to_stem_table)
         self.execute_transformation(fulong_dre_to_stem_table)
-        #self.stem_table_to_domains()
+        self.execute_transformation(enddata_to_observation_period)
+        self.execute_transformation(enddata_to_stem_table)
+        self.stem_table_to_domains()
 
         # self.create_person_lookup()
 
@@ -133,19 +135,6 @@ class Wrapper(EtlWrapper):
 
         return self.person_id_lookup[person_source_value]
 
-    """
-    def create_visit_lookup(self):
-        with self.db.session_scope() as session:
-            # Create lookup of the Visit Occurrence table
-            query = session.query(clinical_data.VisitOccurrence).all()
-            self.visit_id_lookup = {x.visit_occurrence_id: [x.person_id, x.visit_source_value] for x in query}
-
-    def lookup_visit_id(self):
-        if self.visit_id_lookup is None:
-            self.create_visit_lookup()
-        return self.visit_id_lookup
-    """
-
     def create_visit_lookup(self):
         """ Initialize the visit lookup """
         with self.db.session_scope() as session:
@@ -156,9 +145,9 @@ class Wrapper(EtlWrapper):
         if self.visit_occurrence_id_lookup is None:
             self.create_visit_lookup()
 
-        #if visit_source_value not in self.visit_occurrence_id_lookup:
-        #    print(self.visit_occurrence_lookup.keys())
-        #    raise Exception('Visit source value "{}" not found in lookup.'.format(visit_source_value))
+        if visit_source_value not in self.visit_occurrence_id_lookup:
+            print(self.visit_occurrence_lookup.keys())
+            raise Exception('Visit source value "{}" not found in lookup.'.format(visit_source_value))
 
         return self.visit_occurrence_id_lookup.get(visit_source_value)
 
