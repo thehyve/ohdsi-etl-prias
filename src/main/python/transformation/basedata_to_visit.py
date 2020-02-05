@@ -16,12 +16,16 @@
 from src.main.python.model.cdm import VisitOccurrence
 from datetime import datetime
 from src.main.python.util.number_conversion import to_int
+from src.main.python.util.create_visit_source_value import create_basedata_visit_source_value
 
 def basedata_to_visit(wrapper) -> list:
     basedata = wrapper.get_basedata()
 
     records_to_insert = []
     for row in basedata:
+
+        # Create visit_occurrence_source_value for visit_id lookup
+        visit_occurrence_source_value = create_basedata_visit_source_value(row['p_id'])
 
         start_date = datetime(to_int(row['year_diagnosis']), 7, 1)
 
@@ -35,7 +39,8 @@ def basedata_to_visit(wrapper) -> list:
             visit_end_datetime=start_date,
             visit_type_concept_id=44818519,  # Clinical Study visit
             discharge_to_concept_id=0,
-            admitted_from_concept_id=0
+            admitted_from_concept_id=0,
+            visit_occurrence_source_value=visit_occurrence_source_value
         )
         records_to_insert.append(record)
 

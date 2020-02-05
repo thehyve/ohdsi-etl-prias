@@ -24,10 +24,10 @@ nav_order: 4
 | visit_occurrence_id           |                |       | Auto-increment                                                                                                                                 |
 | person_id                     | p_id           |       |                                                                                                                                                |
 | visit_concept_id              |                |       | Map to custom concept 'Baseline Visit' - 2000000027                                                                                            |
-| visit_start_date              | year_diagnosis |       | year-07-01<br>                                                                                                                                 |
-| visit_start_datetime          | year_diagnosis |       | year-07-01<br> 00:00:00                                                                                                                        |
-| visit_end_date                | year_diagnosis |       | year-07-01<br>                                                                                                                                 |
-| visit_end_datetime            | year_diagnosis |       | year-07-01<br> 00:00:00                                                                                                                        |
+| visit_start_date              | year_diagnosis |       | year-07-01                                                                                                                                     |
+| visit_start_datetime          | year_diagnosis |       | year-07-01 00:00:00                                                                                                                            |
+| visit_end_date                | year_diagnosis |       | year-07-01                                                                                                                                     |
+| visit_end_datetime            | year_diagnosis |       | year-07-01 00:00:00                                                                                                                            |
 | visit_type_concept_id         |                |       | Clinical Study visit - 44818519                                                                                                                |
 | provider_id                   |                |       |                                                                                                                                                |
 | care_site_id                  |                |       |                                                                                                                                                |
@@ -48,10 +48,10 @@ nav_order: 4
 | visit_occurrence_id           |               |       | Auto-increment                                                                                                                                 |
 | person_id                     | p_id          |       |                                                                                                                                                |
 | visit_concept_id              | time          |       | Map to custom concepts (as variable_value_mapping)                                                                                             |
-| visit_start_date              | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br>                                                                                                  |
-| visit_start_datetime          | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br> + 00:00:00                                                                                       |
-| visit_end_date                | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br>                                                                                                  |
-| visit_end_datetime            | days_psa_diag |       | year_diag (from basedata) + days_psa_diag<br> + 00:00:00                                                                                       |
+| visit_start_date              | days_psa_diag |       | year_diag (from basedata) + days_psa_diag                                                                                                      |
+| visit_start_datetime          | days_psa_diag |       | year_diag (from basedata) + days_psa_diag + 00:00:00                                                                                           |
+| visit_end_date                | days_psa_diag |       | year_diag (from basedata) + days_psa_diag                                                                                                      |
+| visit_end_datetime            | days_psa_diag |       | year_diag (from basedata) + days_psa_diag + 00:00:00                                                                                           |
 | visit_type_concept_id         |               |       | Clinical Study visit - 44818519                                                                                                                |
 | provider_id                   |               |       |                                                                                                                                                |
 | care_site_id                  |               |       |                                                                                                                                                |

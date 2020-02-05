@@ -17,6 +17,7 @@ from src.main.python.model.cdm import VisitOccurrence
 from datetime import datetime
 from datetime import timedelta
 from src.main.python.util.number_conversion import to_int
+from src.main.python.util.create_visit_source_value import create_fulong_visit_source_value
 
 def fulong_to_visit(wrapper) -> list:
     fulong = wrapper.get_fulong()
@@ -28,6 +29,9 @@ def fulong_to_visit(wrapper) -> list:
         variable = 'time'
         value = row[variable]
         target = wrapper.variable_mapper.lookup(variable, value)
+
+        # Create visit_occurrence_source_value for visit_id lookup
+        visit_occurrence_source_value = create_fulong_visit_source_value(row['p_id'], row[variable])
 
         # Calculate proxy date
         basedata_record = wrapper.lookup_basedata_by_pid(row['p_id'])
@@ -51,7 +55,8 @@ def fulong_to_visit(wrapper) -> list:
             visit_type_concept_id=44818519,  # Clinical Study visit
             visit_source_value=row[variable],
             discharge_to_concept_id=0,
-            admitted_from_concept_id=0
+            admitted_from_concept_id=0,
+            visit_occurrence_source_value=visit_occurrence_source_value
         )
         records_to_insert.append(record)
 

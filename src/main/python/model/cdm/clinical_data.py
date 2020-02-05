@@ -122,39 +122,7 @@ class DrugExposure(base):
     visit_occurrence = relationship('VisitOccurrence')
 
 
-class Episode(base):
-    __tablename__ = 'episode'
-    __table_args__ = {'schema': 'public'}
 
-    episode_id = Column(BigInteger, primary_key=True)
-    person_id = Column(ForeignKey('public.person.person_id'), nullable=False, index=True)
-    episode_start_datetime = Column(DateTime, nullable=False)
-    episode_end_datetime = Column(DateTime, nullable=False)
-    episode_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False, index=True)
-    episode_parent_id = Column(ForeignKey('public.episode.episode_id'))
-    episode_number = Column(Integer)
-    episode_object_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
-    episode_type_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
-    episode_source_value = Column(String(50))
-    episode_source_concept_id = Column(ForeignKey('public.concept.concept_id'))
-
-    episode_concept = relationship('Concept', primaryjoin='Episode.episode_concept_id == Concept.concept_id')
-    episode_object_concept = relationship('Concept', primaryjoin='Episode.episode_object_concept_id == Concept.concept_id')
-    episode_parent = relationship('Episode', remote_side=[episode_id])
-    episode_source_concept = relationship('Concept', primaryjoin='Episode.episode_source_concept_id == Concept.concept_id')
-    episode_type_concept = relationship('Concept', primaryjoin='Episode.episode_type_concept_id == Concept.concept_id')
-    person = relationship('Person')
-
-
-class EpisodeEvent(base):
-    __tablename__ = 'episode_event'
-    __table_args__ = {'schema': 'public'}
-
-    episode_id = Column(BigInteger, primary_key=True, nullable=False, index=True)
-    event_id = Column(BigInteger, primary_key=True, nullable=False)
-    event_field_concept_id = Column(ForeignKey('public.concept.concept_id'), primary_key=True, nullable=False, index=True)
-
-    event_field_concept = relationship('Concept')
 
 
 class FactRelationship(base):
@@ -526,6 +494,7 @@ class VisitOccurrence(base):
     provider_id = Column(ForeignKey('public.provider.provider_id'))
     care_site_id = Column(ForeignKey('public.care_site.care_site_id'))
     visit_source_value = Column(String(50))
+    visit_occurrence_source_value = Column(String(50))
     visit_source_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
     admitted_from_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
     admitted_from_source_value = Column(String(50))

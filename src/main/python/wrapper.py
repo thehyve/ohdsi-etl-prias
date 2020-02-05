@@ -32,7 +32,7 @@ class Wrapper(EtlWrapper):
         self.source_folder = Path(source_folder)
         self.variable_mapper = VariableConceptMapper(Path(mapping_tables_folder))
         self.person_id_lookup = None
-        self.visit_id_lookup = None
+        self.visit_occurrence_id_lookup = None
         self.basedata_by_pid_lookup = None
         self.enddata_by_pid_lookup = None
         self.source_table_basedata = None
@@ -133,8 +133,8 @@ class Wrapper(EtlWrapper):
 
         return self.person_id_lookup[person_source_value]
 
+    """
     def create_visit_lookup(self):
-        """Initialize the visit lookup"""
         with self.db.session_scope() as session:
             # Create lookup of the Visit Occurrence table
             query = session.query(clinical_data.VisitOccurrence).all()
@@ -144,6 +144,23 @@ class Wrapper(EtlWrapper):
         if self.visit_id_lookup is None:
             self.create_visit_lookup()
         return self.visit_id_lookup
+    """
+
+    def create_visit_lookup(self):
+        """ Initialize the visit lookup """
+        with self.db.session_scope() as session:
+            query = session.query(clinical_data.VisitOccurrence).all()
+            self.visit_occurrence_id_lookup = {x.visit_occurrence_source_value: x.visit_occurrence_id for x in query}
+
+    def lookup_visit_occurrence_id(self, visit_source_value):
+        if self.visit_occurrence_id_lookup is None:
+            self.create_visit_lookup()
+
+        #if visit_source_value not in self.visit_occurrence_id_lookup:
+        #    print(self.visit_occurrence_lookup.keys())
+        #    raise Exception('Visit source value "{}" not found in lookup.'.format(visit_source_value))
+
+        return self.visit_occurrence_id_lookup.get(visit_source_value)
 
     def create_basedata_by_pid_lookup(self):
         """

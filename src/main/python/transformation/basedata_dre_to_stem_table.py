@@ -15,6 +15,7 @@
 # !/usr/bin/env python3
 from src.main.python.model.cdm import StemTable
 from datetime import date, datetime
+from src.main.python.util.create_visit_source_value import create_basedata_visit_source_value
 import logging
 
 def basedata_dre_to_stem_table(wrapper) -> list:
@@ -25,16 +26,14 @@ def basedata_dre_to_stem_table(wrapper) -> list:
     for row in basedata:
 
         # Get visit occurrence id
-        visit_record = wrapper.lookup_visit_id()
-        for visit_occurrence_id, [person_id, visit_source_value] in visit_record.items():
-            if person_id == int(row['p_id']) and visit_source_value == None:
-                visit_id = visit_occurrence_id
+        visit_source = create_basedata_visit_source_value(row['p_id'])
+        visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
 
         # Exception: Map variable separate from value
         if row['dre'] != '':
             record = StemTable(
                 person_id=int(row['p_id']),
-                visit_occurrence_id=visit_id,
+                visit_occurrence_id=visit_occurrence_id,
                 start_date=date(int(row['year_diagnosis']), 7, 1),
                 start_datetime=datetime(int(row['year_diagnosis']), 7, 1),
                 concept_id=4254766,  # Digital rectal examination
