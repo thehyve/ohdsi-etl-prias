@@ -17,7 +17,7 @@ nav_order: 10
 | observation_concept_id        | concept_id             |       |               |
 | observation_date              | start_date             |       |               |
 | observation_datetime          | start_datetime         |       |               |
-| observation_type_concept_id   | type_concept_id        |       |               |
+| observation_type_concept_id   | type_concept_id        |       | 45905771 - Observation Recorded from a Survey|
 | value_as_number               | value_as_number        |       |               |
 | value_as_string               | value_as_string        |       |               |
 | value_as_concept_id           | value_as_concept_id    |       |               |

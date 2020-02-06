@@ -15,7 +15,7 @@ nav_order: 11
 | specimen_id                 | id                          |       |               |
 | person_id                   | person_id                   |       |               |
 | specimen_concept_id         | concept_id                  |       |               |
-| specimen_type_concept_id    | type_concept_id             |       |               |
+| specimen_type_concept_id    | type_concept_id             |       | 581378 - EHR Detail|
 | specimen_date               | start_date                  |       |               |
 | specimen_datetime           | start_datetime              |       |               |
 | quantity                    | quantity                    |       |               |

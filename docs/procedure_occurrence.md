@@ -17,7 +17,7 @@ nav_order: 9
 | procedure_concept_id        | concept_id            |       |               |
 | procedure_date              | start_date            |       |               |
 | procedure_datetime          | start_datetime        |       |               |
-| procedure_type_concept_id   | type_concept_id       |       |               |
+| procedure_type_concept_id   | type_concept_id       |       |581412 - Procedure Recorded from a Survey|
 | modifier_concept_id         | modifier_concept_id   |       |               |
 | quantity                    | quantity              |       |               |
 | provider_id                 | provider_id           |       |               |

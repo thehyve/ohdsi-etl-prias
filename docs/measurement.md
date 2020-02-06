@@ -18,7 +18,7 @@ nav_order: 8
 | measurement_date              | start_date          |       |               |
 | measurement_datetime          | start_datetime      |       |               |
 | measurement_time              |                     |       |               |
-| measurement_type_concept_id   | type_concept_id     |       |               |
+| measurement_type_concept_id   | type_concept_id     |       | 44818701 - From Physical Examination|
 | operator_concept_id           | operator_concept_id |       |               |
 | value_as_number               | value_as_number     |       |               |
 | value_as_concept_id           | value_as_concept_id |       |               |
