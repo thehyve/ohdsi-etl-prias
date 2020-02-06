@@ -48,7 +48,7 @@ def fulong_dre_to_stem_table(wrapper) -> list:
                 start_date=start_date.date(),
                 start_datetime=start_date,
                 concept_id=4254766,  # Digital rectal examination
-                source_value='dre',
+                source_value='dre_fu',
                 type_concept_id=0  # TODO
             )
             records_to_insert.append(record)

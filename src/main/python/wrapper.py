@@ -80,6 +80,12 @@ class Wrapper(EtlWrapper):
     def stem_table_to_domains(self):
         post_processing_path = Path('src/main/python/post_processing')
         self.execute_sql_file(post_processing_path / 'stem_table_to_measurement.sql')
+        self.execute_sql_file(post_processing_path / 'stem_table_to_condition_occurrence.sql')
+        self.execute_sql_file(post_processing_path / 'stem_table_to_device_exposure.sql')
+        self.execute_sql_file(post_processing_path / 'stem_table_to_drug_exposure.sql')
+        self.execute_sql_file(post_processing_path / 'stem_table_to_observation.sql')
+        self.execute_sql_file(post_processing_path / 'stem_table_to_procedure_occurrence.sql')
+        self.execute_sql_file(post_processing_path / 'stem_table_to_specimen.sql')
 
     def drop_cdm(self):
         """Drops clinical tables, if they exist"""

@@ -79,12 +79,9 @@ def fulong_to_stem_table(wrapper) -> list:
             if variable in ['mri_lesions', 'mri_targeted_biopsy'] and value != '1':
                 continue
 
-            # Exception: Only if mri_targeted_taken is 1, map mri_method_used
-            if variable == 'mri_method_used' and row['mri_targeted_biopsy'] != 1:
-                continue
-
-            # Exception: Only if mri_targeted_biopsy is 1, map mri_targeted_cores
-            if variable == 'mri_targeted_cores' and row['mri_targeted_biopsy']:
+            # Exception: Only map mri_method_used and mri_targeted_cores if mri_targeted_biopsy is 1
+            if (variable == 'mri_method_used' or variable == 'mri_targeted_cores') \
+                    and row['mri_targeted_biopsy'] != '1':
                 continue
 
             # Exception: When value of mri_suspected_number is 4, value should be '>3'

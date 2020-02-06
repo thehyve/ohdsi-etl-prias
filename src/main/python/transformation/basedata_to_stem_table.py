@@ -69,12 +69,9 @@ def basedata_to_stem_table(wrapper) -> list:
             if variable in ['mri_lesions.0', 'mri_targeted_biopsy.0'] and value != '1':
                 continue
 
-            # Exception: Only if mri_targeted_taken.0 is 1, map mri_method_used.0
-            if variable == 'mri_method_used.0' and row['mri_targeted_biopsy.0'] != 1:
-                continue
-
-            # Exception: Only if mri_targeted_biopsy.0is 1, map mri_targeted_cores.0
-            if variable == 'mri_targeted_cores.0' and row['mri_targeted_biopsy.0']:
+            # Exception: Only map mri_method_used.0 and mri_targeted_cores.0 if mri_targeted_biopsy.0 is 1
+            if (variable == 'mri_method_used.0' or variable == 'mri_targeted_cores.0') \
+                    and row['mri_targeted_biopsy.0'] != '1':
                 continue
 
             # Exception: When value of mri_suspected_number.0 is 4, value should be '>3'
