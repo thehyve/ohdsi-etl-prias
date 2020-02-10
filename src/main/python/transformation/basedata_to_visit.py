@@ -23,26 +23,36 @@ def basedata_to_visit(wrapper) -> list:
 
     records_to_insert = []
     for row in basedata:
+        for visit in ['basedata', 'basedata_mri']:
 
-        # Create visit_occurrence_source_value for visit_id lookup
-        visit_occurrence_source_value = create_basedata_visit_source_value(row['p_id'])
+            # Every patient has Baseline Visit record
+            if visit == 'basedata':
+                visit_concept_id = 2000000027  # Baseline Visit
+            # Add visit record with custom concept Baseline Visit - MRI when an MRI was taken
+            elif visit == 'basedata_mri' and row['mri_taken.0'] == '1':
+                visit_concept_id = 2000000066  # Baseline Visit - MRI
+            else:
+                continue
 
-        start_date = datetime(to_int(row['year_diagnosis']), 7, 1)
+            # Create visit_occurrence_source_value for visit_id lookup
+            visit_occurrence_source_value = create_basedata_visit_source_value(row['p_id'], visit)
 
-        record = VisitOccurrence(
-            person_id=int(row['p_id']),
-            visit_concept_id=2000000027,  # Baseline Visit
-            visit_source_concept_id=0,
-            visit_start_date=start_date.date(),
-            visit_start_datetime=start_date,
-            visit_end_date=start_date.date(),
-            visit_end_datetime=start_date,
-            visit_type_concept_id=44818519,  # Clinical Study visit
-            discharge_to_concept_id=0,
-            admitted_from_concept_id=0,
-            visit_occurrence_source_value=visit_occurrence_source_value
-        )
-        records_to_insert.append(record)
+            start_date = datetime(to_int(row['year_diagnosis']), 7, 1)
+
+            record = VisitOccurrence(
+                person_id=int(row['p_id']),
+                visit_concept_id=visit_concept_id,
+                visit_source_concept_id=0,
+                visit_start_date=start_date.date(),
+                visit_start_datetime=start_date,
+                visit_end_date=start_date.date(),
+                visit_end_datetime=start_date,
+                visit_type_concept_id=44818519,  # Clinical Study visit
+                discharge_to_concept_id=0,
+                admitted_from_concept_id=0,
+                visit_occurrence_source_value=visit_occurrence_source_value
+            )
+            records_to_insert.append(record)
 
     return records_to_insert
 

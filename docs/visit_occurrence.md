@@ -23,7 +23,7 @@ nav_order: 4
 |:------------------------------|:---------------|:------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
 | visit_occurrence_id           |                |       | Auto-increment                                                                                                                                 |
 | person_id                     | p_id           |       |                                                                                                                                                |
-| visit_concept_id              |                |       | Map to custom concept 'Baseline Visit' - 2000000027                                                                                            |
+| visit_concept_id              |                |       | Map to custom concept 'Baseline Visit' - 2000000027.<br> If variable 'mri_taken.0' has value 1, map to 'Baseline Visit - MRI' - 2000000066     |
 | visit_start_date              | year_diagnosis |       | year-07-01                                                                                                                                     |
 | visit_start_datetime          | year_diagnosis |       | year-07-01 00:00:00                                                                                                                            |
 | visit_end_date                | year_diagnosis |       | year-07-01                                                                                                                                     |
@@ -47,15 +47,14 @@ nav_order: 4
 |:------------------------------|:--------------|:------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
 | visit_occurrence_id           |               |       | Auto-increment                                                                                                                                 |
 | person_id                     | p_id          |       |                                                                                                                                                |
-| visit_concept_id              | time          |       | Map to custom concepts (as variable_value_mapping)                                                                                             |
-| visit_start_date              | days_psa_diag |       | year_diag (from basedata) + days_psa_diag                                                                                                      |
+| visit_concept_id              | time          |       | Map to custom concepts (as variable_value_mapping). Custom concepts follow the following convention: "Follow-up Visit" + time. If variable 'mri_taken' has value 1, map to Follow-up Visit - MRI - 2000000067|
 | visit_start_datetime          | days_psa_diag |       | year_diag (from basedata) + days_psa_diag + 00:00:00                                                                                           |
 | visit_end_date                | days_psa_diag |       | year_diag (from basedata) + days_psa_diag                                                                                                      |
 | visit_end_datetime            | days_psa_diag |       | year_diag (from basedata) + days_psa_diag + 00:00:00                                                                                           |
 | visit_type_concept_id         |               |       | Clinical Study visit - 44818519                                                                                                                |
 | provider_id                   |               |       |                                                                                                                                                |
 | care_site_id                  |               |       |                                                                                                                                                |
-| visit_source_value            |               |       |                                                                                                                                                |
+| visit_source_value            | time          |       |                                                                                                                                                |
 | visit_source_concept_id       |               |       | 0                                                                                                                                              |
 | admitted_from_concept_id      |               |       | 0                                                                                                                                              |
 | admitted_from_source_value    |               |       |                                                                                                                                                |

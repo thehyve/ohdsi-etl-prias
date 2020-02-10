@@ -26,7 +26,8 @@ def basedata_diagnosis_to_stem_table(wrapper) -> list:
     for row in basedata:
 
         # Get visit occurrence id
-        visit_source = create_basedata_visit_source_value(row['p_id'])
+        visit = 'basedata'
+        visit_source = create_basedata_visit_source_value(row['p_id'], visit)
         visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
 
         # Exception: For each person, add condition occurrence

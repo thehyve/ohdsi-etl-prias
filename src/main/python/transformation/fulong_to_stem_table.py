@@ -30,10 +30,6 @@ def fulong_to_stem_table(wrapper) -> list:
 
     for row in fulong:
 
-        # Get visit occurrence id
-        visit_source = create_fulong_visit_source_value(row['p_id'], row['time'])
-        visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
-
         # Calculate proxy date
         basedata_record = wrapper.lookup_basedata_by_pid(row['p_id'])
         basedata_date_diagnosis = datetime(to_int(basedata_record['year_diagnosis']), 7, 1)
@@ -125,10 +121,17 @@ def fulong_to_stem_table(wrapper) -> list:
                 else:
                     continue
 
-            # TODO: check if this is the best practice
             # Do not map if there is no variable mapping
             if target.concept_id is None:
                 logging.warning('There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
+
+            # Get visit occurrence id
+            if variable.startswith('mri_') and row['mri_taken'] == '1':
+                visit = 'fulong_mri'
+            else:
+                visit = 'fulong'
+            visit_source = create_fulong_visit_source_value(row['p_id'], row['time'], visit)
+            visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
 
             record = StemTable(
                 person_id=int(row['p_id']),

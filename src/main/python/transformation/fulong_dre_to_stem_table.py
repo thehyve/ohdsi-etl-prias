@@ -27,7 +27,8 @@ def fulong_dre_to_stem_table(wrapper) -> list:
     for row in fulong:
 
         # Get visit occurrence id
-        visit_source = create_fulong_visit_source_value(row['p_id'], row['time'])
+        visit = 'fulong'
+        visit_source = create_fulong_visit_source_value(row['p_id'], row['time'], visit)
         visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
 
         # Calculate proxy date

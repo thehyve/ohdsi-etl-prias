@@ -68,7 +68,7 @@ class Wrapper(EtlWrapper):
         self.execute_transformation(basedata_diagnosis_to_stem_table)
         self.execute_transformation(basedata_dre_to_stem_table)
         self.execute_transformation(fulong_dre_to_stem_table)
-        self.execute_transformation(enddata_to_observation_period)
+        self.execute_transformation(basedata_to_observation_period)
         self.execute_transformation(enddata_to_stem_table)
         self.stem_table_to_domains()
 
@@ -188,9 +188,7 @@ class Wrapper(EtlWrapper):
             self.create_enddata_by_pid_lookup()
 
         if p_id not in self.enddata_by_pid_lookup:
-            print(self.enddata_by_pid_lookup.keys())
-            raise Exception('Person id "{}" not found in lookup.'.format(p_id))
-
+            return None
         return self.enddata_by_pid_lookup[p_id]
 
     def gleason_sum(self, row, gleason_score1, gleason_score2):

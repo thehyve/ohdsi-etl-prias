@@ -28,10 +28,6 @@ def basedata_to_stem_table(wrapper) -> list:
 
     for row in basedata:
 
-        # Get visit occurrence id
-        visit_source = create_basedata_visit_source_value(row['p_id'])
-        visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
-
         for variable, value in row.items():
 
             # Ignore the following columns for mapping
@@ -159,6 +155,14 @@ def basedata_to_stem_table(wrapper) -> list:
             # Give warning when vocabulary mapping is missing
             if target.concept_id is None:
                 logging.warning('There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
+
+            # Get visit occurrence id
+            if variable.startswith('mri_') and row['mri_taken.0'] == '1':
+                visit = 'basedata_mri'
+            else:
+                visit = 'basedata'
+            visit_source = create_basedata_visit_source_value(row['p_id'], visit)
+            visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
 
             record = StemTable(
                 person_id=int(row['p_id']),

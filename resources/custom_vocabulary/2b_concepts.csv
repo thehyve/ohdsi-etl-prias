@@ -65,3 +65,5 @@ concept_id,concept_name,domain_id,vocabulary_id,concept_class_id,standard_concep
 2000000063,Follow-up Visit 36,Visit,None,Undefined,,64,19700101,20991231,
 2000000064,Follow-up Visit 37,Visit,None,Undefined,,65,19700101,20991231,
 2000000065,Follow-up Visit 38,Visit,None,Undefined,,66,19700101,20991231,
+2000000066,Baseline Visit – MRI,Visit,None,Undefined,,65,19700101,20991231,
+2000000067,Follow-up Visit – MRI,Visit,None,Undefined,,66,19700101,20991231,
