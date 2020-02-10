@@ -25,7 +25,9 @@ def basedata_to_person(wrapper) -> list:
     for row in base_data:
 
         death_record = wrapper.lookup_enddata_by_pid(row['p_id'])
-        if death_record['discontinued'] == 'Died':
+
+        # Patient should be in enddata in order to have a date of discontinuation
+        if death_record is not None and death_record['discontinued'] == 'Died':
             death_datetime = datetime(int(death_record['year_discontinued']), 7, 1)
         else:
             death_datetime = None
