@@ -25,9 +25,16 @@ class Target:
         self.value_as_concept_id = None
         self.value_as_number = None
         self.unit_concept_id = None
+        self.source_value = None
+        self.value_source_value = None
 
     def __str__(self):
-        return f'concept_id: {self.concept_id}, value_as_concept_id: {self.value_as_concept_id}, value_as_number: {self.value_as_number}, unit_concept_id: {self.unit_concept_id}'
+        return f'concept_id: {self.concept_id}, ' \
+               f'value_as_concept_id: {self.value_as_concept_id}, ' \
+               f'value_as_number: {self.value_as_number}, ' \
+               f'unit_concept_id: {self.unit_concept_id}, ' \
+               f'source_value: {self.source_value}, ' \
+               f'value_source_value: {self.value_source_value}'
 
 
 class VariableConceptMapper:
@@ -113,30 +120,39 @@ class VariableConceptMapper:
         :param value: string
         :return: Target
         """
-        target = Target()
         variable = variable.lower()
+        value = value.lower()
+
+        target = Target()
 
         if not self.has_mapping_for_variable(variable):
             target.concept_id = 0
+            target.source_value = variable
+            target.value_source_value = value
             return target
 
-        value = str(value).lower()
-
-        # Get concept_id from variable and value or only from variable (in that order of priority)
-        target.concept_id = self.variable_value_to_concept.get(variable, {}).get(value) or \
-                            self.variable_to_concept.get(variable)
-
-        # Value is either categorical or numerical. If value has no mapping, it is assumed to be numeric.
-        is_categorical_value = variable in self.variable_value_to_concept or variable in self.variable_value_to_value
-        if is_categorical_value:
-            target.value_as_concept_id = self.variable_value_to_value.get(variable, {}).get(value)
+        if variable in self.variable_value_to_concept and value in self.variable_value_to_concept.get(variable):
+            # Get concept_id from variable and value
+            target.concept_id = self.variable_value_to_concept.get(variable, {}).get(value)
+            target.source_value = variable + '-' + value
         else:
-            if value != '':
-                try:
-                    target.value_as_number = float(value)
-                except ValueError:
-                    raise ValueError(f'"{variable}" recognised as numeric variable, but could not convert value to float: "{value}"')
-        target.unit_concept_id = self.variable_to_unit.get(variable)
+            # Get concept_id from from variable and value separately
+            target.concept_id = self.variable_to_concept.get(variable)
+            target.source_value = variable
+
+            # Value is either categorical or numerical. If value has no mapping, it is assumed to be numeric.
+            is_categorical_value = variable in self.variable_value_to_concept or variable in self.variable_value_to_value
+            if is_categorical_value:
+                target.value_as_concept_id = self.variable_value_to_value.get(variable, {}).get(value)
+            else:
+                if value != '':
+                    try:
+                        target.value_as_number = float(value)
+                    except ValueError:
+                        raise ValueError(f'"{variable}" recognised as numeric variable, but could not convert value to float: "{value}"')
+
+            target.value_source_value = value
+            target.unit_concept_id = self.variable_to_unit.get(variable)
 
         return target
 
@@ -151,8 +167,8 @@ if __name__ == '__main__':
     print(b)  # c_id = 36304419, v_c_id = 4211547
     c = mapper.lookup('psa', '55.2')
     print(c)  # c_id = 44793131, v_n = 55.2, u_c_id = 8842
-    d = mapper.lookup('biopt_route', '99')
-    print(d)  # c_id = 4278515 (the backup mapping if combo var+val not found)
+    # d = mapper.lookup('biopt_route', '99')
+    # print(d)  # c_id = 4278515 (the backup mapping if combo var+val not found)
     e = mapper.lookup('unknown', '99')
     print(e)  # None
     f = mapper.lookup('dre', 'T1c')
