@@ -55,7 +55,7 @@ expect_condition_occurrence(person_id=10019, condition_concept_id=4129917, condi
 # Basedata to condition occurrence -------------------------------------------
 declareTest(20, 'Condition occurrence - biopt_inf_outcome')
 add_basedata(p_id='10020', year_diagnosis='2005', biopt_inf_outcome='0')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10020, condition_concept_id=4159637)
 
 # Basedata to condition occurrence -------------------------------------------
 declareTest(21, 'Condition occurrence - biopt_inf_outcome')
@@ -74,7 +74,7 @@ expect_condition_occurrence(person_id=10022, condition_concept_id=4216643, condi
 # Basedata to condition occurrence -------------------------------------------
 declareTest(23, 'Condition occurrence - biopt_hematuria')
 add_basedata(p_id='10023', year_diagnosis='2005', biopt_hematuria='0')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10023, condition_concept_id=437038)
 
 # Basedata to condition occurrence -------------------------------------------
 declareTest(24, 'Condition occurrence - biopt_hematuria')
@@ -86,12 +86,12 @@ expect_condition_occurrence(person_id=10024, condition_concept_id=437038, condit
 # Basedata to condition occurrence -------------------------------------------
 declareTest(25, 'Condition occurrence - biopt_hematuria')
 add_basedata(p_id='10025', year_diagnosis='2005', biopt_hematuria='2')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10025, condition_concept_id=437038)
 
 # Basedata to condition occurrence -------------------------------------------
 declareTest(26, 'Condition occurrence - biopt_hemospermia')
 add_basedata(p_id='10026', year_diagnosis='2005', biopt_hemospermia='0')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10026, condition_concept_id=439871)
 
 # Basedata to condition occurrence -------------------------------------------
 declareTest(27, 'Condition occurrence - biopt_hemospermia')
@@ -103,12 +103,12 @@ expect_condition_occurrence(person_id=10027, condition_concept_id=439871, condit
 # Basedata to condition occurrence -------------------------------------------
 declareTest(28, 'Condition occurrence - biopt_hemospermia')
 add_basedata(p_id='10028', year_diagnosis='2005', biopt_hemospermia='2')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10028, condition_concept_id=439871)
 
 # Basedata to condition occurrence -------------------------------------------
 declareTest(29, 'Condition occurrence - biopt_pain')
 add_basedata(p_id='10029', year_diagnosis='2005', biopt_pain='0')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10029, condition_concept_id=439871)
 
 # Basedata to condition occurrence -------------------------------------------
 declareTest(30, 'Condition occurrence - biopt_pain')
@@ -120,12 +120,12 @@ expect_condition_occurrence(person_id=10030, condition_concept_id=2000000005, co
 # Basedata to condition occurrence -------------------------------------------
 declareTest(31, 'Condition occurrence - biopt_pain')
 add_basedata(p_id='10031', year_diagnosis='2005', biopt_pain='2')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10031, condition_concept_id=2000000005)
 
 # Basedata to condition occurrence -------------------------------------------
 declareTest(32, 'Condition occurrence - mri_lesions.0')
 add_basedata(p_id='10032', year_diagnosis='2005', mri_lesions.0='0')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10032, condition_concept_id=4059669)
 
 # Basedata to condition occurrence -------------------------------------------
 declareTest(33, 'Condition occurrence - mri_lesions.0')
@@ -137,7 +137,7 @@ expect_condition_occurrence(person_id=10033, condition_concept_id=4059669, condi
 # Basedata to condition occurrence -------------------------------------------
 declareTest(34, 'Condition occurrence - mri_lesions.0')
 add_basedata(p_id='10034', year_diagnosis='2005', mri_lesions.0='2', mri_taken.0='1')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10034, condition_concept_id=4059669)
 
 # Fulong to condition occurrence -------------------------------------------
 declareTest(35, 'Condition occurrence - fulong dre_fu')
@@ -198,7 +198,7 @@ expect_condition_occurrence(person_id=10041, condition_concept_id=4129917, condi
 declareTest(42, 'Condition occurrence - fulong biopt_inf_outcome_fu')
 add_basedata(p_id='10042', year_diagnosis='2005')
 add_fulong(p_id='10042', biopt_inf_outcome_fu='0', days_psa_diag='1')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10042, condition_concept_id=4159637)
 
 # Fulong to condition occurrence -------------------------------------------
 declareTest(43, 'Condition occurrence - fulong biopt_inf_outcome_fu')
@@ -220,7 +220,7 @@ expect_condition_occurrence(person_id=10044, condition_concept_id=4216643, condi
 declareTest(45, 'Condition occurrence - fulong biopt_hematuria_fu')
 add_basedata(p_id='10045', year_diagnosis='2005')
 add_fulong(p_id='10045', biopt_hematuria_fu='0', days_psa_diag='1')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10045, condition_concept_id=437038)
 
 # Fulong to condition occurrence -------------------------------------------
 declareTest(46, 'Condition occurrence - fulong biopt_hematuria_fu')
@@ -234,19 +234,19 @@ expect_condition_occurrence(person_id=10046, condition_concept_id=437038, condit
 declareTest(47, 'Condition occurrence - fulong biopt_hematuria_fu')
 add_basedata(p_id='10047', year_diagnosis='2005')
 add_fulong(p_id='10047', biopt_hematuria_fu='2', days_psa_diag='1')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10047, condition_concept_id=437038)
 
 # Fulong to condition occurrence -------------------------------------------
 declareTest(48, 'Condition occurrence - fulong biopt_hemospermia_fu')
 add_basedata(p_id='10048', year_diagnosis='2005')
 add_fulong(p_id='10048', biopt_hemospermia_fu='0', days_psa_diag='1')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10048, condition_concept_id=439871)
 
 # Fulong to condition occurrence -------------------------------------------
 declareTest(49, 'Condition occurrence - fulong biopt_hemospermia_fu')
 add_basedata(p_id='10049', year_diagnosis='2005')
 add_fulong(p_id='10049', biopt_hemospermia_fu='1', days_psa_diag='1')
-expect_condition_occurrence(condition_concept_id=439871, condition_start_date='2005-07-02',
+expect_condition_occurrence(person_id=10049, condition_concept_id=439871, condition_start_date='2005-07-02',
                             condition_source_value='biopt_hemospermia_fu-1',
                             condition_start_datetime='2005-07-02 00:00:00', condition_type_concept_id=44786627)
 
@@ -254,13 +254,13 @@ expect_condition_occurrence(condition_concept_id=439871, condition_start_date='2
 declareTest(50, 'Condition occurrence - fulong biopt_hemospermia_fu')
 add_basedata(p_id='10050', year_diagnosis='2005')
 add_fulong(p_id='10050', biopt_hemospermia_fu='2', days_psa_diag='1')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10050, condition_concept_id=439871)
 
 # Fulong to condition occurrence -------------------------------------------
 declareTest(51, 'Condition occurrence - fulong biopt_pain_fu')
 add_basedata(p_id='10051', year_diagnosis='2005')
 add_fulong(p_id='10051', biopt_pain_fu='0', days_psa_diag='1')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10051, condition_concept_id=2000000005)
 
 # Fulong to condition occurrence -------------------------------------------
 declareTest(52, 'Condition occurrence - fulong biopt_pain_fu')
@@ -274,13 +274,13 @@ expect_condition_occurrence(person_id=10052, condition_concept_id=2000000005, co
 declareTest(53, 'Condition occurrence - fulong biopt_pain_fu')
 add_basedata(p_id='10053', year_diagnosis='2005')
 add_fulong(p_id='10053',  biopt_pain_fu='2', days_psa_diag='1')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10053, condition_concept_id=2000000005)
 
 # Fulong to condition occurrence -------------------------------------------
 declareTest(54, 'Condition occurrence - fulong mri_lesions')
 add_basedata(p_id='10054', year_diagnosis='2005')
 add_fulong(p_id='10054', mri_lesions='0', days_psa_diag='1')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10054,condition_concept_id=4059669)
 
 # Fulong to condition occurrence -------------------------------------------
 declareTest(55, 'Condition occurrence - fulong mri_lesions')
@@ -294,15 +294,15 @@ expect_condition_occurrence(person_id=10055, condition_concept_id=4059669, condi
 declareTest(56, 'Condition occurrence - fulong mri_lesions')
 add_basedata(p_id='10056', year_diagnosis='2005')
 add_fulong(p_id='10056', mri_lesions='2', mri_taken='1', days_psa_diag='1')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10056, condition_concept_id=4059669)
 
 # Fulong to condition occurrence -------------------------------------------
 declareTest(57, 'Condition occurrence - fulong mri_lesions')
 add_basedata(p_id='10057', year_diagnosis='2005', mri_lesions='1', mri_taken='0')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10057, condition_concept_id=4059669)
 
 # Fulong to condition occurrence -------------------------------------------
 declareTest(58, 'Condition occurrence - fulong mri_lesions')
 add_basedata(p_id='10058', year_diagnosis='2005')
 add_fulong(p_id='10058', mri_lesions='1', mri_taken='0', days_psa_diag='1')
-expect_no_condition_occurrence
+expect_no_condition_occurrence(person_id=10057, condition_concept_id=4059669)
