@@ -69,6 +69,8 @@ def enddata_to_stem_table(wrapper) -> list:
             concept_id = target.concept_id
             value_as_concept_id = target.value_as_concept_id
             value_as_number = target.value_as_number
+            source_value = target.source_value
+            value_source_value = target.value_source_value
 
             # Give warning when vocabulary mapping is missing
             if target.concept_id is None:
@@ -83,8 +85,8 @@ def enddata_to_stem_table(wrapper) -> list:
                 concept_id=concept_id,
                 value_as_number=value_as_number,
                 value_as_concept_id=value_as_concept_id,
-                source_value=variable,
-                value_source_value=value,
+                source_value=source_value,
+                value_source_value=value_source_value,
                 operator_concept_id=operator_concept_id,
                 type_concept_id=0  # TODO
             )

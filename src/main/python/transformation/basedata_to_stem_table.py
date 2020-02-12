@@ -136,6 +136,8 @@ def basedata_to_stem_table(wrapper) -> list:
             value_as_concept_id = target.value_as_concept_id
             value_as_number = target.value_as_number
             unit_concept_id = target.unit_concept_id
+            source_value = target.source_value
+            value_source_value = target.value_source_value
 
             # Exception: map biopt_inf_hospitalisation and biopt_inf_hospitalization_days to one record
             if variable == 'biopt_inf_hospitalisation':
@@ -173,8 +175,8 @@ def basedata_to_stem_table(wrapper) -> list:
                 value_as_concept_id=value_as_concept_id,
                 value_as_number=value_as_number,
                 unit_concept_id=unit_concept_id,
-                source_value=variable,
-                value_source_value=value,
+                source_value=source_value,
+                value_source_value=value_source_value,
                 unit_source_value=unit_concept_id if unit_concept_id else None,
                 operator_concept_id=operator_concept_id,
                 type_concept_id=0  # TODO

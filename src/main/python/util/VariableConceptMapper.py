@@ -121,7 +121,7 @@ class VariableConceptMapper:
         :return: Target
         """
         variable = variable.lower()
-        value = value.lower()
+        value = str(value).lower()
 
         target = Target()
 
