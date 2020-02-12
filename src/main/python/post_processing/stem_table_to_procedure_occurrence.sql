@@ -27,7 +27,7 @@ SELECT
 
 	stem_table.start_datetime	AS	procedure_datetime,
 
-	stem_table.type_concept_id	AS	procedure_type_concept_id,
+	581412	AS	procedure_type_concept_id, /* Procedure Recorded from a Survey*/
 
 	coalesce(stem_table.modifier_concept_id, 0)	AS	modifier_concept_id,
 
@@ -39,7 +39,7 @@ SELECT
 
 	stem_table.visit_detail_id	AS	visit_detail_id,
 
-	581412	AS	procedure_source_value, /* Procedure Recorded from a Survey*/
+	stem_table.source_value	AS	procedure_source_value,
 
 	coalesce(stem_table.source_concept_id, 0)	AS	procedure_source_concept_id,
 

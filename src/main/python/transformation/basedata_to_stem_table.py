@@ -151,6 +151,7 @@ def basedata_to_stem_table(wrapper) -> list:
             if variable == 'mri_prostate_volume_method.0':
                 if row['mri_prostate_volume.0'] != '':
                     value_as_number = int(row['mri_prostate_volume.0'])
+                    value_source_value = 'mri_prostate_volume.0' + "-" + row['mri_prostate_volume.0']
                 else:
                     continue
 

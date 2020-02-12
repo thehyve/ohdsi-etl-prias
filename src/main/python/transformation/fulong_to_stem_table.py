@@ -120,6 +120,7 @@ def fulong_to_stem_table(wrapper) -> list:
             if variable == 'mri_prostate_volume_method':
                 if row['mri_prostate_volume'] != '':
                     value_as_number = int(row['mri_prostate_volume'])
+                    value_source_value = 'mri_prostate_volume' + "-" + row['mri_prostate_volume']
                 else:
                     continue
 
