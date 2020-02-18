@@ -22,8 +22,9 @@ source('TestFramework.R')  # Note: removed initFramework() line from original fr
 initFramework()
 
 # Import test cases ------------------------------------------------------------
-#source('test_cases/test_person.R')#source('test_cases/test_visit_occurrence.R')
-#source('test_cases/test_basedata.R')
+source('test_cases/test_person.R')
+source('test_cases/test_visit_occurrence.R')
+source('test_cases/test_basedata.R')
 source('test_cases/test_observation.R')
 
 # Generate source csv files -----------------------------------------------------

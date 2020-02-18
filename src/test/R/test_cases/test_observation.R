@@ -2,7 +2,7 @@
 declareTest(203, 'Observation - prostatic_vol')
 add_basedata(p_id='10203', year_diagnosis='2000', prostatic_vol='70')
 expect_observation(person_id=10203, observation_concept_id=4096978, unit_concept_id=8587,
-                   value_as_number=70)
+                   value_as_number=70, observation_datetime='2000-07-01 00:00:00.000000')
 
 #Basedata to observation --------------------------------------------
 declareTest(204, 'Observation - gleason')
@@ -30,9 +30,10 @@ expect_observation(person_id=10207, value_as_concept_id=35929404,
 
 #Basedata to observation --------------------------------------------
 declareTest(208, 'Observation - gleason')
-add_basedata(p_id='10208', gleason1='5', gleason2='3')
+add_basedata(p_id='10208', year_diagnosis='2011', gleason1='5', gleason2='3')
 expect_observation(person_id=10208, value_as_concept_id=35921496, 
-                   observation_concept_id=4297949, observation_source_value='gleason1_gleason2')
+                   observation_concept_id=4297949, observation_source_value='gleason1_gleason2',
+                   observation_date='2011-07-01')
 
 #Basedata to observation --------------------------------------------
 declareTest(209, 'Observation - gleason')
@@ -49,7 +50,8 @@ expect_observation(person_id=10210, value_as_concept_id=35928355,
 #Basedata to observation --------------------------------------------
 declareTest(211, 'Observation - biopt_infection')
 add_basedata(p_id='10211', biopt_infection='0')
-expect_no_observation(person_id=10211, observation_concept_id=2000000002)
+expect_no_observation(person_id=10211, observation_concept_id=2000000002,
+                      observation_type_concept_id=45905771)
 
 #Basedata to observation --------------------------------------------
 declareTest(212, 'Observation - biopt_infection')
@@ -64,10 +66,10 @@ expect_observation(person_id=10213, observation_concept_id=2000000002,
                    value_as_concept_id=45878245, observation_source_value='biopt_infection')
 
 #Basedata to observation --------------------------------------------
-declareTest(214, 'Observation - biopt_inf_hospitalisation')
+declareTest(214, 'Observation - biopt_inf_hospitalisation_days')
 add_basedata(p_id='10214', biopt_inf_hospitalisation='1', biopt_inf_hospitalisation_days='2')
 expect_observation(person_id=10214, observation_concept_id=42869434, 
-                   observation_source_value='biopt_inf_hospitalisation-1', 
+                observation_source_value='biopt_inf_hospitalisation_days', 
                    value_as_number=2, unit_concept_id=8512)
 
 #Basedata to observation --------------------------------------------
@@ -315,11 +317,12 @@ expect_observation(person_id=10256, observation_concept_id=4297949,
                    value_as_concept_id=35928355)
 
 #Basedata to observation --------------------------------------------
-declareTest(257, 'Observation - age diagnosed')
-add_basedata(p_id='10257', age_diagnosis='59')
+declareTest(257, 'Observation - age_diagnosis')
+add_basedata(p_id='10257', age_diagnosis='59', year_diagnosis='2013')
 expect_observation(person_id=10257, observation_concept_id=4265453, 
                    value_as_number=59, observation_type_concept_id=45905771, 
-                   observation_source_value='age_diagnosis')
+                   observation_source_value='age_diagnosis',
+                   observation_date='2013-07-01')
 
 #Fulong to observation ----------------------------------------------
 declareTest(258, 'Observation - gleason_fu')
@@ -847,8 +850,8 @@ expect_observation(person_id=10333, observation_concept_id=44807628,
 declareTest(334, 'Observation - prostatevolume')
 add_basedata(p_id='10334')
 add_enddata(p_id='10334', prostatevolume='70')
-expect_observation(person_id=10334, observation_concept_id=4096978,
-                   unit_concept_id=8587, value_as_number=70)
+expect_observation(person_id=10334, observation_concept_id=4096978, value_as_number=70, 
+                   observation_source_value='prostatevolume')
 
 #Enddata to observation --------------------------------------------
 declareTest(335, 'Observation - tumorvolume')
