@@ -57,8 +57,8 @@ def fulong_to_stem_table(wrapper) -> list:
                 continue
 
             # Only map variables when value is 1
-            if variable in ['biopt_inf_antibiotic_therapy_fu', 'biopt_inf_hospitalisation_fu',
-                            'biopt_hematuria_fu', 'biopt_hemospermia_fu', 'biopt_pain_fu'] and value != '1':
+            if variable in ['biopt_inf_antibiotic_therapy_fu', 'biopt_hematuria_fu',
+                            'biopt_hemospermia_fu', 'biopt_pain_fu'] and value != '1':
                 continue
 
             # Skip 0 values for specific mri_ values
@@ -108,10 +108,10 @@ def fulong_to_stem_table(wrapper) -> list:
             source_value = target.source_value
             value_source_value = target.value_source_value
 
-            # Exception: map biopt_inf_hospitalisation and biopt_inf_hospitalization_days to one record
+            # Exception: map biopt_inf_hospitalization_days_fu if biopt_inf_hospitalization_fu is 1
+            if variable == 'biopt_inf_hospitalisation_days_fu' and row['biopt_inf_hospitalisation_fu'] != '1':
+                continue
             if variable == 'biopt_inf_hospitalisation_fu':
-                value_as_number = row['biopt_inf_hospitalisation_days_fu']
-            if variable == 'biopt_inf_hospitalisation_days_fu':
                 continue
 
             # Exception: map mri_prostate_volume.0 and mri_prostate_volume_method.0 to one record
