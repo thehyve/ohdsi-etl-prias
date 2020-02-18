@@ -26,8 +26,6 @@ Biopt_inf_antibiotic_type_FU,7,Penicillins (with B-lactam),40772521,Penicillin,1
 Biopt_inf_antibiotic_type_FU,8,Aminoglycosides,36306522,Aminoglycoside,1970-01-01,2099-12-31,
 Biopt_inf_antibiotic_type_FU,9,Nitrofuran,2000000004,Nitrofuran,1970-01-01,2099-12-31,
 Biopt_inf_antibiotic_type_FU,10,other,40779119,Other Antibiotic,1970-01-01,2099-12-31,
-Biopt_inf_hospitalisation,1,yes,42869434,Hospitalized or emergency room [ESRD],2012-05-04,2099-12-31,
-Biopt_inf_hospitalisation_FU,1,yes,42869434,Hospitalized or emergency room [ESRD],2012-05-04,2099-12-31,
 Biopt_inf_outcome,1,cured,4159637,Patient cured,1970-01-01,2099-12-31,
 Biopt_inf_outcome,2,death,4216643,Patient died,1970-01-01,2099-12-31,
 Biopt_inf_outcome_FU,1,cured,4159637,Patient cured,1970-01-01,2099-12-31,

@@ -42,12 +42,14 @@ def basedata_to_stem_table(wrapper) -> list:
                 continue
 
             # Skip 0 values for specific biopt_ variables
-            if variable.startswith('biopt_') and variable != 'biopt_max_cancer_score_lenght' and value == '0':
+            if variable.startswith('biopt_') \
+                    and variable not in ['biopt_max_cancer_score_lenght', 'biopt_inf_hospitalisation_days'] \
+                    and value == '0':
                 continue
 
             # Only map variables when value is 1
-            if variable in ['biopt_inf_antibiotic_therapy', 'biopt_inf_hospitalisation',
-                            'biopt_hematuria', 'biopt_hemospermia', 'biopt_pain'] and value != '1':
+            if variable in ['biopt_inf_antibiotic_therapy','biopt_hematuria',
+                            'biopt_hemospermia', 'biopt_pain'] and value != '1':
                 continue
 
             #  Skip 0 values for specific mri_ variables
@@ -139,10 +141,10 @@ def basedata_to_stem_table(wrapper) -> list:
             source_value = target.source_value
             value_source_value = target.value_source_value
 
-            # Exception: map biopt_inf_hospitalisation and biopt_inf_hospitalization_days to one record
+            # Exception: map biopt_inf_hospitalization_days if biopt_inf_hospitalization is 1
+            if variable == 'biopt_inf_hospitalisation_days' and row['biopt_inf_hospitalisation'] != '1':
+                continue
             if variable == 'biopt_inf_hospitalisation':
-                value_as_number = row['biopt_inf_hospitalisation_days']
-            if variable == 'biopt_inf_hospitalisation_days':
                 continue
 
             # Exception: map mri_prostate_volume.0 and mri_prostate_volume_method.0 to one record
