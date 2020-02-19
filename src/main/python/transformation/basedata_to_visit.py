@@ -16,28 +16,30 @@
 from src.main.python.model.cdm import VisitOccurrence
 from datetime import datetime
 from src.main.python.util.number_conversion import to_int
-from src.main.python.util.create_visit_source_value import create_basedata_visit_source_value
+from src.main.python.util.create_record_source_value import create_basedata_visit_record_source_value
 
 def basedata_to_visit(wrapper) -> list:
+    source_table_name = 'basedata'
+
     basedata = wrapper.get_basedata()
 
     records_to_insert = []
     for row in basedata:
-        for visit in ['basedata', 'basedata_mri', 'basedata_biopsy']:
+        for visit_type in ['standard', 'mri', 'biopsy']:
 
             # Every patient has Baseline Visit record
-            if visit == 'basedata':
+            if visit_type == 'standard':
                 visit_concept_id = 2000000027  # Baseline Visit
             # Add visit record with custom concept Baseline Visit - MRI when an MRI was taken
-            elif visit == 'basedata_mri' and row['mri_taken.0'] == '1':
+            elif visit_type == 'mri' and row['mri_taken.0'] == '1':
                 visit_concept_id = 2000000066  # Baseline Visit - MRI
-            elif visit == 'basedata_biopsy':
+            elif visit_type == 'biopsy':
                 visit_concept_id = 2000000105  # Baseline Visit - Biopsy
             else:
                 continue
 
             # Create visit_occurrence_source_value for visit_id lookup
-            visit_occurrence_source_value = create_basedata_visit_source_value(row['p_id'], visit)
+            visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'], source_table_name, visit_type)
 
             start_date = datetime(to_int(row['year_diagnosis']), 7, 1)
 
@@ -52,7 +54,7 @@ def basedata_to_visit(wrapper) -> list:
                 visit_type_concept_id=44818519,  # Clinical Study visit
                 discharge_to_concept_id=0,
                 admitted_from_concept_id=0,
-                visit_occurrence_source_value=visit_occurrence_source_value
+                record_source_value=visit_record_source_value
             )
             records_to_insert.append(record)
 

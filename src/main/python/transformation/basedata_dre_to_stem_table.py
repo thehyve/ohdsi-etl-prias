@@ -15,10 +15,12 @@
 # !/usr/bin/env python3
 from src.main.python.model.cdm import StemTable
 from datetime import date, datetime
-from src.main.python.util.create_visit_source_value import create_basedata_visit_source_value
+from src.main.python.util.create_record_source_value import create_basedata_visit_record_source_value
 import logging
 
 def basedata_dre_to_stem_table(wrapper) -> list:
+    source_table_name = 'basedata'
+
     basedata = wrapper.get_basedata()
 
     records_to_insert = []
@@ -26,9 +28,9 @@ def basedata_dre_to_stem_table(wrapper) -> list:
     for row in basedata:
 
         # Get visit occurrence id
-        visit = 'basedata'
-        visit_source = create_basedata_visit_source_value(row['p_id'], visit)
-        visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
+        visit_type = 'standard'
+        visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'], source_table_name, visit_type)
+        visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
 
         # Exception: Map variable separate from value
         if row['dre'] != '':

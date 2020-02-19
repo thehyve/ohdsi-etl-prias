@@ -45,10 +45,14 @@ class ConditionOccurrence(base):
     condition_status_source_value = Column(String(50))
     condition_status_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
 
-    condition_concept = relationship('Concept', primaryjoin='ConditionOccurrence.condition_concept_id == Concept.concept_id')
-    condition_source_concept = relationship('Concept', primaryjoin='ConditionOccurrence.condition_source_concept_id == Concept.concept_id')
-    condition_status_concept = relationship('Concept', primaryjoin='ConditionOccurrence.condition_status_concept_id == Concept.concept_id')
-    condition_type_concept = relationship('Concept', primaryjoin='ConditionOccurrence.condition_type_concept_id == Concept.concept_id')
+    condition_concept = relationship('Concept',
+                                     primaryjoin='ConditionOccurrence.condition_concept_id == Concept.concept_id')
+    condition_source_concept = relationship('Concept',
+                                            primaryjoin='ConditionOccurrence.condition_source_concept_id == Concept.concept_id')
+    condition_status_concept = relationship('Concept',
+                                            primaryjoin='ConditionOccurrence.condition_status_concept_id == Concept.concept_id')
+    condition_type_concept = relationship('Concept',
+                                          primaryjoin='ConditionOccurrence.condition_type_concept_id == Concept.concept_id')
     person = relationship('Person')
     provider = relationship('Provider')
     visit_detail = relationship('VisitDetail')
@@ -76,8 +80,10 @@ class DeviceExposure(base):
     device_source_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
 
     device_concept = relationship('Concept', primaryjoin='DeviceExposure.device_concept_id == Concept.concept_id')
-    device_source_concept = relationship('Concept', primaryjoin='DeviceExposure.device_source_concept_id == Concept.concept_id')
-    device_type_concept = relationship('Concept', primaryjoin='DeviceExposure.device_type_concept_id == Concept.concept_id')
+    device_source_concept = relationship('Concept',
+                                         primaryjoin='DeviceExposure.device_source_concept_id == Concept.concept_id')
+    device_type_concept = relationship('Concept',
+                                       primaryjoin='DeviceExposure.device_type_concept_id == Concept.concept_id')
     person = relationship('Person')
     provider = relationship('Provider')
     visit_detail = relationship('VisitDetail')
@@ -113,16 +119,14 @@ class DrugExposure(base):
     dose_unit_source_value = Column(String(50))
 
     drug_concept = relationship('Concept', primaryjoin='DrugExposure.drug_concept_id == Concept.concept_id')
-    drug_source_concept = relationship('Concept', primaryjoin='DrugExposure.drug_source_concept_id == Concept.concept_id')
+    drug_source_concept = relationship('Concept',
+                                       primaryjoin='DrugExposure.drug_source_concept_id == Concept.concept_id')
     drug_type_concept = relationship('Concept', primaryjoin='DrugExposure.drug_type_concept_id == Concept.concept_id')
     person = relationship('Person')
     provider = relationship('Provider')
     route_concept = relationship('Concept', primaryjoin='DrugExposure.route_concept_id == Concept.concept_id')
     visit_detail = relationship('VisitDetail')
     visit_occurrence = relationship('VisitOccurrence')
-
-
-
 
 
 class FactRelationship(base):
@@ -164,10 +168,14 @@ class Measurement(base):
     modifier_of_event_id = Column(BigInteger)
     modifier_of_field_concept_id = Column(ForeignKey('public.concept.concept_id'))
 
-    measurement_concept = relationship('Concept', primaryjoin='Measurement.measurement_concept_id == Concept.concept_id')
-    measurement_source_concept = relationship('Concept', primaryjoin='Measurement.measurement_source_concept_id == Concept.concept_id')
-    measurement_type_concept = relationship('Concept', primaryjoin='Measurement.measurement_type_concept_id == Concept.concept_id')
-    modifier_of_field_concept = relationship('Concept', primaryjoin='Measurement.modifier_of_field_concept_id == Concept.concept_id')
+    measurement_concept = relationship('Concept',
+                                       primaryjoin='Measurement.measurement_concept_id == Concept.concept_id')
+    measurement_source_concept = relationship('Concept',
+                                              primaryjoin='Measurement.measurement_source_concept_id == Concept.concept_id')
+    measurement_type_concept = relationship('Concept',
+                                            primaryjoin='Measurement.measurement_type_concept_id == Concept.concept_id')
+    modifier_of_field_concept = relationship('Concept',
+                                             primaryjoin='Measurement.modifier_of_field_concept_id == Concept.concept_id')
     operator_concept = relationship('Concept', primaryjoin='Measurement.operator_concept_id == Concept.concept_id')
     person = relationship('Person')
     provider = relationship('Provider')
@@ -229,7 +237,8 @@ class NoteNlp(base):
 
     note = relationship('Note')
     note_nlp_concept = relationship('Concept', primaryjoin='NoteNlp.note_nlp_concept_id == Concept.concept_id')
-    note_nlp_source_concept = relationship('Concept', primaryjoin='NoteNlp.note_nlp_source_concept_id == Concept.concept_id')
+    note_nlp_source_concept = relationship('Concept',
+                                           primaryjoin='NoteNlp.note_nlp_source_concept_id == Concept.concept_id')
     section_concept = relationship('Concept', primaryjoin='NoteNlp.section_concept_id == Concept.concept_id')
 
 
@@ -259,10 +268,14 @@ class Observation(base):
     observation_event_id = Column(BigInteger)
     obs_event_field_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
 
-    observation_concept = relationship('Concept', primaryjoin='Observation.observation_concept_id == Concept.concept_id')
-    observation_source_concept = relationship('Concept', primaryjoin='Observation.observation_source_concept_id == Concept.concept_id')
-    observation_type_concept = relationship('Concept', primaryjoin='Observation.observation_type_concept_id == Concept.concept_id')
-    obs_event_field_concept = relationship('Concept', primaryjoin='Observation.obs_event_field_concept_id == Concept.concept_id')
+    observation_concept = relationship('Concept',
+                                       primaryjoin='Observation.observation_concept_id == Concept.concept_id')
+    observation_source_concept = relationship('Concept',
+                                              primaryjoin='Observation.observation_source_concept_id == Concept.concept_id')
+    observation_type_concept = relationship('Concept',
+                                            primaryjoin='Observation.observation_type_concept_id == Concept.concept_id')
+    obs_event_field_concept = relationship('Concept',
+                                           primaryjoin='Observation.obs_event_field_concept_id == Concept.concept_id')
     person = relationship('Person')
     provider = relationship('Provider')
     qualifier_concept = relationship('Concept', primaryjoin='Observation.qualifier_concept_id == Concept.concept_id')
@@ -312,7 +325,8 @@ class Person(base):
 
     care_site = relationship('CareSite')
     ethnicity_concept = relationship('Concept', primaryjoin='Person.ethnicity_concept_id == Concept.concept_id')
-    ethnicity_source_concept = relationship('Concept', primaryjoin='Person.ethnicity_source_concept_id == Concept.concept_id')
+    ethnicity_source_concept = relationship('Concept',
+                                            primaryjoin='Person.ethnicity_source_concept_id == Concept.concept_id')
     gender_concept = relationship('Concept', primaryjoin='Person.gender_concept_id == Concept.concept_id')
     gender_source_concept = relationship('Concept', primaryjoin='Person.gender_source_concept_id == Concept.concept_id')
     location = relationship('Location')
@@ -360,11 +374,15 @@ class ProcedureOccurrence(base):
     procedure_source_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
     modifier_source_value = Column(String(50))
 
-    modifier_concept = relationship('Concept', primaryjoin='ProcedureOccurrence.modifier_concept_id == Concept.concept_id')
+    modifier_concept = relationship('Concept',
+                                    primaryjoin='ProcedureOccurrence.modifier_concept_id == Concept.concept_id')
     person = relationship('Person')
-    procedure_concept = relationship('Concept', primaryjoin='ProcedureOccurrence.procedure_concept_id == Concept.concept_id')
-    procedure_source_concept = relationship('Concept', primaryjoin='ProcedureOccurrence.procedure_source_concept_id == Concept.concept_id')
-    procedure_type_concept = relationship('Concept', primaryjoin='ProcedureOccurrence.procedure_type_concept_id == Concept.concept_id')
+    procedure_concept = relationship('Concept',
+                                     primaryjoin='ProcedureOccurrence.procedure_concept_id == Concept.concept_id')
+    procedure_source_concept = relationship('Concept',
+                                            primaryjoin='ProcedureOccurrence.procedure_source_concept_id == Concept.concept_id')
+    procedure_type_concept = relationship('Concept',
+                                          primaryjoin='ProcedureOccurrence.procedure_type_concept_id == Concept.concept_id')
     provider = relationship('Provider')
     visit_detail = relationship('VisitDetail')
     visit_occurrence = relationship('VisitOccurrence')
@@ -390,11 +408,14 @@ class Specimen(base):
     anatomic_site_source_value = Column(String(50))
     disease_status_source_value = Column(String(50))
 
-    anatomic_site_concept = relationship('Concept', primaryjoin='Specimen.anatomic_site_concept_id == Concept.concept_id')
-    disease_status_concept = relationship('Concept', primaryjoin='Specimen.disease_status_concept_id == Concept.concept_id')
+    anatomic_site_concept = relationship('Concept',
+                                         primaryjoin='Specimen.anatomic_site_concept_id == Concept.concept_id')
+    disease_status_concept = relationship('Concept',
+                                          primaryjoin='Specimen.disease_status_concept_id == Concept.concept_id')
     person = relationship('Person')
     specimen_concept = relationship('Concept', primaryjoin='Specimen.specimen_concept_id == Concept.concept_id')
-    specimen_type_concept = relationship('Concept', primaryjoin='Specimen.specimen_type_concept_id == Concept.concept_id')
+    specimen_type_concept = relationship('Concept',
+                                         primaryjoin='Specimen.specimen_type_concept_id == Concept.concept_id')
     unit_concept = relationship('Concept', primaryjoin='Specimen.unit_concept_id == Concept.concept_id')
 
 
@@ -429,17 +450,23 @@ class SurveyConduct(base):
     response_visit_occurrence_id = Column(ForeignKey('public.visit_occurrence.visit_occurrence_id'))
 
     assisted_concept = relationship('Concept', primaryjoin='SurveyConduct.assisted_concept_id == Concept.concept_id')
-    collection_method_concept = relationship('Concept', primaryjoin='SurveyConduct.collection_method_concept_id == Concept.concept_id')
+    collection_method_concept = relationship('Concept',
+                                             primaryjoin='SurveyConduct.collection_method_concept_id == Concept.concept_id')
     person = relationship('Person')
     provider = relationship('Provider')
-    respondent_type_concept = relationship('Concept', primaryjoin='SurveyConduct.respondent_type_concept_id == Concept.concept_id')
-    response_visit_occurrence = relationship('VisitOccurrence', primaryjoin='SurveyConduct.response_visit_occurrence_id == VisitOccurrence.visit_occurrence_id')
+    respondent_type_concept = relationship('Concept',
+                                           primaryjoin='SurveyConduct.respondent_type_concept_id == Concept.concept_id')
+    response_visit_occurrence = relationship('VisitOccurrence',
+                                             primaryjoin='SurveyConduct.response_visit_occurrence_id == VisitOccurrence.visit_occurrence_id')
     survey_concept = relationship('Concept', primaryjoin='SurveyConduct.survey_concept_id == Concept.concept_id')
-    survey_source_concept = relationship('Concept', primaryjoin='SurveyConduct.survey_source_concept_id == Concept.concept_id')
+    survey_source_concept = relationship('Concept',
+                                         primaryjoin='SurveyConduct.survey_source_concept_id == Concept.concept_id')
     timing_concept = relationship('Concept', primaryjoin='SurveyConduct.timing_concept_id == Concept.concept_id')
-    validated_survey_concept = relationship('Concept', primaryjoin='SurveyConduct.validated_survey_concept_id == Concept.concept_id')
+    validated_survey_concept = relationship('Concept',
+                                            primaryjoin='SurveyConduct.validated_survey_concept_id == Concept.concept_id')
     visit_detail = relationship('VisitDetail')
-    visit_occurrence = relationship('VisitOccurrence', primaryjoin='SurveyConduct.visit_occurrence_id == VisitOccurrence.visit_occurrence_id')
+    visit_occurrence = relationship('VisitOccurrence',
+                                    primaryjoin='SurveyConduct.visit_occurrence_id == VisitOccurrence.visit_occurrence_id')
 
 
 class VisitDetail(base):
@@ -466,16 +493,23 @@ class VisitDetail(base):
     visit_detail_parent_id = Column(ForeignKey('public.visit_detail.visit_detail_id'))
     visit_occurrence_id = Column(ForeignKey('public.visit_occurrence.visit_occurrence_id'), nullable=False)
 
-    admitted_from_concept = relationship('Concept', primaryjoin='VisitDetail.admitted_from_concept_id == Concept.concept_id')
+    admitted_from_concept = relationship('Concept',
+                                         primaryjoin='VisitDetail.admitted_from_concept_id == Concept.concept_id')
     care_site = relationship('CareSite')
-    discharge_to_concept = relationship('Concept', primaryjoin='VisitDetail.discharge_to_concept_id == Concept.concept_id')
+    discharge_to_concept = relationship('Concept',
+                                        primaryjoin='VisitDetail.discharge_to_concept_id == Concept.concept_id')
     person = relationship('Person')
-    preceding_visit_detail = relationship('VisitDetail', remote_side=[visit_detail_id], primaryjoin='VisitDetail.preceding_visit_detail_id == VisitDetail.visit_detail_id')
+    preceding_visit_detail = relationship('VisitDetail', remote_side=[visit_detail_id],
+                                          primaryjoin='VisitDetail.preceding_visit_detail_id == VisitDetail.visit_detail_id')
     provider = relationship('Provider')
-    visit_detail_concept = relationship('Concept', primaryjoin='VisitDetail.visit_detail_concept_id == Concept.concept_id')
-    visit_detail_parent = relationship('VisitDetail', remote_side=[visit_detail_id], primaryjoin='VisitDetail.visit_detail_parent_id == VisitDetail.visit_detail_id')
-    visit_detail_source_concept = relationship('Concept', primaryjoin='VisitDetail.visit_detail_source_concept_id == Concept.concept_id')
-    visit_detail_type_concept = relationship('Concept', primaryjoin='VisitDetail.visit_detail_type_concept_id == Concept.concept_id')
+    visit_detail_concept = relationship('Concept',
+                                        primaryjoin='VisitDetail.visit_detail_concept_id == Concept.concept_id')
+    visit_detail_parent = relationship('VisitDetail', remote_side=[visit_detail_id],
+                                       primaryjoin='VisitDetail.visit_detail_parent_id == VisitDetail.visit_detail_id')
+    visit_detail_source_concept = relationship('Concept',
+                                               primaryjoin='VisitDetail.visit_detail_source_concept_id == Concept.concept_id')
+    visit_detail_type_concept = relationship('Concept',
+                                             primaryjoin='VisitDetail.visit_detail_type_concept_id == Concept.concept_id')
     visit_occurrence = relationship('VisitOccurrence')
 
 
@@ -494,23 +528,27 @@ class VisitOccurrence(base):
     provider_id = Column(ForeignKey('public.provider.provider_id'))
     care_site_id = Column(ForeignKey('public.care_site.care_site_id'))
     visit_source_value = Column(String(50))
-    visit_occurrence_source_value = Column(String(50))
     visit_source_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
     admitted_from_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
     admitted_from_source_value = Column(String(50))
     discharge_to_source_value = Column(String(50))
     discharge_to_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
     preceding_visit_occurrence_id = Column(ForeignKey('public.visit_occurrence.visit_occurrence_id'))
+    record_source_value = Column(String(50))
 
-    admitted_from_concept = relationship('Concept', primaryjoin='VisitOccurrence.admitted_from_concept_id == Concept.concept_id')
+    admitted_from_concept = relationship('Concept',
+                                         primaryjoin='VisitOccurrence.admitted_from_concept_id == Concept.concept_id')
     care_site = relationship('CareSite')
-    discharge_to_concept = relationship('Concept', primaryjoin='VisitOccurrence.discharge_to_concept_id == Concept.concept_id')
+    discharge_to_concept = relationship('Concept',
+                                        primaryjoin='VisitOccurrence.discharge_to_concept_id == Concept.concept_id')
     person = relationship('Person')
     preceding_visit_occurrence = relationship('VisitOccurrence', remote_side=[visit_occurrence_id])
     provider = relationship('Provider')
     visit_concept = relationship('Concept', primaryjoin='VisitOccurrence.visit_concept_id == Concept.concept_id')
-    visit_source_concept = relationship('Concept', primaryjoin='VisitOccurrence.visit_source_concept_id == Concept.concept_id')
-    visit_type_concept = relationship('Concept', primaryjoin='VisitOccurrence.visit_type_concept_id == Concept.concept_id')
+    visit_source_concept = relationship('Concept',
+                                        primaryjoin='VisitOccurrence.visit_source_concept_id == Concept.concept_id')
+    visit_type_concept = relationship('Concept',
+                                      primaryjoin='VisitOccurrence.visit_type_concept_id == Concept.concept_id')
 
 
 class StemTable(base):
@@ -580,7 +618,48 @@ class StemTable(base):
     route_concept = relationship('Concept', primaryjoin='StemTable.route_concept_id == Concept.concept_id')
     qualifier_concept = relationship('Concept', primaryjoin='StemTable.qualifier_concept_id == Concept.concept_id')
     modifier_concept = relationship('Concept', primaryjoin='StemTable.modifier_concept_id == Concept.concept_id')
-    anatomic_site_concept = relationship('Concept', primaryjoin='StemTable.anatomic_site_concept_id == Concept.concept_id')
-    disease_status_concept = relationship('Concept', primaryjoin='StemTable.disease_status_concept_id == Concept.concept_id')
+    anatomic_site_concept = relationship('Concept',
+                                         primaryjoin='StemTable.anatomic_site_concept_id == Concept.concept_id')
+    disease_status_concept = relationship('Concept',
+                                          primaryjoin='StemTable.disease_status_concept_id == Concept.concept_id')
     visit_detail = relationship('VisitDetail')
     event_field_concept = relationship('Concept', primaryjoin='StemTable.event_field_concept_id == Concept.concept_id')
+
+
+class Episode(base):
+    __tablename__ = 'episode'
+    __table_args__ = {'schema': 'public'}
+
+    episode_id = Column(BigInteger, primary_key=True)
+    person_id = Column(ForeignKey('public.person.person_id'), nullable=False, index=True)
+    episode_start_datetime = Column(DateTime, nullable=False)
+    episode_end_datetime = Column(DateTime, nullable=False)
+    episode_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False, index=True)
+    episode_parent_id = Column(ForeignKey('public.episode.episode_id'))
+    episode_number = Column(Integer)
+    episode_object_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
+    episode_type_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
+    episode_source_value = Column(String(50))
+    episode_source_concept_id = Column(ForeignKey('public.concept.concept_id'))
+
+    episode_concept = relationship('Concept', primaryjoin='Episode.episode_concept_id == Concept.concept_id')
+    episode_object_concept = relationship('Concept',
+                                          primaryjoin='Episode.episode_object_concept_id == Concept.concept_id')
+    episode_parent = relationship('Episode', remote_side=[episode_id])
+    episode_source_concept = relationship('Concept',
+                                          primaryjoin='Episode.episode_source_concept_id == Concept.concept_id')
+    episode_type_concept = relationship('Concept', primaryjoin='Episode.episode_type_concept_id == Concept.concept_id')
+    record_source_value = Column(String(50))
+    person = relationship('Person')
+
+
+class EpisodeEvent(base):
+    __tablename__ = 'episode_event'
+    __table_args__ = {'schema': 'public'}
+
+    episode_id = Column(BigInteger, primary_key=True, nullable=False, index=True)
+    event_id = Column(BigInteger, primary_key=True, nullable=False)
+    event_field_concept_id = Column(ForeignKey('public.concept.concept_id'), primary_key=True, nullable=False,
+                                    index=True)
+
+    event_field_concept = relationship('Concept')

@@ -17,9 +17,11 @@ from src.main.python.model.cdm import StemTable
 from datetime import date, datetime
 from datetime import timedelta
 from src.main.python.util.number_conversion import to_int
-from src.main.python.util.create_visit_source_value import create_fulong_visit_source_value
+from src.main.python.util.create_record_source_value import create_fulong_visit_record_source_value
 
 def fulong_dre_to_stem_table(wrapper) -> list:
+    source_table_name = 'fulong'
+
     fulong = wrapper.get_fulong()
 
     records_to_insert = []
@@ -27,9 +29,9 @@ def fulong_dre_to_stem_table(wrapper) -> list:
     for row in fulong:
 
         # Get visit occurrence id
-        visit = 'fulong'
-        visit_source = create_fulong_visit_source_value(row['p_id'], row['time'], visit)
-        visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
+        visit_type = 'standard'
+        visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'], source_table_name, row['time'], visit_type)
+        visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
 
         # Calculate proxy date
         basedata_record = wrapper.lookup_basedata_by_pid(row['p_id'])

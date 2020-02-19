@@ -12,13 +12,17 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-def create_basedata_visit_source_value(person_id, visit):
-    return _create_visit_source_value(person_id, visit)
 
-
-def create_fulong_visit_source_value(person_id, time, visit):
-    return _create_visit_source_value(person_id, time, visit)
-
-
-def _create_visit_source_value(*args):
+def _create_record_source_value(*args):
     return '-'.join(args)
+
+
+def create_basedata_visit_record_source_value(person_id, source_table_name, visit_type):
+    return _create_record_source_value(person_id, source_table_name, visit_type)
+
+
+def create_fulong_visit_record_source_value(person_id, source_table_name, time, visit_type):
+    return _create_record_source_value(person_id, source_table_name, time, visit_type)
+
+
+
