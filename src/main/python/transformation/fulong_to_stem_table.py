@@ -131,6 +131,8 @@ def fulong_to_stem_table(wrapper) -> list:
             # Get visit occurrence id
             if variable.startswith('mri_') and row['mri_taken'] == '1':
                 visit = 'fulong_mri'
+            elif variable.startswith('biopsy_'):
+                visit = 'fulong_biopsy'
             else:
                 visit = 'fulong'
             visit_source = create_fulong_visit_source_value(row['p_id'], row['time'], visit)
