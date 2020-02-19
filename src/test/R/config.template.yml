@@ -1,9 +1,0 @@
-connectionDetails:
-  dbms: postgresql
-  user: 
-  password: 
-  server: localhost/my_data
-  port: 5432
-cdmSchema: omopcdm
-sourceDataDir: test_intermediates/source_data
-testQueryFileName: test_intermediates/test_query.sql
