@@ -17,10 +17,12 @@ from src.main.python.model.cdm import StemTable
 from datetime import date, datetime
 from datetime import timedelta
 from src.main.python.util.number_conversion import to_int
-from src.main.python.util.create_visit_source_value import create_fulong_visit_source_value
+from src.main.python.util.create_record_source_value import create_fulong_visit_record_source_value
 import logging
 
 def fulong_to_stem_table(wrapper) -> list:
+    source_table_name = 'fulong'
+
     fulong = wrapper.get_fulong()
 
     records_to_insert = []
@@ -130,13 +132,13 @@ def fulong_to_stem_table(wrapper) -> list:
 
             # Get visit occurrence id
             if variable.startswith('mri_') and row['mri_taken'] == '1':
-                visit = 'fulong_mri'
+                visit_type = 'mri'
             elif variable.startswith('biopsy_'):
-                visit = 'fulong_biopsy'
+                visit_type = 'biopt'
             else:
-                visit = 'fulong'
-            visit_source = create_fulong_visit_source_value(row['p_id'], row['time'], visit)
-            visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
+                visit_type = 'standard'
+            visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'], source_table_name, row['time'], visit_type)
+            visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
 
             record = StemTable(
                 person_id=int(row['p_id']),
