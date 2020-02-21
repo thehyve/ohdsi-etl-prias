@@ -2,10 +2,10 @@ DBMS:
 postgresql
 
 Error:
-org.postgresql.util.PSQLException: Unterminated string literal started at position 48 in SQL INSERT INTO public.test_results SELECT 1 AS id, 'observation. Expected  char
+org.postgresql.util.PSQLException: ERROR: more than one row returned by a subquery used as an expression
 
 SQL:
-INSERT INTO public.test_results SELECT 1 AS id, 'observation
+INSERT INTO public.test_results SELECT 343 AS id, 'Observation - visit_occurence_id' AS description, 'Expect observation' AS test, CASE WHEN (SELECT COUNT(*) FROM public.observation WHERE observation_id = (SELECT observation_id FROM public.observation WHERE visit_occurrence_id = (SELECT visit_occurrence_id FROM public.observation WHERE person_id = '10343' AND observation_source_value = 'prostatic_vol'))) = 0 THEN 'FAIL' ELSE 'PASS' END AS status
 
 R version:
 R version 3.6.2 (2019-12-12)
@@ -23,6 +23,5 @@ Attached base packages:
 - base
 
 Other attached packages:
-- yaml (2.2.1)
 - DatabaseConnector (2.4.2)
-- rJava (0.9-11)
+- yaml (2.2.1)

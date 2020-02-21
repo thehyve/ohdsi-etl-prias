@@ -134,7 +134,6 @@ declareTest(220, 'Observation - mri_suspected_number.0')
 add_basedata(p_id='10220', mri_taken.0='1', mri_suspected_number.0='4')
 expect_observation(person_id=10220, observation_concept_id=4085855, 
                    value_as_number=3, observation_source_value='mri_suspected_number.0')
-#observation_concept_id=4172704,
 
 #Basedata to observation --------------------------------------------
 declareTest(221, 'Observation - mri_largest_dia_1.0')
@@ -355,6 +354,22 @@ expect_observation(person_id=10257, observation_concept_id=4265453,
                    value_as_number=59, observation_type_concept_id=45905771, 
                    observation_source_value='age_diagnosis',
                    observation_date='2013-07-01')
+
+#Basedata to observation --------------------------------------------
+declareTest(340, 'Observation - visit_occurence_id')
+add_basedata(p_id='10340', mri_taken.0='1', gleason1='4', gleason2='3')
+expect_observation(visit_occurrence_id=lookup_observation('visit_occurrence_id',
+                                                          person_id='10340',
+                                                          observation_concept_id='4096978'))
+
+#Basedata to observation --------------------------------------------
+declareTest(341, 'Observation - visit_occurence_id')
+add_basedata(p_id='10341', mri_taken.0='1', gleason1='4', gleason2='3')
+expect_observation(person_id='10341', observation_concept_id='4096978')
+expect_observation(visit_occurrence_id=
+                     lookup_visit_occurrence('visit_occurrence_id',person_id='10341', 
+                                             visit_concept_id = 2000000066))
+expect_visit_occurrence(person_id = '10341')
 
 #Fulong to observation ----------------------------------------------
 declareTest(258, 'Observation - gleason_fu')
@@ -891,7 +906,6 @@ add_basedata(p_id='10335')
 add_enddata(p_id='10335', tumorvolume='3')
 expect_observation(person_id=10335, observation_concept_id=4121185, 
                    value_as_number=3)
-
 
 
 

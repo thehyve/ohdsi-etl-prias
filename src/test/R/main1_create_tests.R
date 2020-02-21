@@ -26,6 +26,10 @@ source('test_cases/test_person.R')
 source('test_cases/test_visit_occurrence.R')
 source('test_cases/test_basedata.R')
 source('test_cases/test_observation.R')
+source('test_cases/test_measurement.R')
+source('test_cases/test_condition_occurrence.R')
+source('test_cases/test_procedure_occurrence.R')
+source('test_cases/test_observation_period.R')
 
 # Generate source csv files -----------------------------------------------------
 dir.create(config$sourceDataDir, recursive=T, showWarnings = F)
