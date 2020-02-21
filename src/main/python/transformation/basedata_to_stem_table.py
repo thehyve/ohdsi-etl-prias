@@ -16,7 +16,9 @@
 from src.main.python.model.cdm import StemTable
 from datetime import date, datetime
 from src.main.python.util.create_record_source_value import create_basedata_visit_record_source_value
+from src.main.python.util.create_record_source_value import create_stem_table_record_source_value
 import logging
+
 
 def basedata_to_stem_table(wrapper) -> list:
     source_table_name = 'basedata'
@@ -50,7 +52,7 @@ def basedata_to_stem_table(wrapper) -> list:
                 continue
 
             # Only map variables when value is 1
-            if variable in ['biopt_inf_antibiotic_therapy','biopt_hematuria',
+            if variable in ['biopt_inf_antibiotic_therapy', 'biopt_hematuria',
                             'biopt_hemospermia', 'biopt_pain'] and value != '1':
                 continue
 
@@ -80,23 +82,10 @@ def basedata_to_stem_table(wrapper) -> list:
                     value = '3'
                     operator_concept_id = 4172704  # >
 
-            # Exception: If num_cores < 8, take num_cores2, num_cores_pc2 and gleason1_2 and gleason2_2
-            # instead of num_cores, num_cores_pc2, gleason1 and gleason2
-            if row['num_cores'] != '':
-                # Take num_cores2 if bigger than num_cores
-                if int(row['num_cores']) < 8 and int(row['num_cores2']) >= 8:
-                    if variable in ['num_cores', 'num_cores_pc', 'gleason1', 'gleason2']:
-                        continue
-                # Take num_cores if both num_cores and num_cores2 are below 8
-                elif int(row['num_cores']) < 8 and int(row['num_cores2']) < 8:
-                    if variable in ['num_cores2', 'num_cores_pc2', 'gleason1_2', 'gleason2_2']:
-                        continue
-                # Take num_cores if above 8
-                elif int(row['num_cores']) > 8:
-                    if variable in ['num_cores2', 'num_cores_pc2', 'gleason1_2', 'gleason2_2']:
-                        continue
-            elif variable in ['num_cores', 'num_cores_pc', 'gleason1', 'gleason2',
-                              'num_cores2', 'num_cores_pc2', 'gleason1_2', 'gleason2_2']:
+            # Exception: Do not map num_cores*, num_cores_pc*, gleason1* and gleason* when num_cores* is 0 or empty
+            if row['num_cores'] == '' and variable in ['num_cores', 'num_cores_pc', 'gleason1', 'gleason2']:
+                continue
+            if row['num_cores2'] == '' and variable in ['num_cores2', 'num_cores_pc2', 'gleason1_2', 'gleason2_2']:
                 continue
 
             # Exception: Do not map length if < 50
@@ -161,7 +150,8 @@ def basedata_to_stem_table(wrapper) -> list:
 
             # Give warning when vocabulary mapping is missing
             if target.concept_id is None:
-                logging.warning('There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
+                logging.warning(
+                    'There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
 
             # Get visit occurrence id
             if variable.startswith('mri_') and row['mri_taken.0'] == '1':
@@ -173,6 +163,11 @@ def basedata_to_stem_table(wrapper) -> list:
             visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'], source_table_name,
                                                                                   visit_type)
             visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
+
+            # Add record source value to Stem Table
+            stem_table_record_source_value = create_stem_table_record_source_value(row['p_id'],
+                                                                                   source_table_name,
+                                                                                   variable)
 
             record = StemTable(
                 person_id=int(row['p_id']),
@@ -187,7 +182,9 @@ def basedata_to_stem_table(wrapper) -> list:
                 value_source_value=value_source_value,
                 unit_source_value=unit_concept_id if unit_concept_id else None,
                 operator_concept_id=operator_concept_id,
-                type_concept_id=0  # TODO
+                type_concept_id=0,
+                record_source_value=stem_table_record_source_value
+
             )
 
             records_to_insert.append(record)

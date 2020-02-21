@@ -25,4 +25,9 @@ def create_fulong_visit_record_source_value(person_id, source_table_name, time, 
     return _create_record_source_value(person_id, source_table_name, time, visit_type)
 
 
+def create_episode_record_source_value(person_id, source_table_name, lesion_number):
+    return _create_record_source_value(person_id, source_table_name, lesion_number)
 
+
+def create_stem_table_record_source_value(person_id, source_table_name, variable):
+    return _create_record_source_value(person_id, source_table_name, variable)

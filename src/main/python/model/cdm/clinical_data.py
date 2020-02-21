@@ -605,6 +605,7 @@ class StemTable(base):
     event_id = Column(BigInteger)
     event_field_concept_id = Column(ForeignKey('public.concept.concept_id'))
     modifier_source_value = Column(String(50))
+    record_source_value = Column(String(100))
 
     person = relationship('Person')
     provider = relationship('Provider')
