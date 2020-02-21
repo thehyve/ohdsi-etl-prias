@@ -165,8 +165,9 @@ class EtlWrapper:
         with open(file_path, 'r') as f:
             query = f.read().strip()
 
-        if verbose:
-            self.log_query_in_progress(file_path)
+        # 20200221 Does not work well with the new logging class. Each row on new line
+        # if verbose:
+        #     self.log_query_in_progress(file_path)
 
         return self.execute_sql_query(query, verbose)
 
