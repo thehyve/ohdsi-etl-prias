@@ -45,13 +45,21 @@ def fulong_to_stem_table(wrapper) -> list:
         for variable, value in row.items():
 
             # Ignore the following columns for mapping
-            # TODO: ask whether there is a second gleason score available for mri_targeted_gleason
             if variable in ['p_id', 'time', 'dre_fu_recode', 'log2psa_fu', 'gleason_sum_fu',
-                            'slope', 'pro_psa_fu', 'visit_action', 'active_visit', 'year_visit', 'days_psa_diag', 'mri_targeted_gleason1']:
+                            'slope', 'pro_psa_fu', 'visit_action', 'active_visit', 'year_visit', 'days_psa_diag']:
                 continue
 
             # Skip empty string values
             if value == '' or value == None:
+                continue
+
+            # Exception: Map sum of mri_targeted_gleason1 and mri_targeted_gleason2
+            if variable == 'mri_targeted_gleason1':
+                if row['mri_targeted_gleason1'] == '' or row['mri_targeted_gleason2'] == '':
+                    logging.warning('One of the gleason scores is empty (mri_targeted_gleason1 or mri_targeted_gleason2)')
+                    continue
+                variable, value = wrapper.gleason_sum(row, 'mri_targeted_gleason1', 'mri_targeted_gleason2')
+            if variable == 'mri_targeted_gleason2':
                 continue
 
             # Skip 0 values for specific biopt_ values

@@ -43,7 +43,6 @@ def enddata_to_stem_table(wrapper) -> list:
 
             # Exception: Map sum of gleason1_rad_prost and gleason2_rad_prost
             if variable == 'gleason1_rad_prost':
-                # TODO: What to do if one of the gleason scores is empty?
                 if row['gleason1_rad_prost'] == '' or row['gleason2_rad_prost'] == '':
                     logging.warning('One of the gleason scores is empty (gleason1_rad_prost or gleason2_rad_prost)')
                     continue
@@ -57,9 +56,9 @@ def enddata_to_stem_table(wrapper) -> list:
 
             # Exception: postoperative_psa strip '&lt;'
             if variable == 'postoperative_psa':
-                if '&lt;' in value:
+                if '<' in value:
                     operator_concept_id = 4171756  # <
-                    value = re.sub('&lt;', '', value)
+                    value = re.sub('<', '', value)
                 value = re.sub(',', '.', value)
 
             # Extract variable and value form mapping tables

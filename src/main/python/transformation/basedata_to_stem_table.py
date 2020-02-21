@@ -112,8 +112,8 @@ def basedata_to_stem_table(wrapper) -> list:
 
             # Exception: Map sum of mri_targeted_gleason1.0 and mri_targeted_gleason1.0.1
             if variable == 'mri_targeted_gleason1.0':
-                variable, value = wrapper.gleason_sum(row, 'mri_targeted_gleason1.0', 'mri_targeted_gleason1.0.1')
-            if variable == 'mri_targeted_gleason1.0.1':
+                variable, value = wrapper.gleason_sum(row, 'mri_targeted_gleason1.0', 'mri_targeted_gleason2.0')
+            if variable == 'mri_targeted_gleason2.0':
                 continue
 
             # Exception: Map both variable and value of dre separately
