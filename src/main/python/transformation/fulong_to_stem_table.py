@@ -141,8 +141,8 @@ def fulong_to_stem_table(wrapper) -> list:
             # Get visit occurrence id
             if variable.startswith('mri_') and row['mri_taken'] == '1':
                 visit_type = 'mri'
-            elif variable.startswith('biopsy_'):
-                visit_type = 'biopt'
+            elif variable.startswith('biopt_'):
+                visit_type = 'biopsy'
             else:
                 visit_type = 'standard'
             visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'], source_table_name, row['time'], visit_type)
@@ -156,12 +156,11 @@ def fulong_to_stem_table(wrapper) -> list:
                 concept_id=concept_id,
                 value_as_concept_id=value_as_concept_id,
                 value_as_number=value_as_number,
-                unit_concept_id=unit_concept_id,
+                unit_concept_id=unit_concept_id if unit_concept_id else None,
                 source_value=source_value,
                 value_source_value=value_source_value,
-                unit_source_value=unit_concept_id if unit_concept_id else None,
                 operator_concept_id=operator_concept_id,
-                type_concept_id=0  # TODO
+                type_concept_id=0
             )
 
             records_to_insert.append(record)
