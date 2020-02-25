@@ -73,12 +73,14 @@ class Wrapper(EtlWrapper):
         self.execute_transformation(basedata_to_observation_period)
         self.execute_transformation(enddata_to_stem_table)
         self.execute_transformation(basedata_to_episode)
+        self.execute_transformation(fulong_to_episode)
 
         logger.info('Stem table to domains')
         self.stem_table_to_domains()
 
         logger.info('Episode event')
         self.execute_transformation(basedata_to_episode_event)
+        self.execute_transformation(fulong_to_episode_event)
 
         # self.create_person_lookup()
 
