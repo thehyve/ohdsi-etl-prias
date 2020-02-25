@@ -29,16 +29,16 @@ def create_basedata_episode_record_source_value(person_id, episode_group):
     return _create_record_source_value(person_id, 'basedata', episode_group)
 
 
-def create_fulong_episode_record_source_value(person_id, episode_group):
-    return _create_record_source_value(person_id, 'fulong', episode_group)
+def create_fulong_episode_record_source_value(person_id, time, episode_group):
+    return _create_record_source_value(person_id, 'fulong', time, episode_group)
 
 
 def create_basedata_stem_table_record_source_value(person_id, variable):
     return _create_record_source_value(person_id, 'basedata', variable)
 
 
-def create_fulong_stem_table_record_source_value(person_id, variable):
-    return _create_record_source_value(person_id, 'fulong', variable)
+def create_fulong_stem_table_record_source_value(person_id, time, variable):
+    return _create_record_source_value(person_id, 'fulong', time, variable)
 
 
 def create_enddata_stem_table_record_source_value(person_id, variable):

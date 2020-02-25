@@ -154,6 +154,7 @@ def fulong_to_stem_table(wrapper) -> list:
 
             # Add record source value to Stem Table
             stem_table_record_source_value = create_fulong_stem_table_record_source_value(row['p_id'],
+                                                                                          row['time'],
                                                                                           variable)
 
             record = StemTable(
