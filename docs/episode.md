@@ -96,7 +96,7 @@ This variable is not included in OMOP CDM v6 + oncology extensions and should be
 | episode_type_concept_id     |               |       |                   |
 | episode_source_value        |               |       |                   |
 | episode_source_concept_id   |               |       | 0                 |
-| record_source_value         | p_id          |       | p_id-'fulong'-episode_group, e.g. 1-fulong-lesion1|
+| record_source_value         | p_id<br>time  |       | p_id-'fulong'-time-episode_group, e.g. 1-fulong-37-lesion1|
 
 **Core biopsy episodes**
 
@@ -122,4 +122,4 @@ This variable is not included in OMOP CDM v6 + oncology extensions and should be
 | episode_type_concept_id     |               |       |                   |
 | episode_source_value        |               |       |                   |
 | episode_source_concept_id   |               |       | 0                 |
-| record_source_value         | p_id          |       | p_id-'fulong'-episode_group, e.g. 1-fulong-core_biopsy1|
+| record_source_value         | p_id<br>time  |       | p_id-'fulong'-time-episode_group, e.g. 1-fulong-37-core_biopsy1|
