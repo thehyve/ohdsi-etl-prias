@@ -16,10 +16,10 @@
 from src.main.python.model.cdm import StemTable
 from datetime import date, datetime
 from src.main.python.util.create_record_source_value import create_basedata_visit_record_source_value
+from src.main.python.util.create_record_source_value import create_basedata_stem_table_record_source_value
 import logging
 
 def basedata_dre_to_stem_table(wrapper) -> list:
-    source_table_name = 'basedata'
 
     basedata = wrapper.get_basedata()
 
@@ -29,8 +29,12 @@ def basedata_dre_to_stem_table(wrapper) -> list:
 
         # Get visit occurrence id
         visit_type = 'standard'
-        visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'], source_table_name, visit_type)
+        visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'], visit_type)
         visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
+
+        # Add record source value to Stem Table
+        stem_table_record_source_value = create_basedata_stem_table_record_source_value(row['p_id'],
+                                                                                        'dre')
 
         # Exception: Map variable separate from value
         if row['dre'] != '':
@@ -41,7 +45,8 @@ def basedata_dre_to_stem_table(wrapper) -> list:
                 start_datetime=datetime(int(row['year_diagnosis']), 7, 1),
                 concept_id=4254766,  # Digital rectal examination
                 source_value='dre',
-                type_concept_id=0  # TODO
+                type_concept_id=0,
+                record_source_value=stem_table_record_source_value
             )
             records_to_insert.append(record)
 

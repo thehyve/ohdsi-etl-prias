@@ -19,7 +19,6 @@ from src.main.python.util.number_conversion import to_int
 from src.main.python.util.create_record_source_value import create_basedata_visit_record_source_value
 
 def basedata_to_visit(wrapper) -> list:
-    source_table_name = 'basedata'
 
     basedata = wrapper.get_basedata()
 
@@ -39,7 +38,7 @@ def basedata_to_visit(wrapper) -> list:
                 continue
 
             # Create visit_occurrence_source_value for visit_id lookup
-            visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'], source_table_name, visit_type)
+            visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'], visit_type)
 
             start_date = datetime(to_int(row['year_diagnosis']), 7, 1)
 

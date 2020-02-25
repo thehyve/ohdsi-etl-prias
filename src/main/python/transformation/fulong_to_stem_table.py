@@ -18,11 +18,11 @@ from datetime import date, datetime
 from datetime import timedelta
 from src.main.python.util.number_conversion import to_int
 from src.main.python.util.create_record_source_value import create_fulong_visit_record_source_value
+from src.main.python.util.create_record_source_value import create_fulong_stem_table_record_source_value
 import logging
 
-def fulong_to_stem_table(wrapper) -> list:
-    source_table_name = 'fulong'
 
+def fulong_to_stem_table(wrapper) -> list:
     fulong = wrapper.get_fulong()
 
     records_to_insert = []
@@ -56,7 +56,8 @@ def fulong_to_stem_table(wrapper) -> list:
             # Exception: Map sum of mri_targeted_gleason1 and mri_targeted_gleason2
             if variable == 'mri_targeted_gleason1':
                 if row['mri_targeted_gleason1'] == '' or row['mri_targeted_gleason2'] == '':
-                    logging.warning('One of the gleason scores is empty (mri_targeted_gleason1 or mri_targeted_gleason2)')
+                    logging.warning(
+                        'One of the gleason scores is empty (mri_targeted_gleason1 or mri_targeted_gleason2)')
                     continue
                 variable, value = wrapper.gleason_sum(row, 'mri_targeted_gleason1', 'mri_targeted_gleason2')
             if variable == 'mri_targeted_gleason2':
@@ -136,7 +137,8 @@ def fulong_to_stem_table(wrapper) -> list:
 
             # Do not map if there is no variable mapping
             if target.concept_id is None:
-                logging.warning('There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
+                logging.warning(
+                    'There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
 
             # Get visit occurrence id
             if variable.startswith('mri_') and row['mri_taken'] == '1':
@@ -145,8 +147,14 @@ def fulong_to_stem_table(wrapper) -> list:
                 visit_type = 'biopsy'
             else:
                 visit_type = 'standard'
-            visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'], source_table_name, row['time'], visit_type)
+            visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'],
+                                                                                row['time'],
+                                                                                visit_type)
             visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
+
+            # Add record source value to Stem Table
+            stem_table_record_source_value = create_fulong_stem_table_record_source_value(row['p_id'],
+                                                                                          variable)
 
             record = StemTable(
                 person_id=int(row['p_id']),
@@ -160,7 +168,8 @@ def fulong_to_stem_table(wrapper) -> list:
                 source_value=source_value,
                 value_source_value=value_source_value,
                 operator_concept_id=operator_concept_id,
-                type_concept_id=0
+                type_concept_id=0,
+                record_source_value=stem_table_record_source_value
             )
 
             records_to_insert.append(record)

@@ -20,7 +20,6 @@ from src.main.python.util.number_conversion import to_int
 from src.main.python.util.create_record_source_value import create_fulong_visit_record_source_value
 
 def fulong_to_visit(wrapper) -> list:
-    source_table_name = 'fulong'
 
     fulong = wrapper.get_fulong()
 
@@ -56,8 +55,9 @@ def fulong_to_visit(wrapper) -> list:
                 continue
 
             # Create visit_occurrence_source_value for visit_id lookup
-            visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'], source_table_name,
-                                                                                row[variable], visit_type)
+            visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'],
+                                                                                row[variable],
+                                                                                visit_type)
 
             # Calculate proxy date
             basedata_record = wrapper.lookup_basedata_by_pid(row['p_id'])

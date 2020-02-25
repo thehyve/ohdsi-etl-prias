@@ -17,17 +17,29 @@ def _create_record_source_value(*args):
     return '-'.join(args)
 
 
-def create_basedata_visit_record_source_value(person_id, source_table_name, visit_type):
-    return _create_record_source_value(person_id, source_table_name, visit_type)
+def create_basedata_visit_record_source_value(person_id, visit_type):
+    return _create_record_source_value(person_id, 'basedata', visit_type)
 
 
-def create_fulong_visit_record_source_value(person_id, source_table_name, time, visit_type):
-    return _create_record_source_value(person_id, source_table_name, time, visit_type)
+def create_fulong_visit_record_source_value(person_id, time, visit_type):
+    return _create_record_source_value(person_id, 'fulong', time, visit_type)
 
 
-def create_episode_record_source_value(person_id, source_table_name, lesion_number):
-    return _create_record_source_value(person_id, source_table_name, lesion_number)
+def create_basedata_episode_record_source_value(person_id, episode_group):
+    return _create_record_source_value(person_id, 'basedata', episode_group)
 
 
-def create_stem_table_record_source_value(person_id, source_table_name, variable):
-    return _create_record_source_value(person_id, source_table_name, variable)
+def create_fulong_episode_record_source_value(person_id, episode_group):
+    return _create_record_source_value(person_id, 'fulong', episode_group)
+
+
+def create_basedata_stem_table_record_source_value(person_id, variable):
+    return _create_record_source_value(person_id, 'basedata', variable)
+
+
+def create_fulong_stem_table_record_source_value(person_id, variable):
+    return _create_record_source_value(person_id, 'fulong', variable)
+
+
+def create_enddata_stem_table_record_source_value(person_id, variable):
+    return _create_record_source_value(person_id, 'enddata', variable)

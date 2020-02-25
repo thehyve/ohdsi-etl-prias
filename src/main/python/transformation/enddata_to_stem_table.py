@@ -1,8 +1,10 @@
 from src.main.python.model.cdm import StemTable
+from src.main.python.util.create_record_source_value import create_enddata_stem_table_record_source_value
 from datetime import datetime
 from datetime import timedelta
 import re
 import logging
+
 
 def enddata_to_stem_table(wrapper) -> list:
     enddata = wrapper.get_enddata()
@@ -72,11 +74,14 @@ def enddata_to_stem_table(wrapper) -> list:
             value_source_value = target.value_source_value
             unit_concept_id = target.unit_concept_id
 
-
-
             # Give warning when vocabulary mapping is missing
             if target.concept_id is None:
-                logging.warning('There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
+                logging.warning(
+                    'There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
+
+            # Add record source value to Stem Table
+            stem_table_record_source_value = create_enddata_stem_table_record_source_value(row['p_id'],
+                                                                                           variable)
 
             record = StemTable(
                 person_id=int(row['p_id']),
@@ -91,12 +96,14 @@ def enddata_to_stem_table(wrapper) -> list:
                 source_value=source_value,
                 value_source_value=value_source_value,
                 operator_concept_id=operator_concept_id,
-                type_concept_id=0
+                type_concept_id=0,
+                record_source_value=stem_table_record_source_value
             )
 
             records_to_insert.append(record)
 
     return records_to_insert
+
 
 if __name__ == '__main__':
     from src.main.python.database.database import Database

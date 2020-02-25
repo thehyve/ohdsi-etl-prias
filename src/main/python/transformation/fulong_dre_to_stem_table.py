@@ -18,9 +18,9 @@ from datetime import date, datetime
 from datetime import timedelta
 from src.main.python.util.number_conversion import to_int
 from src.main.python.util.create_record_source_value import create_fulong_visit_record_source_value
+from src.main.python.util.create_record_source_value import create_fulong_stem_table_record_source_value
 
 def fulong_dre_to_stem_table(wrapper) -> list:
-    source_table_name = 'fulong'
 
     fulong = wrapper.get_fulong()
 
@@ -30,7 +30,7 @@ def fulong_dre_to_stem_table(wrapper) -> list:
 
         # Get visit occurrence id
         visit_type = 'standard'
-        visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'], source_table_name, row['time'], visit_type)
+        visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'], row['time'], visit_type)
         visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
 
         # Calculate proxy date
@@ -43,6 +43,10 @@ def fulong_dre_to_stem_table(wrapper) -> list:
         else:
             start_date = basedata_date_diagnosis
 
+        # Add record source value to Stem Table
+        stem_table_record_source_value = create_fulong_stem_table_record_source_value(row['p_id'],
+                                                                                      'dre')
+
         # Exception: Map variable separate from value
         if row['dre_fu'] != '':
             record = StemTable(
@@ -52,7 +56,8 @@ def fulong_dre_to_stem_table(wrapper) -> list:
                 start_datetime=start_date,
                 concept_id=4254766,  # Digital rectal examination
                 source_value='dre_fu',
-                type_concept_id=0  # TODO
+                type_concept_id=0,
+                record_source_value=stem_table_record_source_value
             )
             records_to_insert.append(record)
 
