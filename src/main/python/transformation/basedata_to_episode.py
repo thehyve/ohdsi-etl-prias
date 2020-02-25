@@ -13,14 +13,13 @@
 # GNU General Public License for more details.
 
 # !/usr/bin/env python3
-from src.main.python.util.create_record_source_value import create_episode_record_source_value
+from src.main.python.util.create_record_source_value import create_basedata_episode_record_source_value
 from datetime import datetime
 from src.main.python.model.cdm import Episode
 import copy
 
 
 def basedata_to_episode(wrapper) -> list:
-    source_table_name = 'basedata'
 
     basedata = wrapper.get_basedata()
 
@@ -54,18 +53,19 @@ def basedata_to_episode(wrapper) -> list:
         for episode_group, episode_variables in lesion_episode_groups.items():
             lesion_values = [row[variable] for variable in episode_variables]
 
-            # Skip if all lesion values are empty or '0'
-            if all(item in [None, '0', ''] for item in lesion_values):
-                continue
-
             # Skip if no mri was taken
             if row['mri_taken.0'] != '1':
+                continue
+
+            # Skip if all lesion values are empty or '0'
+            if all(item in [None, '0', ''] for item in lesion_values):
                 continue
 
             episode_lesion = copy.deepcopy(base_episode_record)
             episode_lesion.episode_concept_id = 4115735  # Lesion of prostate (condition occurrence)
             episode_lesion.episode_number = int(episode_group[-1:])
-            episode_lesion.record_source_value = create_episode_record_source_value(row['p_id'], source_table_name, episode_group)
+            episode_lesion.record_source_value = create_basedata_episode_record_source_value(row['p_id'], episode_group)
+
             records_to_insert.append(episode_lesion)
 
         for episode_group in biopsy_episode_groups:
@@ -79,7 +79,8 @@ def basedata_to_episode(wrapper) -> list:
             episode_biopsy = copy.deepcopy(base_episode_record)
             episode_biopsy.episode_concept_id = 4221802  # Core needle biopsy of prostate (procedure occurrence)
             episode_biopsy.episode_number = int(episode_group[-1:])
-            episode_biopsy.record_source_value = create_episode_record_source_value(row['p_id'], source_table_name, episode_group)
+            episode_biopsy.record_source_value = create_basedata_episode_record_source_value(row['p_id'],
+                                                                                             episode_group)
 
             records_to_insert.append(episode_biopsy)
 
