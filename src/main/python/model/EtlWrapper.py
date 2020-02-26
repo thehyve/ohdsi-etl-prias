@@ -160,6 +160,23 @@ class EtlWrapper:
         logger.info(self.SOURCE_ROW_COUNT_FORMAT.format(str(file_path), count))
         return count
 
+    def log_target_tables_rowcount(self):
+        logger.info('{:-^100}'.format(' Output OMOP CDM counts '))
+        with self.db.session_scope() as session:
+            # Print in this order
+            # todo: if we choose to not fix the order of tables, just loop through all table objects imported from model.cdm module
+            for table in [Person, ObservationPeriod, Death, VisitOccurrence, VisitDetail,
+                          ConditionOccurrence, ProcedureOccurrence, DrugExposure, DeviceExposure,
+                          Measurement, Observation, Specimen, Episode, EpisodeEvent,
+                          Note, NoteNlp, SurveyConduct, FactRelationship,
+                          Cost, PayerPlanPeriod,
+                          DrugEra, DoseEra, ConditionEra,
+                          Location, LocationHistory, Provider, CareSite]:
+                table_name = table.__name__  # str(table)
+                table_module = table.__module__.split('.')[-1]  # clinical_data, derived_elements, etc.
+                table_count = session.query(table).count()
+                logging.info(f'{table_module} | {table_name}: {table_count}')
+
     def execute_sql_file(self, file_path, verbose=True):
         # Open and read the file as a single buffer
         with open(file_path, 'r') as f:

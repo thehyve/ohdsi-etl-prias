@@ -82,10 +82,10 @@ class Wrapper(EtlWrapper):
         self.execute_transformation(basedata_to_episode_event)
         self.execute_transformation(fulong_to_episode_event)
 
-        # self.create_person_lookup()
-
         self.log_summary()
         self.log_runtime()
+
+        self.log_target_tables_rowcount()
 
     def stem_table_to_domains(self):
         post_processing_path = Path('src/main/python/post_processing')
