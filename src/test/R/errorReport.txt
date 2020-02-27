@@ -1,0 +1,27 @@
+DBMS:
+postgresql
+
+Error:
+org.postgresql.util.PSQLException: ERROR: more than one row returned by a subquery used as an expression
+
+SQL:
+INSERT INTO public.test_results SELECT 343 AS id, 'Observation - visit_occurence_id' AS description, 'Expect observation' AS test, CASE WHEN (SELECT COUNT(*) FROM public.observation WHERE observation_id = (SELECT observation_id FROM public.observation WHERE visit_occurrence_id = (SELECT visit_occurrence_id FROM public.observation WHERE person_id = '10343' AND observation_source_value = 'prostatic_vol'))) = 0 THEN 'FAIL' ELSE 'PASS' END AS status
+
+R version:
+R version 3.6.2 (2019-12-12)
+
+Platform:
+x86_64-apple-darwin15.6.0
+
+Attached base packages:
+- stats
+- graphics
+- grDevices
+- utils
+- datasets
+- methods
+- base
+
+Other attached packages:
+- DatabaseConnector (2.4.2)
+- yaml (2.2.1)
