@@ -4,6 +4,9 @@ src/test/R/all_test_cases.csv
 src/test/R/unittest_results.csv
 src/test/R/test_intermediates/source_data/
 src/test/R/test_intermediates/test_query.sql
+src/test/R/.Rhistory
+src/test/R/.RData
+src/test/R/errorReport.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -136,3 +139,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Mac
+.DS_Store
