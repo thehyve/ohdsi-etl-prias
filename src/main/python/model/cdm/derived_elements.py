@@ -70,32 +70,3 @@ class DrugEra(base):
 
     drug_concept = relationship('Concept')
     person = relationship('Person')
-
-
-t_cdm_source = Table(
-    'cdm_source', metadata,
-    Column('cdm_source_name', String(255), nullable=False),
-    Column('cdm_source_abbreviation', String(25)),
-    Column('cdm_holder', String(255)),
-    Column('source_description', Text),
-    Column('source_documentation_reference', String(255)),
-    Column('cdm_etl_reference', String(255)),
-    Column('source_release_date', Date),
-    Column('cdm_release_date', Date),
-    Column('cdm_version', String(10)),
-    Column('vocabulary_version', String(20)),
-    schema='public'
-)
-
-
-t_metadata = Table(
-    'metadata', metadata,
-    Column('metadata_concept_id', Integer, nullable=False, index=True),
-    Column('metadata_type_concept_id', Integer, nullable=False),
-    Column('name', String(250), nullable=False),
-    Column('value_as_string', Text),
-    Column('value_as_concept_id', Integer),
-    Column('metadata_date', Date),
-    Column('metadata_datetime', DateTime),
-    schema='public'
-)
