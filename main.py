@@ -60,8 +60,8 @@ def main(database, username, password, hostname, port, source, debug):
     etl = Wrapper(db, source, './resources/mapping_tables')
 
     logger.info('ETL version {}'.format(__version__))
-    if etl.is_git_repo():
-        logger.info('Git HEAD at ' + etl.get_git_tag_or_branch())
+    # if etl.is_git_repo():
+    #     logger.info('Git HEAD at ' + etl.get_git_tag_or_branch())
 
     # Run ETL
     try:
@@ -73,4 +73,4 @@ def main(database, username, password, hostname, port, source, debug):
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(auto_envvar_prefix='ETL'))
