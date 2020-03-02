@@ -1,6 +1,7 @@
 from sqlalchemy import CHAR, Column, Date, ForeignKey, Integer, Numeric, String, Text, Table
 from sqlalchemy.orm import relationship
-from base import Base
+
+from src.main.python.database.database import base
 
 metadata = Base.metadata
 
