@@ -30,7 +30,7 @@ class ConditionEra(base):
 
     condition_era_id = Column(BigInteger, primary_key=True)
     person_id = Column(ForeignKey('public.person.person_id'), nullable=False, index=True)
-    condition_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False, index=True)
+    condition_concept_id = Column(ForeignKey('vocab.concept.concept_id'), nullable=False, index=True)
     condition_era_start_datetime = Column(DateTime, nullable=False)
     condition_era_end_datetime = Column(DateTime, nullable=False)
     condition_occurrence_count = Column(Integer)
@@ -45,8 +45,8 @@ class DoseEra(base):
 
     dose_era_id = Column(BigInteger, primary_key=True)
     person_id = Column(ForeignKey('public.person.person_id'), nullable=False, index=True)
-    drug_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False, index=True)
-    unit_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False)
+    drug_concept_id = Column(ForeignKey('vocab.concept.concept_id'), nullable=False, index=True)
+    unit_concept_id = Column(ForeignKey('vocab.concept.concept_id'), nullable=False)
     dose_value = Column(Numeric, nullable=False)
     dose_era_start_datetime = Column(DateTime, nullable=False)
     dose_era_end_datetime = Column(DateTime, nullable=False)
@@ -62,7 +62,7 @@ class DrugEra(base):
 
     drug_era_id = Column(BigInteger, primary_key=True)
     person_id = Column(ForeignKey('public.person.person_id'), nullable=False, index=True)
-    drug_concept_id = Column(ForeignKey('public.concept.concept_id'), nullable=False, index=True)
+    drug_concept_id = Column(ForeignKey('vocab.concept.concept_id'), nullable=False, index=True)
     drug_era_start_datetime = Column(DateTime, nullable=False)
     drug_era_end_datetime = Column(DateTime, nullable=False)
     drug_exposure_count = Column(Integer)

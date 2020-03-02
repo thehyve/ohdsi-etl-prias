@@ -49,6 +49,6 @@ SELECT
 	coalesce(stem_table.source_concept_id, 0)	AS	device_source_concept_id
 
 FROM public.stem_table
-    LEFT JOIN public.concept USING (concept_id)
+    LEFT JOIN vocab.concept USING (concept_id)
 WHERE concept.domain_id = 'Device'
 ;
