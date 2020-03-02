@@ -23,6 +23,7 @@ Free_PSA_FU,Percentage of unbound PSA,4194418,Free prostate specific antigen lev
 Gleason1_2_Gleason2_2,Sum of gleason1 and gleason2,4297949,Total Gleason score,1970-01-01,2099-12-31,
 Gleason1_FU_Gleason2_FU,Sum of gleason1 and gleason2,4297949,Total Gleason score,1970-01-01,2099-12-31,
 Gleason1_Gleason2,Sum of gleason1 and gleason2,4297949,Total Gleason score ,1970-01-01,2099-12-31,
+Mri_Targeted_Gleason1_Mri_Targeted_Gleason2,Sum of gleason1 and gleason2,4297949,Total Gleason score ,1970-01-01,2099-12-31,
 Gleason1_Rad_Prost_Gleason2_Rad_Prost,Sum of gleason1 and gleason2,35918021,Gleason's Score on Prostatectomy/Autopsy,1970-01-01,2099-12-31,
 Length,Length of patient (in cm),3023540,Body height measured,1970-01-01,2099-12-31,
 Mri_Largest_Dia_1,Largest diameter of lesion 1,4084390,Lesion size,1970-01-01,2099-12-31,

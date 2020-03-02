@@ -8,3 +8,8 @@ from src.main.python.transformation.basedata_dre_to_stem_table import basedata_d
 from src.main.python.transformation.fulong_dre_to_stem_table import fulong_dre_to_stem_table
 from src.main.python.transformation.basedata_to_observation_period import basedata_to_observation_period
 from src.main.python.transformation.enddata_to_stem_table import enddata_to_stem_table
+from src.main.python.transformation.basedata_to_episode import basedata_to_episode
+from src.main.python.transformation.basedata_to_episode_event import basedata_to_episode_event
+from src.main.python.transformation.fulong_to_episode import fulong_to_episode
+from src.main.python.transformation.fulong_to_episode_event import fulong_to_episode_event
+

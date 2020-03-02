@@ -73,6 +73,8 @@ initFramework <- function() {
   defaults$mri_targeted_taken.0 <- '0'
   defaults$mri_targeted_gleason1.0 <- '0'
   defaults$mri_targeted_gleason1.0.1 <- '0'
+  defaults$mri_targeted_gleason2.0 <- '0'
+  defaults$mri_targeted_gleason2.0.1 <- '0'
   defaults$mri_lesion_positive.0 <- ''
   defaults$mri_method_used.0 <- '0'
   defaults$mri_prostate_volume.0 <- ''
@@ -136,6 +138,7 @@ initFramework <- function() {
   defaults$mri_targeted_cores <- '0'
   defaults$mri_targeted_taken <- '0'
   defaults$mri_targeted_gleason1 <- '0'
+  defaults$mri_targeted_gleason2 <- '0'
   defaults$mri_lesion_positive <- '0'
   defaults$mri_method_used <- '0'
   defaults$mri_prostate_volume <- ''
@@ -196,7 +199,7 @@ initFramework <- function() {
 
 initFramework()
 
-set_defaults_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, num_cores_pc, asa, log2psa, gleason1, gleason2, gleason_sum, free_psa, pro_psa, phi, charlson, tnm, method_detection, length, weight, num_cores2, num_cores_pc2, gleason1_2, gleason2_2, no_co_morbidity, active_visit, biopt_prob_type, biopt_infection, biopt_inf_urine_culture, biopt_inf_urine_bacterium, biopt_inf_unrine_resistant, biopt_inf_antibiotic_therapy, biopt_inf_antibiotic_type, biopt_inf_hospitalisation, biopt_inf_hospitalisation_days, biopt_inf_outcome, biopt_hematuria, biopt_hemospermia, biopt_pain, biopt_route, biopt_max_cancer_score_lenght, mri_included, bonescan, mri_taken.0, mri_lesions.0, mri_suspected_number.0, mri_pirads_1.0, mri_largest_dia_1.0, mri_location_1.0, mri_location_free_1.0, mri_pirads_2.0, mri_largest_dia_2.0, mri_location_2.0, mri_location_free_2.0, mri_pirads_3.0, mri_largest_dia_3.0, mri_location_3.0, mri_location_free_3.0, mri_progrssion_lesions.0, mri_targeted_biopsy.0, mri_targeted_cores.0, mri_targeted_taken.0, mri_targeted_gleason1.0, mri_targeted_gleason1.0.1, mri_lesion_positive.0, mri_method_used.0, mri_prostate_volume.0, mri_prostate_volume_method.0, age_diagnosis, year_diagnosis) {
+set_defaults_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, num_cores_pc, asa, log2psa, gleason1, gleason2, gleason_sum, free_psa, pro_psa, phi, charlson, tnm, method_detection, length, weight, num_cores2, num_cores_pc2, gleason1_2, gleason2_2, no_co_morbidity, active_visit, biopt_prob_type, biopt_infection, biopt_inf_urine_culture, biopt_inf_urine_bacterium, biopt_inf_unrine_resistant, biopt_inf_antibiotic_therapy, biopt_inf_antibiotic_type, biopt_inf_hospitalisation, biopt_inf_hospitalisation_days, biopt_inf_outcome, biopt_hematuria, biopt_hemospermia, biopt_pain, biopt_route, biopt_max_cancer_score_lenght, mri_included, bonescan, mri_taken.0, mri_lesions.0, mri_suspected_number.0, mri_pirads_1.0, mri_largest_dia_1.0, mri_location_1.0, mri_location_free_1.0, mri_pirads_2.0, mri_largest_dia_2.0, mri_location_2.0, mri_location_free_2.0, mri_pirads_3.0, mri_largest_dia_3.0, mri_location_3.0, mri_location_free_3.0, mri_progrssion_lesions.0, mri_targeted_biopsy.0, mri_targeted_cores.0, mri_targeted_taken.0, mri_targeted_gleason1.0, mri_targeted_gleason1.0.1, mri_targeted_gleason2.0, mri_targeted_gleason2.0.1, mri_lesion_positive.0, mri_method_used.0, mri_prostate_volume.0, mri_prostate_volume_method.0, age_diagnosis, year_diagnosis) {
   defaults <- get('basedata', envir = frameworkContext$defaultValues)
   if (!missing(year_birth)) {
     defaults$year_birth <- year_birth
@@ -390,6 +393,12 @@ set_defaults_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num
   if (!missing(mri_targeted_gleason1.0.1)) {
     defaults$mri_targeted_gleason1.0.1 <- mri_targeted_gleason1.0.1
   }
+  if (!missing(mri_targeted_gleason2.0)) {
+    defaults$mri_targeted_gleason2.0 <- mri_targeted_gleason2.0
+  }
+  if (!missing(mri_targeted_gleason2.0.1)) {
+    defaults$mri_targeted_gleason2.0.1 <- mri_targeted_gleason2.0.1
+  }
   if (!missing(mri_lesion_positive.0)) {
     defaults$mri_lesion_positive.0 <- mri_lesion_positive.0
   }
@@ -412,7 +421,7 @@ set_defaults_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num
   invisible(defaults)
 }
 
-set_defaults_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_cores_biop_fu, num_cores_pc_fu, asa_fu, log2psa_fu, psadt, gleason1_fu, gleason2_fu, gleason_sum_fu, slope, free_psa_fu, pro_psa_fu, phi_fu, visit_action, active_visit, biopt_prob_type_fu, biopt_infection_fu, biopt_inf_urine_culture_fu, biopt_inf_urine_bacterium_fu, biopt_inf_unrine_resistant_fu, biopt_inf_antibiotic_therapy_fu, biopt_inf_antibiotic_type_fu, biopt_inf_hospitalisation_fu, biopt_inf_hospitalisation_days_fu, biopt_inf_outcome_fu, biopt_hematuria_fu, biopt_hemospermia_fu, biopt_pain_fu, biopt_route_fu, biopt_max_cancer_score_lenght_fu, mri_taken, mri_lesions, mri_suspected_number, mri_pirads_1, mri_largest_dia_1, mri_location_1, mri_location_free_1, mri_pirads_2, mri_largest_dia_2, mri_location_2, mri_location_free_2, mri_pirads_3, mri_largest_dia_3, mri_location_3, mri_location_free_3, mri_progrssion_lesions, mri_targeted_biopsy, mri_targeted_cores, mri_targeted_taken, mri_targeted_gleason1, mri_lesion_positive, mri_method_used, mri_prostate_volume, mri_prostate_volume_method, year_visit, days_psa_diag) {
+set_defaults_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_cores_biop_fu, num_cores_pc_fu, asa_fu, log2psa_fu, psadt, gleason1_fu, gleason2_fu, gleason_sum_fu, slope, free_psa_fu, pro_psa_fu, phi_fu, visit_action, active_visit, biopt_prob_type_fu, biopt_infection_fu, biopt_inf_urine_culture_fu, biopt_inf_urine_bacterium_fu, biopt_inf_unrine_resistant_fu, biopt_inf_antibiotic_therapy_fu, biopt_inf_antibiotic_type_fu, biopt_inf_hospitalisation_fu, biopt_inf_hospitalisation_days_fu, biopt_inf_outcome_fu, biopt_hematuria_fu, biopt_hemospermia_fu, biopt_pain_fu, biopt_route_fu, biopt_max_cancer_score_lenght_fu, mri_taken, mri_lesions, mri_suspected_number, mri_pirads_1, mri_largest_dia_1, mri_location_1, mri_location_free_1, mri_pirads_2, mri_largest_dia_2, mri_location_2, mri_location_free_2, mri_pirads_3, mri_largest_dia_3, mri_location_3, mri_location_free_3, mri_progrssion_lesions, mri_targeted_biopsy, mri_targeted_cores, mri_targeted_taken, mri_targeted_gleason1, mri_targeted_gleason2, mri_lesion_positive, mri_method_used, mri_prostate_volume, mri_prostate_volume_method, year_visit, days_psa_diag) {
   defaults <- get('fulong', envir = frameworkContext$defaultValues)
   if (!missing(p_id)) {
     defaults$p_id <- p_id
@@ -576,6 +585,9 @@ set_defaults_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_c
   if (!missing(mri_targeted_gleason1)) {
     defaults$mri_targeted_gleason1 <- mri_targeted_gleason1
   }
+  if (!missing(mri_targeted_gleason2)) {
+    defaults$mri_targeted_gleason2 <- mri_targeted_gleason2
+  }
   if (!missing(mri_lesion_positive)) {
     defaults$mri_lesion_positive <- mri_lesion_positive
   }
@@ -689,7 +701,7 @@ declareTest <- function(id, description) {
   frameworkContext$testDescription <- description
 }
 
-add_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, num_cores_pc, asa, log2psa, gleason1, gleason2, gleason_sum, free_psa, pro_psa, phi, charlson, tnm, method_detection, length, weight, num_cores2, num_cores_pc2, gleason1_2, gleason2_2, no_co_morbidity, active_visit, biopt_prob_type, biopt_infection, biopt_inf_urine_culture, biopt_inf_urine_bacterium, biopt_inf_unrine_resistant, biopt_inf_antibiotic_therapy, biopt_inf_antibiotic_type, biopt_inf_hospitalisation, biopt_inf_hospitalisation_days, biopt_inf_outcome, biopt_hematuria, biopt_hemospermia, biopt_pain, biopt_route, biopt_max_cancer_score_lenght, mri_included, bonescan, mri_taken.0, mri_lesions.0, mri_suspected_number.0, mri_pirads_1.0, mri_largest_dia_1.0, mri_location_1.0, mri_location_free_1.0, mri_pirads_2.0, mri_largest_dia_2.0, mri_location_2.0, mri_location_free_2.0, mri_pirads_3.0, mri_largest_dia_3.0, mri_location_3.0, mri_location_free_3.0, mri_progrssion_lesions.0, mri_targeted_biopsy.0, mri_targeted_cores.0, mri_targeted_taken.0, mri_targeted_gleason1.0, mri_targeted_gleason1.0.1, mri_lesion_positive.0, mri_method_used.0, mri_prostate_volume.0, mri_prostate_volume_method.0, age_diagnosis, year_diagnosis) {
+add_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, num_cores_pc, asa, log2psa, gleason1, gleason2, gleason_sum, free_psa, pro_psa, phi, charlson, tnm, method_detection, length, weight, num_cores2, num_cores_pc2, gleason1_2, gleason2_2, no_co_morbidity, active_visit, biopt_prob_type, biopt_infection, biopt_inf_urine_culture, biopt_inf_urine_bacterium, biopt_inf_unrine_resistant, biopt_inf_antibiotic_therapy, biopt_inf_antibiotic_type, biopt_inf_hospitalisation, biopt_inf_hospitalisation_days, biopt_inf_outcome, biopt_hematuria, biopt_hemospermia, biopt_pain, biopt_route, biopt_max_cancer_score_lenght, mri_included, bonescan, mri_taken.0, mri_lesions.0, mri_suspected_number.0, mri_pirads_1.0, mri_largest_dia_1.0, mri_location_1.0, mri_location_free_1.0, mri_pirads_2.0, mri_largest_dia_2.0, mri_location_2.0, mri_location_free_2.0, mri_pirads_3.0, mri_largest_dia_3.0, mri_location_3.0, mri_location_free_3.0, mri_progrssion_lesions.0, mri_targeted_biopsy.0, mri_targeted_cores.0, mri_targeted_taken.0, mri_targeted_gleason1.0, mri_targeted_gleason1.0.1, mri_targeted_gleason2.0, mri_targeted_gleason2.0.1, mri_lesion_positive.0, mri_method_used.0, mri_prostate_volume.0, mri_prostate_volume_method.0, age_diagnosis, year_diagnosis) {
   defaults <- get('basedata', envir = frameworkContext$defaultValues)
   fields <- c()
   values <- c()
@@ -1205,6 +1217,22 @@ add_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, n
   fields <- c(fields, "[mri_targeted_gleason1.0.1]")
   values <- c(values, if (is.null(mri_targeted_gleason1.0.1)) "NULL" else if (is(mri_targeted_gleason1.0.1, "subQuery")) paste0("(", as.character(mri_targeted_gleason1.0.1), ")") else paste0("'", as.character(mri_targeted_gleason1.0.1), "'"))
 
+  if (missing(mri_targeted_gleason2.0)) {
+    mri_targeted_gleason2.0 <- defaults$mri_targeted_gleason2.0
+  } else {
+    frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_targeted_gleason2.0')
+  }
+  fields <- c(fields, "[mri_targeted_gleason2.0]")
+  values <- c(values, if (is.null(mri_targeted_gleason2.0)) "NULL" else if (is(mri_targeted_gleason2.0, "subQuery")) paste0("(", as.character(mri_targeted_gleason2.0), ")") else paste0("'", as.character(mri_targeted_gleason2.0), "'"))
+
+  if (missing(mri_targeted_gleason2.0.1)) {
+    mri_targeted_gleason2.0.1 <- defaults$mri_targeted_gleason2.0.1
+  } else {
+    frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_targeted_gleason2.0.1')
+  }
+  fields <- c(fields, "[mri_targeted_gleason2.0.1]")
+  values <- c(values, if (is.null(mri_targeted_gleason2.0.1)) "NULL" else if (is(mri_targeted_gleason2.0.1, "subQuery")) paste0("(", as.character(mri_targeted_gleason2.0.1), ")") else paste0("'", as.character(mri_targeted_gleason2.0.1), "'"))
+
   if (missing(mri_lesion_positive.0)) {
     mri_lesion_positive.0 <- defaults$mri_lesion_positive.0
   } else {
@@ -1258,7 +1286,7 @@ add_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, n
   invisible(NULL)
 }
 
-add_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_cores_biop_fu, num_cores_pc_fu, asa_fu, log2psa_fu, psadt, gleason1_fu, gleason2_fu, gleason_sum_fu, slope, free_psa_fu, pro_psa_fu, phi_fu, visit_action, active_visit, biopt_prob_type_fu, biopt_infection_fu, biopt_inf_urine_culture_fu, biopt_inf_urine_bacterium_fu, biopt_inf_unrine_resistant_fu, biopt_inf_antibiotic_therapy_fu, biopt_inf_antibiotic_type_fu, biopt_inf_hospitalisation_fu, biopt_inf_hospitalisation_days_fu, biopt_inf_outcome_fu, biopt_hematuria_fu, biopt_hemospermia_fu, biopt_pain_fu, biopt_route_fu, biopt_max_cancer_score_lenght_fu, mri_taken, mri_lesions, mri_suspected_number, mri_pirads_1, mri_largest_dia_1, mri_location_1, mri_location_free_1, mri_pirads_2, mri_largest_dia_2, mri_location_2, mri_location_free_2, mri_pirads_3, mri_largest_dia_3, mri_location_3, mri_location_free_3, mri_progrssion_lesions, mri_targeted_biopsy, mri_targeted_cores, mri_targeted_taken, mri_targeted_gleason1, mri_lesion_positive, mri_method_used, mri_prostate_volume, mri_prostate_volume_method, year_visit, days_psa_diag) {
+add_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_cores_biop_fu, num_cores_pc_fu, asa_fu, log2psa_fu, psadt, gleason1_fu, gleason2_fu, gleason_sum_fu, slope, free_psa_fu, pro_psa_fu, phi_fu, visit_action, active_visit, biopt_prob_type_fu, biopt_infection_fu, biopt_inf_urine_culture_fu, biopt_inf_urine_bacterium_fu, biopt_inf_unrine_resistant_fu, biopt_inf_antibiotic_therapy_fu, biopt_inf_antibiotic_type_fu, biopt_inf_hospitalisation_fu, biopt_inf_hospitalisation_days_fu, biopt_inf_outcome_fu, biopt_hematuria_fu, biopt_hemospermia_fu, biopt_pain_fu, biopt_route_fu, biopt_max_cancer_score_lenght_fu, mri_taken, mri_lesions, mri_suspected_number, mri_pirads_1, mri_largest_dia_1, mri_location_1, mri_location_free_1, mri_pirads_2, mri_largest_dia_2, mri_location_2, mri_location_free_2, mri_pirads_3, mri_largest_dia_3, mri_location_3, mri_location_free_3, mri_progrssion_lesions, mri_targeted_biopsy, mri_targeted_cores, mri_targeted_taken, mri_targeted_gleason1, mri_targeted_gleason2, mri_lesion_positive, mri_method_used, mri_prostate_volume, mri_prostate_volume_method, year_visit, days_psa_diag) {
   defaults <- get('fulong', envir = frameworkContext$defaultValues)
   fields <- c()
   values <- c()
@@ -1693,6 +1721,14 @@ add_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_cores_biop
   }
   fields <- c(fields, "mri_targeted_gleason1")
   values <- c(values, if (is.null(mri_targeted_gleason1)) "NULL" else if (is(mri_targeted_gleason1, "subQuery")) paste0("(", as.character(mri_targeted_gleason1), ")") else paste0("'", as.character(mri_targeted_gleason1), "'"))
+
+  if (missing(mri_targeted_gleason2)) {
+    mri_targeted_gleason2 <- defaults$mri_targeted_gleason2
+  } else {
+    frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_targeted_gleason2')
+  }
+  fields <- c(fields, "mri_targeted_gleason2")
+  values <- c(values, if (is.null(mri_targeted_gleason2)) "NULL" else if (is(mri_targeted_gleason2, "subQuery")) paste0("(", as.character(mri_targeted_gleason2), ")") else paste0("'", as.character(mri_targeted_gleason2), "'"))
 
   if (missing(mri_lesion_positive)) {
     mri_lesion_positive <- defaults$mri_lesion_positive

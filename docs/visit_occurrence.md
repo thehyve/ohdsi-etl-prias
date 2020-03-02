@@ -19,6 +19,10 @@ nav_order: 4
 
 ![](index_files/image5.png)
 
+The record_source_value is used to link stem_table visits to the visit_occurrence table.
+This variable is not included in OMOP CDM v6 + oncology extensions and should be removed from the episode table after all mappings are finished.
+
+
 | Destination Field             | Source field   | Logic | Comment field                                                                                                                                  |
 |:------------------------------|:---------------|:------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
 | visit_occurrence_id           |                |       | Auto-increment                                                                                                                                 |
@@ -38,10 +42,14 @@ nav_order: 4
 | discharge_to_concept_id       |                |       | 0                                                                                                                                              |
 | discharge_to_source_value     |                |       |                                                                                                                                                |
 | preceding_visit_occurrence_id |                |       |                                                                                                                                                |
+| record_source_value		    | p_id           |       | Concatenate p_id-"basedata"-visit_type. Visit type is either "standard", "mri" or "biopsy"  (e.g. 1-basedata-mri)                                                                                                                                               |
 
 ## Reading from fulong.csv
 
 ![](index_files/image6.png)
+
+The record_source_value is used to link stem_table visits to the visit_occurrence table.
+This variable is not included in OMOP CDM v6 + oncology extensions and should be removed from the episode table after all mappings are finished.
 
 | Destination Field             | Source field  | Logic | Comment field                                                                                                                                  |
 |:------------------------------|:--------------|:------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
@@ -60,5 +68,6 @@ nav_order: 4
 | admitted_from_source_value    |               |       |                                                                                                                                                |
 | discharge_to_concept_id       |               |       | 0                                                                                                                                              |
 | discharge_to_source_value     |               |       |                                                                                                                                                |
-| preceding_visit_occurrence_id |               |       |                                                                                                                                                |
+| preceding_visit_occurrence_id |               |       |                           fulong                                                                                                                     |
+| record_source_value           | p_id<br>time    |       | Concatenate p_id-"basedata"-time-visit_type (e.g. 1-fulong-35-mri)                                                                                                                                               |
 

@@ -1,8 +1,10 @@
 from src.main.python.model.cdm import StemTable
+from src.main.python.util.create_record_source_value import create_enddata_stem_table_record_source_value
 from datetime import datetime
 from datetime import timedelta
 import re
 import logging
+
 
 def enddata_to_stem_table(wrapper) -> list:
     enddata = wrapper.get_enddata()
@@ -43,7 +45,6 @@ def enddata_to_stem_table(wrapper) -> list:
 
             # Exception: Map sum of gleason1_rad_prost and gleason2_rad_prost
             if variable == 'gleason1_rad_prost':
-                # TODO: What to do if one of the gleason scores is empty?
                 if row['gleason1_rad_prost'] == '' or row['gleason2_rad_prost'] == '':
                     logging.warning('One of the gleason scores is empty (gleason1_rad_prost or gleason2_rad_prost)')
                     continue
@@ -57,9 +58,9 @@ def enddata_to_stem_table(wrapper) -> list:
 
             # Exception: postoperative_psa strip '&lt;'
             if variable == 'postoperative_psa':
-                if '&lt;' in value:
+                if '<' in value:
                     operator_concept_id = 4171756  # <
-                    value = re.sub('&lt;', '', value)
+                    value = re.sub('<', '', value)
                 value = re.sub(',', '.', value)
 
             # Extract variable and value form mapping tables
@@ -71,10 +72,16 @@ def enddata_to_stem_table(wrapper) -> list:
             value_as_number = target.value_as_number
             source_value = target.source_value
             value_source_value = target.value_source_value
+            unit_concept_id = target.unit_concept_id
 
             # Give warning when vocabulary mapping is missing
             if target.concept_id is None:
-                logging.warning('There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
+                logging.warning(
+                    'There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
+
+            # Add record source value to Stem Table
+            stem_table_record_source_value = create_enddata_stem_table_record_source_value(row['p_id'],
+                                                                                           variable)
 
             record = StemTable(
                 person_id=int(row['p_id']),
@@ -85,15 +92,18 @@ def enddata_to_stem_table(wrapper) -> list:
                 concept_id=concept_id,
                 value_as_number=value_as_number,
                 value_as_concept_id=value_as_concept_id,
+                unit_concept_id=unit_concept_id if unit_concept_id else None,
                 source_value=source_value,
                 value_source_value=value_source_value,
                 operator_concept_id=operator_concept_id,
-                type_concept_id=0  # TODO
+                type_concept_id=0,
+                record_source_value=stem_table_record_source_value
             )
 
             records_to_insert.append(record)
 
     return records_to_insert
+
 
 if __name__ == '__main__':
     from src.main.python.database.database import Database
