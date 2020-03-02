@@ -3,10 +3,10 @@ from sqlalchemy.orm import relationship
 
 from src.main.python.database.database import base
 
-metadata = Base.metadata
+metadata = base.metadata
 
 
-class CdmSource(Base):
+class CdmSource(base):
     __tablename__ = 'cdm_source'
     __table_args__ = {'schema': 'public'}
 
@@ -22,7 +22,7 @@ class CdmSource(Base):
     vocabulary_version = Column(String(20))
 
 
-class Metadata(Base):
+class Metadata(base):
     __tablename__ = 'metadata'
     __table_args__ = {'schema': 'public'}
 
