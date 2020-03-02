@@ -518,7 +518,7 @@ class StemTable(base):
     __table_args__ = {'schema': 'public'}
 
     id = Column(Integer, primary_key=True)
-    domain_id = Column(ForeignKey('public.domain.domain_id'),
+    domain_id = Column(ForeignKey('vocab.domain.domain_id'),
                        comment='A foreign key identifying the domain this event belongs to. The domain drives the target CDM table this event will be '
                                'recorded in.  If one is not set specify a default domain.')
     person_id = Column(ForeignKey('public.person.person_id'), nullable=False, index=True)
