@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 
 from src.main.python.database.database import base
 
-metadata = Base.metadata
+metadata = base.metadata
 
 
 class CdmSource(Base):
