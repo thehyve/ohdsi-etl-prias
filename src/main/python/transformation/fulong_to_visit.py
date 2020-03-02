@@ -17,25 +17,26 @@ from src.main.python.model.cdm import VisitOccurrence
 from datetime import datetime
 from datetime import timedelta
 from src.main.python.util.number_conversion import to_int
-from src.main.python.util.create_visit_source_value import create_fulong_visit_source_value
+from src.main.python.util.create_record_source_value import create_fulong_visit_record_source_value
 
 def fulong_to_visit(wrapper) -> list:
+
     fulong = wrapper.get_fulong()
 
     records_to_insert = []
     for row in fulong:
 
-        for visit in ['fulong', 'fulong_mri', 'fulong_biopsy']:
+        for visit_type in ['standard', 'mri', 'biopsy']:
 
             # Every patient has Fulong Visit record
-            if visit == 'fulong':
+            if visit_type == 'standard':
                 # Extract variables and values
                 variable = 'time'
                 value = row[variable]
                 target = wrapper.variable_mapper.lookup(variable, value)
                 visit_concept_id = target.concept_id  # Follow-up Visit *number*
             # Add visit record with custom concept Follow-up Visit *number* - MRI when an MRI was taken
-            elif visit == 'fulong_mri' and row['mri_taken'] == '1':
+            elif visit_type == 'mri' and row['mri_taken'] == '1':
                 # Extract variables and values
                 variable = 'time'
                 value = row[variable]
@@ -43,7 +44,7 @@ def fulong_to_visit(wrapper) -> list:
                 target = wrapper.variable_mapper.lookup('time_mri', value)
                 visit_concept_id = target.concept_id  # Follow-up Visit *number* - MRI
             # Add visit record with custom concept Follow-up Visit *number* - Biopsy when an Biopsy was taken
-            elif visit == 'fulong_biopsy':
+            elif visit_type == 'biopsy':
                 # Extract variables and values
                 variable = 'time'
                 value = row[variable]
@@ -54,7 +55,9 @@ def fulong_to_visit(wrapper) -> list:
                 continue
 
             # Create visit_occurrence_source_value for visit_id lookup
-            visit_occurrence_source_value = create_fulong_visit_source_value(row['p_id'], row[variable], visit)
+            visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'],
+                                                                                row[variable],
+                                                                                visit_type)
 
             # Calculate proxy date
             basedata_record = wrapper.lookup_basedata_by_pid(row['p_id'])
@@ -79,7 +82,7 @@ def fulong_to_visit(wrapper) -> list:
                 visit_source_value=row[variable],
                 discharge_to_concept_id=0,
                 admitted_from_concept_id=0,
-                visit_occurrence_source_value=visit_occurrence_source_value
+                record_source_value=visit_record_source_value
             )
             records_to_insert.append(record)
 

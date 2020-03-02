@@ -14,11 +14,13 @@
 
 # !/usr/bin/env python3
 from src.main.python.model.cdm import StemTable
-from src.main.python.util.create_visit_source_value import create_basedata_visit_source_value
+from src.main.python.util.create_record_source_value import create_basedata_visit_record_source_value
+from src.main.python.util.create_record_source_value import create_basedata_stem_table_record_source_value
 from datetime import date, datetime
 
 
 def basedata_diagnosis_to_stem_table(wrapper) -> list:
+
     basedata = wrapper.get_basedata()
 
     records_to_insert = []
@@ -26,9 +28,13 @@ def basedata_diagnosis_to_stem_table(wrapper) -> list:
     for row in basedata:
 
         # Get visit occurrence id
-        visit = 'basedata'
-        visit_source = create_basedata_visit_source_value(row['p_id'], visit)
-        visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
+        visit_type = 'standard'
+        visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'], visit_type)
+        visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
+
+        # Add record source value to Stem Table
+        stem_table_record_source_value = create_basedata_stem_table_record_source_value(row['p_id'],
+                                                                                        'diagnosis')
 
         # Exception: For each person, add condition occurrence
         record = StemTable(
@@ -37,7 +43,8 @@ def basedata_diagnosis_to_stem_table(wrapper) -> list:
             start_date=date(int(row['year_diagnosis']), 7, 1),
             start_datetime=datetime(int(row['year_diagnosis']), 7, 1),
             concept_id=4116087,  # Carcinoma of prostate
-            type_concept_id=0  # TODO
+            type_concept_id=0,
+            record_source_value=stem_table_record_source_value
         )
         records_to_insert.append(record)
 

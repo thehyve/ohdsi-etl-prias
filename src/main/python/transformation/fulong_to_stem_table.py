@@ -17,8 +17,10 @@ from src.main.python.model.cdm import StemTable
 from datetime import date, datetime
 from datetime import timedelta
 from src.main.python.util.number_conversion import to_int
-from src.main.python.util.create_visit_source_value import create_fulong_visit_source_value
+from src.main.python.util.create_record_source_value import create_fulong_visit_record_source_value
+from src.main.python.util.create_record_source_value import create_fulong_stem_table_record_source_value
 import logging
+
 
 def fulong_to_stem_table(wrapper) -> list:
     fulong = wrapper.get_fulong()
@@ -43,13 +45,22 @@ def fulong_to_stem_table(wrapper) -> list:
         for variable, value in row.items():
 
             # Ignore the following columns for mapping
-            # TODO: ask whether there is a second gleason score available for mri_targeted_gleason
             if variable in ['p_id', 'time', 'dre_fu_recode', 'log2psa_fu', 'gleason_sum_fu',
-                            'slope', 'pro_psa_fu', 'visit_action', 'active_visit', 'year_visit', 'days_psa_diag', 'mri_targeted_gleason1']:
+                            'slope', 'pro_psa_fu', 'visit_action', 'active_visit', 'year_visit', 'days_psa_diag']:
                 continue
 
             # Skip empty string values
             if value == '' or value == None:
+                continue
+
+            # Exception: Map sum of mri_targeted_gleason1 and mri_targeted_gleason2
+            if variable == 'mri_targeted_gleason1':
+                if row['mri_targeted_gleason1'] == '' or row['mri_targeted_gleason2'] == '':
+                    logging.warning(
+                        'One of the gleason scores is empty (mri_targeted_gleason1 or mri_targeted_gleason2)')
+                    continue
+                variable, value = wrapper.gleason_sum(row, 'mri_targeted_gleason1', 'mri_targeted_gleason2')
+            if variable == 'mri_targeted_gleason2':
                 continue
 
             # Skip 0 values for specific biopt_ values
@@ -126,17 +137,25 @@ def fulong_to_stem_table(wrapper) -> list:
 
             # Do not map if there is no variable mapping
             if target.concept_id is None:
-                logging.warning('There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
+                logging.warning(
+                    'There is no target_concept_id for variable "{}" and value "{}"'.format(variable, value))
 
             # Get visit occurrence id
             if variable.startswith('mri_') and row['mri_taken'] == '1':
-                visit = 'fulong_mri'
-            elif variable.startswith('biopsy_'):
-                visit = 'fulong_biopsy'
+                visit_type = 'mri'
+            elif variable.startswith('biopt_'):
+                visit_type = 'biopsy'
             else:
-                visit = 'fulong'
-            visit_source = create_fulong_visit_source_value(row['p_id'], row['time'], visit)
-            visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_source)
+                visit_type = 'standard'
+            visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'],
+                                                                                row['time'],
+                                                                                visit_type)
+            visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
+
+            # Add record source value to Stem Table
+            stem_table_record_source_value = create_fulong_stem_table_record_source_value(row['p_id'],
+                                                                                          row['time'],
+                                                                                          variable)
 
             record = StemTable(
                 person_id=int(row['p_id']),
@@ -146,12 +165,12 @@ def fulong_to_stem_table(wrapper) -> list:
                 concept_id=concept_id,
                 value_as_concept_id=value_as_concept_id,
                 value_as_number=value_as_number,
-                unit_concept_id=unit_concept_id,
+                unit_concept_id=unit_concept_id if unit_concept_id else None,
                 source_value=source_value,
                 value_source_value=value_source_value,
-                unit_source_value=unit_concept_id if unit_concept_id else None,
                 operator_concept_id=operator_concept_id,
-                type_concept_id=0  # TODO
+                type_concept_id=0,
+                record_source_value=stem_table_record_source_value
             )
 
             records_to_insert.append(record)

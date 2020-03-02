@@ -24,7 +24,7 @@ from src.main.python.model.setup_logging import setup_logging
 from src.main.python.database.database import Database
 from src.main.python.wrapper import Wrapper
 
-__version__ = '0.0.1'
+__version__ = '0.1.0'
 
 logger = logging.getLogger(__name__)
 

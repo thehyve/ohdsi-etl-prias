@@ -33,6 +33,8 @@ class Wrapper(EtlWrapper):
         self.variable_mapper = VariableConceptMapper(Path(mapping_tables_folder))
         self.person_id_lookup = None
         self.visit_occurrence_id_lookup = None
+        self.episode_id_lookup = None
+        self.stem_table_id_lookup = None
         self.basedata_by_pid_lookup = None
         self.enddata_by_pid_lookup = None
         self.source_table_basedata = None
@@ -70,7 +72,15 @@ class Wrapper(EtlWrapper):
         self.execute_transformation(fulong_dre_to_stem_table)
         self.execute_transformation(basedata_to_observation_period)
         self.execute_transformation(enddata_to_stem_table)
+        self.execute_transformation(basedata_to_episode)
+        self.execute_transformation(fulong_to_episode)
+
+        logger.info('Stem table to domains')
         self.stem_table_to_domains()
+
+        logger.info('Episode event')
+        self.execute_transformation(basedata_to_episode_event)
+        self.execute_transformation(fulong_to_episode_event)
 
         # self.create_person_lookup()
 
@@ -91,8 +101,6 @@ class Wrapper(EtlWrapper):
         """Drops clinical tables, if they exist"""
         logger.info('Dropping OMOP CDM (non-vocabulary) tables if existing')
         self.db.base.metadata.drop_all(self.db.engine, tables=[
-            #clinical_data.Episode.__table__,
-            #clinical_data.EpisodeEvent.__table__,
             clinical_data.ConditionOccurrence.__table__,
             clinical_data.DeviceExposure.__table__,
             clinical_data.DrugExposure.__table__,
@@ -108,6 +116,8 @@ class Wrapper(EtlWrapper):
             clinical_data.SurveyConduct.__table__,
             clinical_data.VisitOccurrence.__table__,
             clinical_data.VisitDetail.__table__,
+            clinical_data.EpisodeEvent.__table__,
+            clinical_data.Episode.__table__,
             derived_elements.DrugEra.__table__,
             derived_elements.DoseEra.__table__,
             derived_elements.ConditionEra.__table__,
@@ -145,17 +155,49 @@ class Wrapper(EtlWrapper):
         """ Initialize the visit lookup """
         with self.db.session_scope() as session:
             query = session.query(clinical_data.VisitOccurrence).all()
-            self.visit_occurrence_id_lookup = {x.visit_occurrence_source_value: x.visit_occurrence_id for x in query}
+            self.visit_occurrence_id_lookup = {x.record_source_value: x.visit_occurrence_id for x in query}
 
-    def lookup_visit_occurrence_id(self, visit_source_value):
+    def lookup_visit_occurrence_id(self, visit_record_source_value):
         if self.visit_occurrence_id_lookup is None:
             self.create_visit_lookup()
 
-        if visit_source_value not in self.visit_occurrence_id_lookup:
-            print(self.visit_occurrence_lookup.keys())
-            raise Exception('Visit source value "{}" not found in lookup.'.format(visit_source_value))
+        if visit_record_source_value not in self.visit_occurrence_id_lookup:
+            print(self.visit_occurrence_id_lookup.keys())
+            raise Exception('Visit record_source_value "{}" not found in lookup.'.format(visit_record_source_value))
 
-        return self.visit_occurrence_id_lookup.get(visit_source_value)
+        return self.visit_occurrence_id_lookup.get(visit_record_source_value)
+
+    def create_episode_lookup(self):
+        """ Initialize the episode lookup """
+        with self.db.session_scope() as session:
+            query = session.query(clinical_data.Episode).all()
+            self.episode_id_lookup = {x.record_source_value: x.episode_id for x in query}
+
+    def lookup_episode_id(self, episode_record_source_value):
+        if self.episode_id_lookup is None:
+            self.create_episode_lookup()
+
+        if episode_record_source_value not in self.episode_id_lookup:
+            print(self.episode_id_lookup.keys())
+            raise Exception('Episode record source value "{}" not found in lookup.'.format(episode_record_source_value))
+
+        return self.episode_id_lookup.get(episode_record_source_value)
+
+    def create_stem_table_lookup(self):
+        """ Initialize the stem_table lookup """
+        with self.db.session_scope() as session:
+            query = session.query(clinical_data.StemTable).all()
+            self.stem_table_id_lookup = {x.record_source_value: x.id for x in query}
+
+    def lookup_stem_table_id(self, stem_table_record_source_value):
+        if self.stem_table_id_lookup is None:
+            self.create_stem_table_lookup()
+
+        if stem_table_record_source_value not in self.stem_table_id_lookup:
+            print(self.stem_table_id_lookup.keys())
+            raise Exception('Stem table record source value "{}" not found in lookup.'.format(stem_table_record_source_value))
+
+        return self.stem_table_id_lookup.get(stem_table_record_source_value)
 
     def create_basedata_by_pid_lookup(self):
         """
