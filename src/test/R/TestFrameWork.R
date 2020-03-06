@@ -4372,6 +4372,112 @@ expect_location_history <- function(location_id, relationship_type_concept_id, d
   invisible(NULL)
 }
 
+expect_episode <- function(episode_id, person_id, episode_start_datetime, episode_end_datetime, episode_concept_id, episode_parent_id, episode_number, episode_object_concept_id, episode_type_concept_id, episode_source_value, episode_source_concept_id, record_source_value) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(person_id)) {
+    fields <- c(fields, "person_id")
+    values <- c(values, if (is.null(person_id)) "NULL" else if (is(person_id, "subQuery")) paste0("(", as.character(person_id), ")") else paste0("'", as.character(person_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.person_id')
+  }
+  
+  if (!missing(episode_start_datetime)) {
+    fields <- c(fields, "episode_start_datetime")
+    values <- c(values, if (is.null(episode_start_datetime)) "NULL" else if (is(episode_start_datetime, "subQuery")) paste0("(", as.character(episode_start_datetime), ")") else paste0("'", as.character(episode_start_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_start_datetime')
+  }
+  
+  if (!missing(episode_end_datetime)) {
+    fields <- c(fields, "episode_end_datetime")
+    values <- c(values, if (is.null(episode_end_datetime)) "NULL" else if (is(episode_end_datetime, "subQuery")) paste0("(", as.character(episode_end_datetime), ")") else paste0("'", as.character(episode_end_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_end_datetime')
+  }
+  
+  if (!missing(episode_concept_id)) {
+    fields <- c(fields, "episode_concept_id")
+    values <- c(values, if (is.null(episode_concept_id)) "NULL" else if (is(episode_concept_id, "subQuery")) paste0("(", as.character(episode_concept_id), ")") else paste0("'", as.character(episode_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_concept_id')
+  }
+  
+  if (!missing(episode_parent_id)) {
+    fields <- c(fields, "episode_parent_id")
+    values <- c(values, if (is.null(episode_parent_id)) "NULL" else if (is(episode_parent_id, "subQuery")) paste0("(", as.character(episode_parent_id), ")") else paste0("'", as.character(episode_parent_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_parent_id')
+  }
+  
+  if (!missing(episode_number)) {
+    fields <- c(fields, "episode_number")
+    values <- c(values, if (is.null(episode_number)) "NULL" else if (is(episode_number, "subQuery")) paste0("(", as.character(episode_number), ")") else paste0("'", as.character(episode_number), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_number')
+  }
+  
+  if (!missing(episode_object_concept_id)) {
+    fields <- c(fields, "episode_object_concept_id")
+    values <- c(values, if (is.null(episode_object_concept_id)) "NULL" else if (is(episode_object_concept_id, "subQuery")) paste0("(", as.character(episode_object_concept_id), ")") else paste0("'", as.character(episode_object_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_object_concept_id')
+  }
+  
+  if (!missing(episode_type_concept_id)) {
+    fields <- c(fields, "episode_type_concept_id")
+    values <- c(values, if (is.null(episode_type_concept_id)) "NULL" else if (is(episode_type_concept_id, "subQuery")) paste0("(", as.character(episode_type_concept_id), ")") else paste0("'", as.character(episode_type_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_type_concept_id')
+  }
+  
+  if (!missing(episode_source_value)) {
+    fields <- c(fields, "episode_source_value")
+    values <- c(values, if (is.null(episode_source_value)) "NULL" else if (is(episode_source_value, "subQuery")) paste0("(", as.character(episode_source_value), ")") else paste0("'", as.character(episode_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_value')
+  }
+  
+  if (!missing(episode_source_concept_id)) {
+    fields <- c(fields, "episode_source_concept_id")
+    values <- c(values, if (is.null(episode_source_concept_id)) "NULL" else if (is(episode_source_concept_id, "subQuery")) paste0("(", as.character(episode_source_concept_id), ")") else paste0("'", as.character(episode_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_concept_id')
+  }
+  
+  if (!missing(record_source_value)) {
+    fields <- c(fields, "record_source_value")
+    values <- c(values, if (is.null(record_source_value)) "NULL" else if (is(record_source_value, "subQuery")) paste0("(", as.character(record_source_value), ")") else paste0("'", as.character(record_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.record_source_value')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 0, table = "episode", fields = fields, values = values)
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
+expect_episode_event <- function(episode_id, event_id, event_field_concept_id) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(event_id)) {
+    fields <- c(fields, "event_id")
+    values <- c(values, if (is.null(event_id)) "NULL" else if (is(event_id, "subQuery")) paste0("(", as.character(event_id), ")") else paste0("'", as.character(event_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_id')
+  }
+  
+  if (!missing(event_field_concept_id)) {
+    fields <- c(fields, "event_field_concept_id")
+    values <- c(values, if (is.null(event_field_concept_id)) "NULL" else if (is(event_field_concept_id, "subQuery")) paste0("(", as.character(event_field_concept_id), ")") else paste0("'", as.character(event_field_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_field_concept_id')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 0, table = "episode_event", fields = fields, values = values)
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
 expect_no_person <- function(person_id, gender_concept_id, year_of_birth, month_of_birth, day_of_birth, birth_datetime, death_datetime, race_concept_id, ethnicity_concept_id, location_id, provider_id, care_site_id, person_source_value, gender_source_value, gender_source_concept_id, race_source_value, race_source_concept_id, ethnicity_source_value, ethnicity_source_concept_id) {
   fields <- c()
   values <- c()
@@ -6422,6 +6528,112 @@ expect_no_location_history <- function(location_id, relationship_type_concept_id
   }
 
   expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 1, table = "location_history", fields = fields, values = values)
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
+expect_no_episode <- function(episode_id, person_id, episode_start_datetime, episode_end_datetime, episode_concept_id, episode_parent_id, episode_number, episode_object_concept_id, episode_type_concept_id, episode_source_value, episode_source_concept_id, record_source_value) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(person_id)) {
+    fields <- c(fields, "person_id")
+    values <- c(values, if (is.null(person_id)) "NULL" else if (is(person_id, "subQuery")) paste0("(", as.character(person_id), ")") else paste0("'", as.character(person_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.person_id')
+  }
+  
+  if (!missing(episode_start_datetime)) {
+    fields <- c(fields, "episode_start_datetime")
+    values <- c(values, if (is.null(episode_start_datetime)) "NULL" else if (is(episode_start_datetime, "subQuery")) paste0("(", as.character(episode_start_datetime), ")") else paste0("'", as.character(episode_start_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_start_datetime')
+  }
+  
+  if (!missing(episode_end_datetime)) {
+    fields <- c(fields, "episode_end_datetime")
+    values <- c(values, if (is.null(episode_end_datetime)) "NULL" else if (is(episode_end_datetime, "subQuery")) paste0("(", as.character(episode_end_datetime), ")") else paste0("'", as.character(episode_end_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_end_datetime')
+  }
+  
+  if (!missing(episode_concept_id)) {
+    fields <- c(fields, "episode_concept_id")
+    values <- c(values, if (is.null(episode_concept_id)) "NULL" else if (is(episode_concept_id, "subQuery")) paste0("(", as.character(episode_concept_id), ")") else paste0("'", as.character(episode_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_concept_id')
+  }
+  
+  if (!missing(episode_parent_id)) {
+    fields <- c(fields, "episode_parent_id")
+    values <- c(values, if (is.null(episode_parent_id)) "NULL" else if (is(episode_parent_id, "subQuery")) paste0("(", as.character(episode_parent_id), ")") else paste0("'", as.character(episode_parent_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_parent_id')
+  }
+  
+  if (!missing(episode_number)) {
+    fields <- c(fields, "episode_number")
+    values <- c(values, if (is.null(episode_number)) "NULL" else if (is(episode_number, "subQuery")) paste0("(", as.character(episode_number), ")") else paste0("'", as.character(episode_number), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_number')
+  }
+  
+  if (!missing(episode_object_concept_id)) {
+    fields <- c(fields, "episode_object_concept_id")
+    values <- c(values, if (is.null(episode_object_concept_id)) "NULL" else if (is(episode_object_concept_id, "subQuery")) paste0("(", as.character(episode_object_concept_id), ")") else paste0("'", as.character(episode_object_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_object_concept_id')
+  }
+  
+  if (!missing(episode_type_concept_id)) {
+    fields <- c(fields, "episode_type_concept_id")
+    values <- c(values, if (is.null(episode_type_concept_id)) "NULL" else if (is(episode_type_concept_id, "subQuery")) paste0("(", as.character(episode_type_concept_id), ")") else paste0("'", as.character(episode_type_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_type_concept_id')
+  }
+  
+  if (!missing(episode_source_value)) {
+    fields <- c(fields, "episode_source_value")
+    values <- c(values, if (is.null(episode_source_value)) "NULL" else if (is(episode_source_value, "subQuery")) paste0("(", as.character(episode_source_value), ")") else paste0("'", as.character(episode_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_value')
+  }
+  
+  if (!missing(episode_source_concept_id)) {
+    fields <- c(fields, "episode_source_concept_id")
+    values <- c(values, if (is.null(episode_source_concept_id)) "NULL" else if (is(episode_source_concept_id, "subQuery")) paste0("(", as.character(episode_source_concept_id), ")") else paste0("'", as.character(episode_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_concept_id')
+  }
+  
+  if (!missing(record_source_value)) {
+    fields <- c(fields, "record_source_value")
+    values <- c(values, if (is.null(record_source_value)) "NULL" else if (is(record_source_value, "subQuery")) paste0("(", as.character(record_source_value), ")") else paste0("'", as.character(record_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.record_source_value')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 1, table = "episode", fields = fields, values = values)
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
+expect_no_episode_event <- function(episode_id, event_id, event_field_concept_id) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(event_id)) {
+    fields <- c(fields, "event_id")
+    values <- c(values, if (is.null(event_id)) "NULL" else if (is(event_id, "subQuery")) paste0("(", as.character(event_id), ")") else paste0("'", as.character(event_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_id')
+  }
+  
+  if (!missing(event_field_concept_id)) {
+    fields <- c(fields, "event_field_concept_id")
+    values <- c(values, if (is.null(event_field_concept_id)) "NULL" else if (is(event_field_concept_id, "subQuery")) paste0("(", as.character(event_field_concept_id), ")") else paste0("'", as.character(event_field_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_field_concept_id')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 1, table = "episode_event", fields = fields, values = values)
   frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
   invisible(NULL)
 }
@@ -8870,6 +9082,113 @@ expect_count_location_history <- function(rowCount, location_id, relationship_ty
 
   expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 2, table = "location_history", fields = fields, values = values)
   expects$rowCount = rowCount
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
+expect_count_episode <- function(episode_id, person_id, episode_start_datetime, episode_end_datetime, episode_concept_id, episode_parent_id, episode_number, episode_object_concept_id, episode_type_concept_id, episode_source_value, episode_source_concept_id, record_source_value) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(person_id)) {
+    fields <- c(fields, "person_id")
+    values <- c(values, if (is.null(person_id)) "NULL" else if (is(person_id, "subQuery")) paste0("(", as.character(person_id), ")") else paste0("'", as.character(person_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.person_id')
+  }
+  
+  if (!missing(episode_start_datetime)) {
+    fields <- c(fields, "episode_start_datetime")
+    values <- c(values, if (is.null(episode_start_datetime)) "NULL" else if (is(episode_start_datetime, "subQuery")) paste0("(", as.character(episode_start_datetime), ")") else paste0("'", as.character(episode_start_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_start_datetime')
+  }
+  
+  if (!missing(episode_end_datetime)) {
+    fields <- c(fields, "episode_end_datetime")
+    values <- c(values, if (is.null(episode_end_datetime)) "NULL" else if (is(episode_end_datetime, "subQuery")) paste0("(", as.character(episode_end_datetime), ")") else paste0("'", as.character(episode_end_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_end_datetime')
+  }
+  
+  if (!missing(episode_concept_id)) {
+    fields <- c(fields, "episode_concept_id")
+    values <- c(values, if (is.null(episode_concept_id)) "NULL" else if (is(episode_concept_id, "subQuery")) paste0("(", as.character(episode_concept_id), ")") else paste0("'", as.character(episode_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_concept_id')
+  }
+  
+  if (!missing(episode_parent_id)) {
+    fields <- c(fields, "episode_parent_id")
+    values <- c(values, if (is.null(episode_parent_id)) "NULL" else if (is(episode_parent_id, "subQuery")) paste0("(", as.character(episode_parent_id), ")") else paste0("'", as.character(episode_parent_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_parent_id')
+  }
+  
+  if (!missing(episode_number)) {
+    fields <- c(fields, "episode_number")
+    values <- c(values, if (is.null(episode_number)) "NULL" else if (is(episode_number, "subQuery")) paste0("(", as.character(episode_number), ")") else paste0("'", as.character(episode_number), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_number')
+  }
+  
+  if (!missing(episode_object_concept_id)) {
+    fields <- c(fields, "episode_object_concept_id")
+    values <- c(values, if (is.null(episode_object_concept_id)) "NULL" else if (is(episode_object_concept_id, "subQuery")) paste0("(", as.character(episode_object_concept_id), ")") else paste0("'", as.character(episode_object_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_object_concept_id')
+  }
+  
+  if (!missing(episode_type_concept_id)) {
+    fields <- c(fields, "episode_type_concept_id")
+    values <- c(values, if (is.null(episode_type_concept_id)) "NULL" else if (is(episode_type_concept_id, "subQuery")) paste0("(", as.character(episode_type_concept_id), ")") else paste0("'", as.character(episode_type_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_type_concept_id')
+  }
+  
+  if (!missing(episode_source_value)) {
+    fields <- c(fields, "episode_source_value")
+    values <- c(values, if (is.null(episode_source_value)) "NULL" else if (is(episode_source_value, "subQuery")) paste0("(", as.character(episode_source_value), ")") else paste0("'", as.character(episode_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_value')
+  }
+  
+  if (!missing(episode_source_concept_id)) {
+    fields <- c(fields, "episode_source_concept_id")
+    values <- c(values, if (is.null(episode_source_concept_id)) "NULL" else if (is(episode_source_concept_id, "subQuery")) paste0("(", as.character(episode_source_concept_id), ")") else paste0("'", as.character(episode_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_concept_id')
+  }
+  
+  if (!missing(record_source_value)) {
+    fields <- c(fields, "record_source_value")
+    values <- c(values, if (is.null(record_source_value)) "NULL" else if (is(record_source_value, "subQuery")) paste0("(", as.character(record_source_value), ")") else paste0("'", as.character(record_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.record_source_value')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 2, table = "episode", fields = fields, values = values)
+  expects$rowCount = rowCount
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
+expect_count_episode_event <- function(episode_id, event_id, event_field_concept_id) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(event_id)) {
+    fields <- c(fields, "event_id")
+    values <- c(values, if (is.null(event_id)) "NULL" else if (is(event_id, "subQuery")) paste0("(", as.character(event_id), ")") else paste0("'", as.character(event_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_id')
+  }
+  
+  if (!missing(event_field_concept_id)) {
+    fields <- c(fields, "event_field_concept_id")
+    values <- c(values, if (is.null(event_field_concept_id)) "NULL" else if (is(event_field_concept_id, "subQuery")) paste0("(", as.character(event_field_concept_id), ")") else paste0("'", as.character(event_field_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_field_concept_id')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 2, table = "episode_event", fields = fields, values = values)
   frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
   invisible(NULL)
 }
@@ -12364,6 +12683,155 @@ lookup_location_history <- function(fetchField, location_id, relationship_type_c
   return(statement)
 }
 
+lookup_episode <- function(fetchField, episode_id, person_id, episode_start_datetime, episode_end_datetime, episode_concept_id, episode_parent_id, episode_number, episode_object_concept_id, episode_type_concept_id, episode_source_value, episode_source_concept_id, record_source_value) {
+  statement <- paste0('SELECT ', fetchField , ' FROM @cdm_database_schema.episode WHERE')
+  first <- TRUE
+  if (!missing(episode_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_id = ", if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+  }
+  
+  if (!missing(person_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " person_id = ", if (is.null(person_id)) "NULL" else if (is(person_id, "subQuery")) paste0("(", as.character(person_id), ")") else paste0("'", as.character(person_id), "'"))
+  }
+  
+  if (!missing(episode_start_datetime)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_start_datetime = ", if (is.null(episode_start_datetime)) "NULL" else if (is(episode_start_datetime, "subQuery")) paste0("(", as.character(episode_start_datetime), ")") else paste0("'", as.character(episode_start_datetime), "'"))
+  }
+  
+  if (!missing(episode_end_datetime)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_end_datetime = ", if (is.null(episode_end_datetime)) "NULL" else if (is(episode_end_datetime, "subQuery")) paste0("(", as.character(episode_end_datetime), ")") else paste0("'", as.character(episode_end_datetime), "'"))
+  }
+  
+  if (!missing(episode_concept_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_concept_id = ", if (is.null(episode_concept_id)) "NULL" else if (is(episode_concept_id, "subQuery")) paste0("(", as.character(episode_concept_id), ")") else paste0("'", as.character(episode_concept_id), "'"))
+  }
+  
+  if (!missing(episode_parent_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_parent_id = ", if (is.null(episode_parent_id)) "NULL" else if (is(episode_parent_id, "subQuery")) paste0("(", as.character(episode_parent_id), ")") else paste0("'", as.character(episode_parent_id), "'"))
+  }
+  
+  if (!missing(episode_number)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_number = ", if (is.null(episode_number)) "NULL" else if (is(episode_number, "subQuery")) paste0("(", as.character(episode_number), ")") else paste0("'", as.character(episode_number), "'"))
+  }
+  
+  if (!missing(episode_object_concept_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_object_concept_id = ", if (is.null(episode_object_concept_id)) "NULL" else if (is(episode_object_concept_id, "subQuery")) paste0("(", as.character(episode_object_concept_id), ")") else paste0("'", as.character(episode_object_concept_id), "'"))
+  }
+  
+  if (!missing(episode_type_concept_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_type_concept_id = ", if (is.null(episode_type_concept_id)) "NULL" else if (is(episode_type_concept_id, "subQuery")) paste0("(", as.character(episode_type_concept_id), ")") else paste0("'", as.character(episode_type_concept_id), "'"))
+  }
+  
+  if (!missing(episode_source_value)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_source_value = ", if (is.null(episode_source_value)) "NULL" else if (is(episode_source_value, "subQuery")) paste0("(", as.character(episode_source_value), ")") else paste0("'", as.character(episode_source_value), "'"))
+  }
+  
+  if (!missing(episode_source_concept_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_source_concept_id = ", if (is.null(episode_source_concept_id)) "NULL" else if (is(episode_source_concept_id, "subQuery")) paste0("(", as.character(episode_source_concept_id), ")") else paste0("'", as.character(episode_source_concept_id), "'"))
+  }
+  
+  if (!missing(record_source_value)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " record_source_value = ", if (is.null(record_source_value)) "NULL" else if (is(record_source_value, "subQuery")) paste0("(", as.character(record_source_value), ")") else paste0("'", as.character(record_source_value), "'"))
+  }
+  
+  class(statement) <- 'subQuery'
+  return(statement)
+}
+
+lookup_episode_event <- function(fetchField, episode_id, event_id, event_field_concept_id) {
+  statement <- paste0('SELECT ', fetchField , ' FROM @cdm_database_schema.episode_event WHERE')
+  first <- TRUE
+  if (!missing(episode_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_id = ", if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+  }
+  
+  if (!missing(event_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " event_id = ", if (is.null(person_id)) "NULL" else if (is(event_id, "subQuery")) paste0("(", as.character(event_id), ")") else paste0("'", as.character(event_id), "'"))
+  }
+  
+  if (!missing(event_field_concept_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " event_field_concept_id = ", if (is.null(event_field_concept_id)) "NULL" else if (is(event_field_concept_id, "subQuery")) paste0("(", as.character(event_field_concept_id), ")") else paste0("'", as.character(event_field_concept_id), "'"))
+  }
+  
+  class(statement) <- 'subQuery'
+  return(statement)
+}
+
 generateInsertSql <- function(databaseSchema = NULL) {
   insertSql <- c()
   insertSql <- c(insertSql, "TRUNCATE TABLE @cdm_database_schema.basedata;")
@@ -12591,4 +13059,3 @@ outputTestResultsSummary <- function(connection, databaseSchema = NULL) {
     write(sprintf('All %d tests PASSED', n_tests), file='')
   }
 }
-
