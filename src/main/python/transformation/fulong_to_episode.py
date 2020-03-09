@@ -56,8 +56,7 @@ def fulong_to_episode(wrapper) -> list:
             episode_start_datetime=start_date,
             episode_end_datetime=start_date,
             episode_object_concept_id=0,
-            episode_source_concept_id=0,
-            episode_type_concept_id=0
+            episode_source_concept_id=0
         )
 
         # Go through each episode group
@@ -78,6 +77,7 @@ def fulong_to_episode(wrapper) -> list:
             episode_lesion.record_source_value = create_fulong_episode_record_source_value(row['p_id'],
                                                                                            row['time'],
                                                                                            episode_group)
+            episode_lesion.episode_type_concept_id = 5086  # Condition tested by diagnosis procedure
 
             records_to_insert.append(episode_lesion)
 
@@ -94,6 +94,7 @@ def fulong_to_episode(wrapper) -> list:
             episode_biopsy.record_source_value = create_fulong_episode_record_source_value(row['p_id'],
                                                                                            row['time'],
                                                                                            episode_group)
+            episode_biopsy.episode_type_concept_id = 44786630  # Primary procedure
 
             records_to_insert.append(episode_biopsy)
 
