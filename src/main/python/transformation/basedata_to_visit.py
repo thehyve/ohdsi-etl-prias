@@ -24,15 +24,18 @@ def basedata_to_visit(wrapper) -> list:
 
     records_to_insert = []
     for row in basedata:
-        for visit_type in ['standard', 'mri', 'biopsy']:
+        for visit in wrapper.BasedataVisit:
+            visit_type = visit.name
 
             # Every patient has Baseline Visit record
-            if visit_type == 'standard':
+            # standard visit
+            if visit_type == wrapper.BasedataVisit(1).name:
                 visit_concept_id = 2000000027  # Baseline Visit
             # Add visit record with custom concept Baseline Visit - MRI when an MRI was taken
-            elif visit_type == 'mri' and row['mri_taken.0'] == '1':
+            elif visit_type == wrapper.BasedataVisit(2).name and row['mri_taken.0'] == '1':
                 visit_concept_id = 2000000066  # Baseline Visit - MRI
-            elif visit_type == 'biopsy':
+            # Add visit record with custom concept Baseline Visit - biopsy when a biopsy was taken
+            elif visit_type == wrapper.BasedataVisit(3).name:
                 visit_concept_id = 2000000105  # Baseline Visit - Biopsy
             else:
                 continue

@@ -27,8 +27,10 @@ def basedata_diagnosis_to_stem_table(wrapper) -> list:
 
     for row in basedata:
 
+        # visit_type is 'standard'
+        visit_type = wrapper.BasedataVisit(1).name
+
         # Get visit occurrence id
-        visit_type = 'standard'
         visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'], visit_type)
         visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
 

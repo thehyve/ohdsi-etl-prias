@@ -21,6 +21,7 @@ from src.main.python.model.SourceData import SourceData
 from src.main.python.util import VariableConceptMapper
 from src.main.python.model.cdm import *
 from src.main.python.transformation import *
+import enum
 
 logger = logging.getLogger(__name__)
 
@@ -267,3 +268,9 @@ class Wrapper(EtlWrapper):
             self.source_table_enddata = SourceData(self.source_folder / 'enddata.csv')
 
         return self.source_table_enddata
+
+    # Set the different visit types
+    class BasedataVisit(enum.Enum):
+        standard = 1
+        mri = 2
+        biopsy = 3
