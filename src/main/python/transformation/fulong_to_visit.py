@@ -26,17 +26,20 @@ def fulong_to_visit(wrapper) -> list:
     records_to_insert = []
     for row in fulong:
 
-        for visit_type in ['standard', 'mri', 'biopsy']:
+        for visit in wrapper.BasedataVisit:
+            visit_type = visit.name
 
             # Every patient has Fulong Visit record
-            if visit_type == 'standard':
+            # standard visit
+            if visit_type == wrapper.BasedataVisit(1).name:
                 # Extract variables and values
                 variable = 'time'
                 value = row[variable]
                 target = wrapper.variable_mapper.lookup(variable, value)
                 visit_concept_id = target.concept_id  # Follow-up Visit *number*
             # Add visit record with custom concept Follow-up Visit *number* - MRI when an MRI was taken
-            elif visit_type == 'mri' and row['mri_taken'] == '1':
+            # mri visit
+            elif visit_type == wrapper.BasedataVisit(2).name and row['mri_taken'] == '1':
                 # Extract variables and values
                 variable = 'time'
                 value = row[variable]
@@ -44,7 +47,8 @@ def fulong_to_visit(wrapper) -> list:
                 target = wrapper.variable_mapper.lookup('time_mri', value)
                 visit_concept_id = target.concept_id  # Follow-up Visit *number* - MRI
             # Add visit record with custom concept Follow-up Visit *number* - Biopsy when an Biopsy was taken
-            elif visit_type == 'biopsy':
+            # biopsy visit
+            elif visit_type == wrapper.BasedataVisit(3).name:
                 # Extract variables and values
                 variable = 'time'
                 value = row[variable]
