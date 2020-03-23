@@ -31,7 +31,7 @@ def fulong_to_visit(wrapper) -> list:
 
             # Every patient has Fulong Visit record
             # standard visit
-            if visit_type == wrapper.BasedataVisit(1).name:
+            if visit_type == wrapper.BasedataVisit('standard').name:
                 # Extract variables and values
                 variable = 'time'
                 value = row[variable]
@@ -39,7 +39,7 @@ def fulong_to_visit(wrapper) -> list:
                 visit_concept_id = target.concept_id  # Follow-up Visit *number*
             # Add visit record with custom concept Follow-up Visit *number* - MRI when an MRI was taken
             # mri visit
-            elif visit_type == wrapper.BasedataVisit(2).name and row['mri_taken'] == '1':
+            elif visit_type == wrapper.BasedataVisit('mri').name and row['mri_taken'] == '1':
                 # Extract variables and values
                 variable = 'time'
                 value = row[variable]
@@ -48,7 +48,7 @@ def fulong_to_visit(wrapper) -> list:
                 visit_concept_id = target.concept_id  # Follow-up Visit *number* - MRI
             # Add visit record with custom concept Follow-up Visit *number* - Biopsy when an Biopsy was taken
             # biopsy visit
-            elif visit_type == wrapper.BasedataVisit(3).name:
+            elif visit_type == wrapper.BasedataVisit('biopsy').name:
                 # Extract variables and values
                 variable = 'time'
                 value = row[variable]
