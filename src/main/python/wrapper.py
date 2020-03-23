@@ -271,6 +271,6 @@ class Wrapper(EtlWrapper):
 
     # Set the different visit types
     class BasedataVisit(enum.Enum):
-        standard = 'standard'
-        mri = 'mri'
-        biopsy = 'biopsy'
+        standard = 1
+        mri = 2
+        biopsy = 3

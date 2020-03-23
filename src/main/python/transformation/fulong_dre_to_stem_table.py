@@ -29,7 +29,7 @@ def fulong_dre_to_stem_table(wrapper) -> list:
     for row in fulong:
 
         # Get visit occurrence id
-        visit_type = wrapper.BasedataVisit('standard').name
+        visit_type = wrapper.BasedataVisit.standard.name
         visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'], row['time'], visit_type)
         visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
 
