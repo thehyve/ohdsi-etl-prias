@@ -15,6 +15,7 @@
 # !/usr/bin/env python3
 from pathlib import Path
 import logging
+from datetime import date
 
 from src.main.python.model import EtlWrapper
 from src.main.python.model.SourceData import SourceData
@@ -34,6 +35,7 @@ class Wrapper(EtlWrapper):
         self.person_id_lookup = None
         self.visit_occurrence_id_lookup = None
         self.episode_id_lookup = None
+        self.event_field_concept_id_lookup = None
         self.stem_table_id_lookup = None
         self.basedata_by_pid_lookup = None
         self.enddata_by_pid_lookup = None
@@ -182,6 +184,37 @@ class Wrapper(EtlWrapper):
             raise Exception('Episode record source value "{}" not found in lookup.'.format(episode_record_source_value))
 
         return self.episode_id_lookup.get(episode_record_source_value)
+
+    def domain_id_lookup(self, concept_id):
+        """Initialize the domain lookup"""
+        with self.db.session_scope() as session:
+            query = session.query(vocabularies.Concept)
+            result = query.filter_by(concept_id=concept_id).one()
+            return result.domain_id
+
+    def create_event_field_concept_id_lookup(self):
+        event_field_concept_id_lookup = {
+            'observation.observation_concept_id': 1147167,
+            'measurement.measurement_concept_id': 1147140,
+            'condition_occurrence.condition_concept_id': 1147129,
+            'device_exposure.device_concept_id': 1147117,
+            'drug_exposure.drug_concept_id': 1147096,
+            'procedure_occurrence.procedure_concept_id': 1147084,
+            'specimen.specimen_concept_id': 1147051,
+            'visit_occurrence.visit_concept_id': 1147072
+        }
+        self.event_field_concept_id_lookup = event_field_concept_id_lookup
+
+    def lookup_event_field_concept_id(self, concept_name):
+        if self.event_field_concept_id_lookup is None:
+            self.create_event_field_concept_id_lookup()
+
+        if concept_name not in self.event_field_concept_id_lookup:
+            print(self.event_field_concept_id_lookup.keys())
+            raise Exception('Concept name "{}" not found in lookup.'.format(concept_name))
+
+        return self.event_field_concept_id_lookup.get(concept_name)
+
 
     def create_stem_table_lookup(self):
         """ Initialize the stem_table lookup """
