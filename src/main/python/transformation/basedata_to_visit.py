@@ -29,13 +29,13 @@ def basedata_to_visit(wrapper) -> list:
 
             # Every patient has Baseline Visit record
             # Standard visit
-            if visit_type == wrapper.BasedataVisit(1).name:
+            if visit_type == wrapper.BasedataVisit.standard.name:
                 visit_concept_id = 2000000048  # Baseline Visit
             # Add visit record with custom concept Baseline Visit - MRI when an MRI was taken
-            elif visit_type == wrapper.BasedataVisit(2).name and row['mri_taken.0'] == '1':
+            elif visit_type == wrapper.BasedataVisit.mri.name and row['mri_taken.0'] == '1':
                 visit_concept_id = 2000000087  # Baseline Visit - MRI
             # Add visit record with custom concept Baseline Visit - biopsy when a biopsy was taken
-            elif visit_type == wrapper.BasedataVisit(3).name:
+            elif visit_type == wrapper.BasedataVisit.biopsy.name:
                 visit_concept_id = 2000000105  # Baseline Visit - Biopsy
             else:
                 continue
