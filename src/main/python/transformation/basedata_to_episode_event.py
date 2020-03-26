@@ -68,10 +68,12 @@ def basedata_to_episode_event(wrapper) -> list:
                 event_id = wrapper.lookup_stem_table_id(stem_table_record_source_value)
 
                 # Get event_field_concept_id
-                if variable.startswith('mri_pirads'):
-                    event_field_concept_id = 1147140  # measurement.measurement_concept_id
-                else:
-                    event_field_concept_id = 1147167  # observation.observation_concept_id
+                target = wrapper.variable_mapper.lookup(variable, row[variable])
+                domain_id = wrapper.domain_id_lookup(target.concept_id)
+                domain_prefix = domain_id.split('_')[0]
+                concept_name = domain_id + "." + domain_prefix + "_concept_id"
+                concept_name = concept_name.lower()
+                event_field_concept_id = wrapper.lookup_event_field_concept_id(concept_name)
 
                 record = EpisodeEvent(
                     event_id=event_id,

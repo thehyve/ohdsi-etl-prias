@@ -45,8 +45,7 @@ def basedata_to_episode(wrapper) -> list:
             episode_start_datetime=datetime(int(row['year_diagnosis']), 7, 1),
             episode_end_datetime=datetime(int(row['year_diagnosis']), 7, 1),
             episode_object_concept_id=0,
-            episode_source_concept_id=0,
-            episode_type_concept_id=0
+            episode_source_concept_id=0
         )
 
         # Go through each episode group
@@ -65,6 +64,7 @@ def basedata_to_episode(wrapper) -> list:
             episode_lesion.episode_concept_id = 4115735  # Lesion of prostate (condition occurrence)
             episode_lesion.episode_number = int(episode_group[-1:])
             episode_lesion.record_source_value = create_basedata_episode_record_source_value(row['p_id'], episode_group)
+            episode_lesion.episode_type_concept_id = 5086  # Condition tested by diagnosis procedure
 
             records_to_insert.append(episode_lesion)
 
@@ -81,6 +81,7 @@ def basedata_to_episode(wrapper) -> list:
             episode_biopsy.episode_number = int(episode_group[-1:])
             episode_biopsy.record_source_value = create_basedata_episode_record_source_value(row['p_id'],
                                                                                              episode_group)
+            episode_biopsy.episode_type_concept_id = 44786630  # Primary procedure
 
             records_to_insert.append(episode_biopsy)
 
