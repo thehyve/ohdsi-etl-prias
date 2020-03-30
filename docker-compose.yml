@@ -94,4 +94,3 @@ volumes:
 
 networks:
   app:
-    driver: bridge
