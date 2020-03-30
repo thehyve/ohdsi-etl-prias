@@ -3,18 +3,22 @@ ETL scripts to concert the Prostate cancer Research International: Active Survei
 
 ## Docker
 `cd ohdsi-etl-prias`
-`docker-compose up -d`
-* postgres
-* webapi
-* atlas
+
+`docker-compose up -d` will start the following containers:
+* postgresql
+* broadsea-webtools
+* broadsea-methods-library
+* jupyter
 * etl
 
 Run logs:
-To check the postgres database:
+* To check the postgres database:
 `docker-compose logs -f postgres`
-
-To check the ETL:
+* To check the ETL:
 `docker-compose logs -f etl`
+
+To run ETL again: `docker-compose up --build etl`
+
 
 ## Target
 The resulting OMOP CDM is written to the `public` schema.
