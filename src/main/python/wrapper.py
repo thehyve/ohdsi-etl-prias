@@ -15,12 +15,14 @@
 # !/usr/bin/env python3
 from pathlib import Path
 import logging
+from datetime import date
 
 from src.main.python.model import EtlWrapper
 from src.main.python.model.SourceData import SourceData
 from src.main.python.util import VariableConceptMapper
 from src.main.python.model.cdm import *
 from src.main.python.transformation import *
+import enum
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +36,7 @@ class Wrapper(EtlWrapper):
         self.person_id_lookup = None
         self.visit_occurrence_id_lookup = None
         self.episode_id_lookup = None
+        self.event_field_concept_id_lookup = None
         self.stem_table_id_lookup = None
         self.basedata_by_pid_lookup = None
         self.enddata_by_pid_lookup = None
@@ -183,6 +186,36 @@ class Wrapper(EtlWrapper):
 
         return self.episode_id_lookup.get(episode_record_source_value)
 
+    def domain_id_lookup(self, concept_id):
+        """Initialize the domain lookup"""
+        with self.db.session_scope() as session:
+            query = session.query(vocabularies.Concept)
+            result = query.filter_by(concept_id=concept_id).one()
+            return result.domain_id
+
+    def create_event_field_concept_id_lookup(self):
+        event_field_concept_id_lookup = {
+            'observation.observation_concept_id': 1147167,
+            'measurement.measurement_concept_id': 1147140,
+            'condition_occurrence.condition_concept_id': 1147129,
+            'device_exposure.device_concept_id': 1147117,
+            'drug_exposure.drug_concept_id': 1147096,
+            'procedure_occurrence.procedure_concept_id': 1147084,
+            'specimen.specimen_concept_id': 1147051,
+            'visit_occurrence.visit_concept_id': 1147072
+        }
+        self.event_field_concept_id_lookup = event_field_concept_id_lookup
+
+    def lookup_event_field_concept_id(self, concept_name):
+        if self.event_field_concept_id_lookup is None:
+            self.create_event_field_concept_id_lookup()
+
+        if concept_name not in self.event_field_concept_id_lookup:
+            print(self.event_field_concept_id_lookup.keys())
+            raise Exception('Concept name "{}" not found in lookup.'.format(concept_name))
+
+        return self.event_field_concept_id_lookup.get(concept_name)
+
     def create_stem_table_lookup(self):
         """ Initialize the stem_table lookup """
         with self.db.session_scope() as session:
@@ -195,7 +228,8 @@ class Wrapper(EtlWrapper):
 
         if stem_table_record_source_value not in self.stem_table_id_lookup:
             print(self.stem_table_id_lookup.keys())
-            raise Exception('Stem table record source value "{}" not found in lookup.'.format(stem_table_record_source_value))
+            raise Exception(
+                'Stem table record source value "{}" not found in lookup.'.format(stem_table_record_source_value))
 
         return self.stem_table_id_lookup.get(stem_table_record_source_value)
 
@@ -250,6 +284,18 @@ class Wrapper(EtlWrapper):
             value = int(row[gleason_score1]) + int(row[gleason_score2])
         return variable, value
 
+    def get_event_field_concept_id(self, concept_id):
+        """
+        :param concept_id:
+        :return event_field_concept_id:
+        """
+        domain_id = self.domain_id_lookup(concept_id)
+        domain_prefix = domain_id.split('_')[0]
+        concept_name = domain_id + "." + domain_prefix + "_concept_id"
+        concept_name = concept_name.lower()
+        event_field_concept_id = self.lookup_event_field_concept_id(concept_name)
+        return event_field_concept_id
+
     def get_basedata(self):
         if not self.source_table_basedata:
             self.source_table_basedata = SourceData(self.source_folder / 'basedata.csv')
@@ -267,3 +313,9 @@ class Wrapper(EtlWrapper):
             self.source_table_enddata = SourceData(self.source_folder / 'enddata.csv')
 
         return self.source_table_enddata
+
+    # Set the different visit types
+    class BasedataVisit(enum.Enum):
+        standard = 1
+        mri = 2
+        biopsy = 3

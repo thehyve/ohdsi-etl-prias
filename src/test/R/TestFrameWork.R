@@ -73,6 +73,8 @@ initFramework <- function() {
   defaults$mri_targeted_taken.0 <- '0'
   defaults$mri_targeted_gleason1.0 <- '0'
   defaults$mri_targeted_gleason1.0.1 <- '0'
+  defaults$mri_targeted_gleason2.0 <- '0'
+  defaults$mri_targeted_gleason2.0.1 <- '0'
   defaults$mri_lesion_positive.0 <- ''
   defaults$mri_method_used.0 <- '0'
   defaults$mri_prostate_volume.0 <- ''
@@ -136,6 +138,7 @@ initFramework <- function() {
   defaults$mri_targeted_cores <- '0'
   defaults$mri_targeted_taken <- '0'
   defaults$mri_targeted_gleason1 <- '0'
+  defaults$mri_targeted_gleason2 <- '0'
   defaults$mri_lesion_positive <- '0'
   defaults$mri_method_used <- '0'
   defaults$mri_prostate_volume <- ''
@@ -196,7 +199,7 @@ initFramework <- function() {
 
 initFramework()
 
-set_defaults_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, num_cores_pc, asa, log2psa, gleason1, gleason2, gleason_sum, free_psa, pro_psa, phi, charlson, tnm, method_detection, length, weight, num_cores2, num_cores_pc2, gleason1_2, gleason2_2, no_co_morbidity, active_visit, biopt_prob_type, biopt_infection, biopt_inf_urine_culture, biopt_inf_urine_bacterium, biopt_inf_unrine_resistant, biopt_inf_antibiotic_therapy, biopt_inf_antibiotic_type, biopt_inf_hospitalisation, biopt_inf_hospitalisation_days, biopt_inf_outcome, biopt_hematuria, biopt_hemospermia, biopt_pain, biopt_route, biopt_max_cancer_score_lenght, mri_included, bonescan, mri_taken.0, mri_lesions.0, mri_suspected_number.0, mri_pirads_1.0, mri_largest_dia_1.0, mri_location_1.0, mri_location_free_1.0, mri_pirads_2.0, mri_largest_dia_2.0, mri_location_2.0, mri_location_free_2.0, mri_pirads_3.0, mri_largest_dia_3.0, mri_location_3.0, mri_location_free_3.0, mri_progrssion_lesions.0, mri_targeted_biopsy.0, mri_targeted_cores.0, mri_targeted_taken.0, mri_targeted_gleason1.0, mri_targeted_gleason1.0.1, mri_lesion_positive.0, mri_method_used.0, mri_prostate_volume.0, mri_prostate_volume_method.0, age_diagnosis, year_diagnosis) {
+set_defaults_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, num_cores_pc, asa, log2psa, gleason1, gleason2, gleason_sum, free_psa, pro_psa, phi, charlson, tnm, method_detection, length, weight, num_cores2, num_cores_pc2, gleason1_2, gleason2_2, no_co_morbidity, active_visit, biopt_prob_type, biopt_infection, biopt_inf_urine_culture, biopt_inf_urine_bacterium, biopt_inf_unrine_resistant, biopt_inf_antibiotic_therapy, biopt_inf_antibiotic_type, biopt_inf_hospitalisation, biopt_inf_hospitalisation_days, biopt_inf_outcome, biopt_hematuria, biopt_hemospermia, biopt_pain, biopt_route, biopt_max_cancer_score_lenght, mri_included, bonescan, mri_taken.0, mri_lesions.0, mri_suspected_number.0, mri_pirads_1.0, mri_largest_dia_1.0, mri_location_1.0, mri_location_free_1.0, mri_pirads_2.0, mri_largest_dia_2.0, mri_location_2.0, mri_location_free_2.0, mri_pirads_3.0, mri_largest_dia_3.0, mri_location_3.0, mri_location_free_3.0, mri_progrssion_lesions.0, mri_targeted_biopsy.0, mri_targeted_cores.0, mri_targeted_taken.0, mri_targeted_gleason1.0, mri_targeted_gleason1.0.1, mri_targeted_gleason2.0, mri_targeted_gleason2.0.1, mri_lesion_positive.0, mri_method_used.0, mri_prostate_volume.0, mri_prostate_volume_method.0, age_diagnosis, year_diagnosis) {
   defaults <- get('basedata', envir = frameworkContext$defaultValues)
   if (!missing(year_birth)) {
     defaults$year_birth <- year_birth
@@ -390,6 +393,12 @@ set_defaults_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num
   if (!missing(mri_targeted_gleason1.0.1)) {
     defaults$mri_targeted_gleason1.0.1 <- mri_targeted_gleason1.0.1
   }
+  if (!missing(mri_targeted_gleason2.0)) {
+    defaults$mri_targeted_gleason2.0 <- mri_targeted_gleason2.0
+  }
+  if (!missing(mri_targeted_gleason2.0.1)) {
+    defaults$mri_targeted_gleason2.0.1 <- mri_targeted_gleason2.0.1
+  }
   if (!missing(mri_lesion_positive.0)) {
     defaults$mri_lesion_positive.0 <- mri_lesion_positive.0
   }
@@ -412,7 +421,7 @@ set_defaults_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num
   invisible(defaults)
 }
 
-set_defaults_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_cores_biop_fu, num_cores_pc_fu, asa_fu, log2psa_fu, psadt, gleason1_fu, gleason2_fu, gleason_sum_fu, slope, free_psa_fu, pro_psa_fu, phi_fu, visit_action, active_visit, biopt_prob_type_fu, biopt_infection_fu, biopt_inf_urine_culture_fu, biopt_inf_urine_bacterium_fu, biopt_inf_unrine_resistant_fu, biopt_inf_antibiotic_therapy_fu, biopt_inf_antibiotic_type_fu, biopt_inf_hospitalisation_fu, biopt_inf_hospitalisation_days_fu, biopt_inf_outcome_fu, biopt_hematuria_fu, biopt_hemospermia_fu, biopt_pain_fu, biopt_route_fu, biopt_max_cancer_score_lenght_fu, mri_taken, mri_lesions, mri_suspected_number, mri_pirads_1, mri_largest_dia_1, mri_location_1, mri_location_free_1, mri_pirads_2, mri_largest_dia_2, mri_location_2, mri_location_free_2, mri_pirads_3, mri_largest_dia_3, mri_location_3, mri_location_free_3, mri_progrssion_lesions, mri_targeted_biopsy, mri_targeted_cores, mri_targeted_taken, mri_targeted_gleason1, mri_lesion_positive, mri_method_used, mri_prostate_volume, mri_prostate_volume_method, year_visit, days_psa_diag) {
+set_defaults_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_cores_biop_fu, num_cores_pc_fu, asa_fu, log2psa_fu, psadt, gleason1_fu, gleason2_fu, gleason_sum_fu, slope, free_psa_fu, pro_psa_fu, phi_fu, visit_action, active_visit, biopt_prob_type_fu, biopt_infection_fu, biopt_inf_urine_culture_fu, biopt_inf_urine_bacterium_fu, biopt_inf_unrine_resistant_fu, biopt_inf_antibiotic_therapy_fu, biopt_inf_antibiotic_type_fu, biopt_inf_hospitalisation_fu, biopt_inf_hospitalisation_days_fu, biopt_inf_outcome_fu, biopt_hematuria_fu, biopt_hemospermia_fu, biopt_pain_fu, biopt_route_fu, biopt_max_cancer_score_lenght_fu, mri_taken, mri_lesions, mri_suspected_number, mri_pirads_1, mri_largest_dia_1, mri_location_1, mri_location_free_1, mri_pirads_2, mri_largest_dia_2, mri_location_2, mri_location_free_2, mri_pirads_3, mri_largest_dia_3, mri_location_3, mri_location_free_3, mri_progrssion_lesions, mri_targeted_biopsy, mri_targeted_cores, mri_targeted_taken, mri_targeted_gleason1, mri_targeted_gleason2, mri_lesion_positive, mri_method_used, mri_prostate_volume, mri_prostate_volume_method, year_visit, days_psa_diag) {
   defaults <- get('fulong', envir = frameworkContext$defaultValues)
   if (!missing(p_id)) {
     defaults$p_id <- p_id
@@ -576,6 +585,9 @@ set_defaults_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_c
   if (!missing(mri_targeted_gleason1)) {
     defaults$mri_targeted_gleason1 <- mri_targeted_gleason1
   }
+  if (!missing(mri_targeted_gleason2)) {
+    defaults$mri_targeted_gleason2 <- mri_targeted_gleason2
+  }
   if (!missing(mri_lesion_positive)) {
     defaults$mri_lesion_positive <- mri_lesion_positive
   }
@@ -689,7 +701,7 @@ declareTest <- function(id, description) {
   frameworkContext$testDescription <- description
 }
 
-add_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, num_cores_pc, asa, log2psa, gleason1, gleason2, gleason_sum, free_psa, pro_psa, phi, charlson, tnm, method_detection, length, weight, num_cores2, num_cores_pc2, gleason1_2, gleason2_2, no_co_morbidity, active_visit, biopt_prob_type, biopt_infection, biopt_inf_urine_culture, biopt_inf_urine_bacterium, biopt_inf_unrine_resistant, biopt_inf_antibiotic_therapy, biopt_inf_antibiotic_type, biopt_inf_hospitalisation, biopt_inf_hospitalisation_days, biopt_inf_outcome, biopt_hematuria, biopt_hemospermia, biopt_pain, biopt_route, biopt_max_cancer_score_lenght, mri_included, bonescan, mri_taken.0, mri_lesions.0, mri_suspected_number.0, mri_pirads_1.0, mri_largest_dia_1.0, mri_location_1.0, mri_location_free_1.0, mri_pirads_2.0, mri_largest_dia_2.0, mri_location_2.0, mri_location_free_2.0, mri_pirads_3.0, mri_largest_dia_3.0, mri_location_3.0, mri_location_free_3.0, mri_progrssion_lesions.0, mri_targeted_biopsy.0, mri_targeted_cores.0, mri_targeted_taken.0, mri_targeted_gleason1.0, mri_targeted_gleason1.0.1, mri_lesion_positive.0, mri_method_used.0, mri_prostate_volume.0, mri_prostate_volume_method.0, age_diagnosis, year_diagnosis) {
+add_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, num_cores_pc, asa, log2psa, gleason1, gleason2, gleason_sum, free_psa, pro_psa, phi, charlson, tnm, method_detection, length, weight, num_cores2, num_cores_pc2, gleason1_2, gleason2_2, no_co_morbidity, active_visit, biopt_prob_type, biopt_infection, biopt_inf_urine_culture, biopt_inf_urine_bacterium, biopt_inf_unrine_resistant, biopt_inf_antibiotic_therapy, biopt_inf_antibiotic_type, biopt_inf_hospitalisation, biopt_inf_hospitalisation_days, biopt_inf_outcome, biopt_hematuria, biopt_hemospermia, biopt_pain, biopt_route, biopt_max_cancer_score_lenght, mri_included, bonescan, mri_taken.0, mri_lesions.0, mri_suspected_number.0, mri_pirads_1.0, mri_largest_dia_1.0, mri_location_1.0, mri_location_free_1.0, mri_pirads_2.0, mri_largest_dia_2.0, mri_location_2.0, mri_location_free_2.0, mri_pirads_3.0, mri_largest_dia_3.0, mri_location_3.0, mri_location_free_3.0, mri_progrssion_lesions.0, mri_targeted_biopsy.0, mri_targeted_cores.0, mri_targeted_taken.0, mri_targeted_gleason1.0, mri_targeted_gleason1.0.1, mri_targeted_gleason2.0, mri_targeted_gleason2.0.1, mri_lesion_positive.0, mri_method_used.0, mri_prostate_volume.0, mri_prostate_volume_method.0, age_diagnosis, year_diagnosis) {
   defaults <- get('basedata', envir = frameworkContext$defaultValues)
   fields <- c()
   values <- c()
@@ -1205,6 +1217,22 @@ add_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, n
   fields <- c(fields, "[mri_targeted_gleason1.0.1]")
   values <- c(values, if (is.null(mri_targeted_gleason1.0.1)) "NULL" else if (is(mri_targeted_gleason1.0.1, "subQuery")) paste0("(", as.character(mri_targeted_gleason1.0.1), ")") else paste0("'", as.character(mri_targeted_gleason1.0.1), "'"))
 
+  if (missing(mri_targeted_gleason2.0)) {
+    mri_targeted_gleason2.0 <- defaults$mri_targeted_gleason2.0
+  } else {
+    frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_targeted_gleason2.0')
+  }
+  fields <- c(fields, "[mri_targeted_gleason2.0]")
+  values <- c(values, if (is.null(mri_targeted_gleason2.0)) "NULL" else if (is(mri_targeted_gleason2.0, "subQuery")) paste0("(", as.character(mri_targeted_gleason2.0), ")") else paste0("'", as.character(mri_targeted_gleason2.0), "'"))
+
+  if (missing(mri_targeted_gleason2.0.1)) {
+    mri_targeted_gleason2.0.1 <- defaults$mri_targeted_gleason2.0.1
+  } else {
+    frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'basedata.mri_targeted_gleason2.0.1')
+  }
+  fields <- c(fields, "[mri_targeted_gleason2.0.1]")
+  values <- c(values, if (is.null(mri_targeted_gleason2.0.1)) "NULL" else if (is(mri_targeted_gleason2.0.1, "subQuery")) paste0("(", as.character(mri_targeted_gleason2.0.1), ")") else paste0("'", as.character(mri_targeted_gleason2.0.1), "'"))
+
   if (missing(mri_lesion_positive.0)) {
     mri_lesion_positive.0 <- defaults$mri_lesion_positive.0
   } else {
@@ -1258,7 +1286,7 @@ add_basedata <- function(year_birth, p_id, psa, prostatic_vol, dre, num_cores, n
   invisible(NULL)
 }
 
-add_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_cores_biop_fu, num_cores_pc_fu, asa_fu, log2psa_fu, psadt, gleason1_fu, gleason2_fu, gleason_sum_fu, slope, free_psa_fu, pro_psa_fu, phi_fu, visit_action, active_visit, biopt_prob_type_fu, biopt_infection_fu, biopt_inf_urine_culture_fu, biopt_inf_urine_bacterium_fu, biopt_inf_unrine_resistant_fu, biopt_inf_antibiotic_therapy_fu, biopt_inf_antibiotic_type_fu, biopt_inf_hospitalisation_fu, biopt_inf_hospitalisation_days_fu, biopt_inf_outcome_fu, biopt_hematuria_fu, biopt_hemospermia_fu, biopt_pain_fu, biopt_route_fu, biopt_max_cancer_score_lenght_fu, mri_taken, mri_lesions, mri_suspected_number, mri_pirads_1, mri_largest_dia_1, mri_location_1, mri_location_free_1, mri_pirads_2, mri_largest_dia_2, mri_location_2, mri_location_free_2, mri_pirads_3, mri_largest_dia_3, mri_location_3, mri_location_free_3, mri_progrssion_lesions, mri_targeted_biopsy, mri_targeted_cores, mri_targeted_taken, mri_targeted_gleason1, mri_lesion_positive, mri_method_used, mri_prostate_volume, mri_prostate_volume_method, year_visit, days_psa_diag) {
+add_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_cores_biop_fu, num_cores_pc_fu, asa_fu, log2psa_fu, psadt, gleason1_fu, gleason2_fu, gleason_sum_fu, slope, free_psa_fu, pro_psa_fu, phi_fu, visit_action, active_visit, biopt_prob_type_fu, biopt_infection_fu, biopt_inf_urine_culture_fu, biopt_inf_urine_bacterium_fu, biopt_inf_unrine_resistant_fu, biopt_inf_antibiotic_therapy_fu, biopt_inf_antibiotic_type_fu, biopt_inf_hospitalisation_fu, biopt_inf_hospitalisation_days_fu, biopt_inf_outcome_fu, biopt_hematuria_fu, biopt_hemospermia_fu, biopt_pain_fu, biopt_route_fu, biopt_max_cancer_score_lenght_fu, mri_taken, mri_lesions, mri_suspected_number, mri_pirads_1, mri_largest_dia_1, mri_location_1, mri_location_free_1, mri_pirads_2, mri_largest_dia_2, mri_location_2, mri_location_free_2, mri_pirads_3, mri_largest_dia_3, mri_location_3, mri_location_free_3, mri_progrssion_lesions, mri_targeted_biopsy, mri_targeted_cores, mri_targeted_taken, mri_targeted_gleason1, mri_targeted_gleason2, mri_lesion_positive, mri_method_used, mri_prostate_volume, mri_prostate_volume_method, year_visit, days_psa_diag) {
   defaults <- get('fulong', envir = frameworkContext$defaultValues)
   fields <- c()
   values <- c()
@@ -1693,6 +1721,14 @@ add_fulong <- function(p_id, time, psa_fu, dre_fu, dre_fu_recode, num_cores_biop
   }
   fields <- c(fields, "mri_targeted_gleason1")
   values <- c(values, if (is.null(mri_targeted_gleason1)) "NULL" else if (is(mri_targeted_gleason1, "subQuery")) paste0("(", as.character(mri_targeted_gleason1), ")") else paste0("'", as.character(mri_targeted_gleason1), "'"))
+
+  if (missing(mri_targeted_gleason2)) {
+    mri_targeted_gleason2 <- defaults$mri_targeted_gleason2
+  } else {
+    frameworkContext$sourceFieldsTested <- c(frameworkContext$sourceFieldsTested, 'fulong.mri_targeted_gleason2')
+  }
+  fields <- c(fields, "mri_targeted_gleason2")
+  values <- c(values, if (is.null(mri_targeted_gleason2)) "NULL" else if (is(mri_targeted_gleason2, "subQuery")) paste0("(", as.character(mri_targeted_gleason2), ")") else paste0("'", as.character(mri_targeted_gleason2), "'"))
 
   if (missing(mri_lesion_positive)) {
     mri_lesion_positive <- defaults$mri_lesion_positive
@@ -4336,6 +4372,112 @@ expect_location_history <- function(location_id, relationship_type_concept_id, d
   invisible(NULL)
 }
 
+expect_episode <- function(episode_id, person_id, episode_start_datetime, episode_end_datetime, episode_concept_id, episode_parent_id, episode_number, episode_object_concept_id, episode_type_concept_id, episode_source_value, episode_source_concept_id, record_source_value) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(person_id)) {
+    fields <- c(fields, "person_id")
+    values <- c(values, if (is.null(person_id)) "NULL" else if (is(person_id, "subQuery")) paste0("(", as.character(person_id), ")") else paste0("'", as.character(person_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.person_id')
+  }
+  
+  if (!missing(episode_start_datetime)) {
+    fields <- c(fields, "episode_start_datetime")
+    values <- c(values, if (is.null(episode_start_datetime)) "NULL" else if (is(episode_start_datetime, "subQuery")) paste0("(", as.character(episode_start_datetime), ")") else paste0("'", as.character(episode_start_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_start_datetime')
+  }
+  
+  if (!missing(episode_end_datetime)) {
+    fields <- c(fields, "episode_end_datetime")
+    values <- c(values, if (is.null(episode_end_datetime)) "NULL" else if (is(episode_end_datetime, "subQuery")) paste0("(", as.character(episode_end_datetime), ")") else paste0("'", as.character(episode_end_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_end_datetime')
+  }
+  
+  if (!missing(episode_concept_id)) {
+    fields <- c(fields, "episode_concept_id")
+    values <- c(values, if (is.null(episode_concept_id)) "NULL" else if (is(episode_concept_id, "subQuery")) paste0("(", as.character(episode_concept_id), ")") else paste0("'", as.character(episode_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_concept_id')
+  }
+  
+  if (!missing(episode_parent_id)) {
+    fields <- c(fields, "episode_parent_id")
+    values <- c(values, if (is.null(episode_parent_id)) "NULL" else if (is(episode_parent_id, "subQuery")) paste0("(", as.character(episode_parent_id), ")") else paste0("'", as.character(episode_parent_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_parent_id')
+  }
+  
+  if (!missing(episode_number)) {
+    fields <- c(fields, "episode_number")
+    values <- c(values, if (is.null(episode_number)) "NULL" else if (is(episode_number, "subQuery")) paste0("(", as.character(episode_number), ")") else paste0("'", as.character(episode_number), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_number')
+  }
+  
+  if (!missing(episode_object_concept_id)) {
+    fields <- c(fields, "episode_object_concept_id")
+    values <- c(values, if (is.null(episode_object_concept_id)) "NULL" else if (is(episode_object_concept_id, "subQuery")) paste0("(", as.character(episode_object_concept_id), ")") else paste0("'", as.character(episode_object_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_object_concept_id')
+  }
+  
+  if (!missing(episode_type_concept_id)) {
+    fields <- c(fields, "episode_type_concept_id")
+    values <- c(values, if (is.null(episode_type_concept_id)) "NULL" else if (is(episode_type_concept_id, "subQuery")) paste0("(", as.character(episode_type_concept_id), ")") else paste0("'", as.character(episode_type_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_type_concept_id')
+  }
+  
+  if (!missing(episode_source_value)) {
+    fields <- c(fields, "episode_source_value")
+    values <- c(values, if (is.null(episode_source_value)) "NULL" else if (is(episode_source_value, "subQuery")) paste0("(", as.character(episode_source_value), ")") else paste0("'", as.character(episode_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_value')
+  }
+  
+  if (!missing(episode_source_concept_id)) {
+    fields <- c(fields, "episode_source_concept_id")
+    values <- c(values, if (is.null(episode_source_concept_id)) "NULL" else if (is(episode_source_concept_id, "subQuery")) paste0("(", as.character(episode_source_concept_id), ")") else paste0("'", as.character(episode_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_concept_id')
+  }
+  
+  if (!missing(record_source_value)) {
+    fields <- c(fields, "record_source_value")
+    values <- c(values, if (is.null(record_source_value)) "NULL" else if (is(record_source_value, "subQuery")) paste0("(", as.character(record_source_value), ")") else paste0("'", as.character(record_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.record_source_value')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 0, table = "episode", fields = fields, values = values)
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
+expect_episode_event <- function(episode_id, event_id, event_field_concept_id) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(event_id)) {
+    fields <- c(fields, "event_id")
+    values <- c(values, if (is.null(event_id)) "NULL" else if (is(event_id, "subQuery")) paste0("(", as.character(event_id), ")") else paste0("'", as.character(event_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_id')
+  }
+  
+  if (!missing(event_field_concept_id)) {
+    fields <- c(fields, "event_field_concept_id")
+    values <- c(values, if (is.null(event_field_concept_id)) "NULL" else if (is(event_field_concept_id, "subQuery")) paste0("(", as.character(event_field_concept_id), ")") else paste0("'", as.character(event_field_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_field_concept_id')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 0, table = "episode_event", fields = fields, values = values)
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
 expect_no_person <- function(person_id, gender_concept_id, year_of_birth, month_of_birth, day_of_birth, birth_datetime, death_datetime, race_concept_id, ethnicity_concept_id, location_id, provider_id, care_site_id, person_source_value, gender_source_value, gender_source_concept_id, race_source_value, race_source_concept_id, ethnicity_source_value, ethnicity_source_concept_id) {
   fields <- c()
   values <- c()
@@ -6386,6 +6528,112 @@ expect_no_location_history <- function(location_id, relationship_type_concept_id
   }
 
   expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 1, table = "location_history", fields = fields, values = values)
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
+expect_no_episode <- function(episode_id, person_id, episode_start_datetime, episode_end_datetime, episode_concept_id, episode_parent_id, episode_number, episode_object_concept_id, episode_type_concept_id, episode_source_value, episode_source_concept_id, record_source_value) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(person_id)) {
+    fields <- c(fields, "person_id")
+    values <- c(values, if (is.null(person_id)) "NULL" else if (is(person_id, "subQuery")) paste0("(", as.character(person_id), ")") else paste0("'", as.character(person_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.person_id')
+  }
+  
+  if (!missing(episode_start_datetime)) {
+    fields <- c(fields, "episode_start_datetime")
+    values <- c(values, if (is.null(episode_start_datetime)) "NULL" else if (is(episode_start_datetime, "subQuery")) paste0("(", as.character(episode_start_datetime), ")") else paste0("'", as.character(episode_start_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_start_datetime')
+  }
+  
+  if (!missing(episode_end_datetime)) {
+    fields <- c(fields, "episode_end_datetime")
+    values <- c(values, if (is.null(episode_end_datetime)) "NULL" else if (is(episode_end_datetime, "subQuery")) paste0("(", as.character(episode_end_datetime), ")") else paste0("'", as.character(episode_end_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_end_datetime')
+  }
+  
+  if (!missing(episode_concept_id)) {
+    fields <- c(fields, "episode_concept_id")
+    values <- c(values, if (is.null(episode_concept_id)) "NULL" else if (is(episode_concept_id, "subQuery")) paste0("(", as.character(episode_concept_id), ")") else paste0("'", as.character(episode_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_concept_id')
+  }
+  
+  if (!missing(episode_parent_id)) {
+    fields <- c(fields, "episode_parent_id")
+    values <- c(values, if (is.null(episode_parent_id)) "NULL" else if (is(episode_parent_id, "subQuery")) paste0("(", as.character(episode_parent_id), ")") else paste0("'", as.character(episode_parent_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_parent_id')
+  }
+  
+  if (!missing(episode_number)) {
+    fields <- c(fields, "episode_number")
+    values <- c(values, if (is.null(episode_number)) "NULL" else if (is(episode_number, "subQuery")) paste0("(", as.character(episode_number), ")") else paste0("'", as.character(episode_number), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_number')
+  }
+  
+  if (!missing(episode_object_concept_id)) {
+    fields <- c(fields, "episode_object_concept_id")
+    values <- c(values, if (is.null(episode_object_concept_id)) "NULL" else if (is(episode_object_concept_id, "subQuery")) paste0("(", as.character(episode_object_concept_id), ")") else paste0("'", as.character(episode_object_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_object_concept_id')
+  }
+  
+  if (!missing(episode_type_concept_id)) {
+    fields <- c(fields, "episode_type_concept_id")
+    values <- c(values, if (is.null(episode_type_concept_id)) "NULL" else if (is(episode_type_concept_id, "subQuery")) paste0("(", as.character(episode_type_concept_id), ")") else paste0("'", as.character(episode_type_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_type_concept_id')
+  }
+  
+  if (!missing(episode_source_value)) {
+    fields <- c(fields, "episode_source_value")
+    values <- c(values, if (is.null(episode_source_value)) "NULL" else if (is(episode_source_value, "subQuery")) paste0("(", as.character(episode_source_value), ")") else paste0("'", as.character(episode_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_value')
+  }
+  
+  if (!missing(episode_source_concept_id)) {
+    fields <- c(fields, "episode_source_concept_id")
+    values <- c(values, if (is.null(episode_source_concept_id)) "NULL" else if (is(episode_source_concept_id, "subQuery")) paste0("(", as.character(episode_source_concept_id), ")") else paste0("'", as.character(episode_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_concept_id')
+  }
+  
+  if (!missing(record_source_value)) {
+    fields <- c(fields, "record_source_value")
+    values <- c(values, if (is.null(record_source_value)) "NULL" else if (is(record_source_value, "subQuery")) paste0("(", as.character(record_source_value), ")") else paste0("'", as.character(record_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.record_source_value')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 1, table = "episode", fields = fields, values = values)
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
+expect_no_episode_event <- function(episode_id, event_id, event_field_concept_id) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(event_id)) {
+    fields <- c(fields, "event_id")
+    values <- c(values, if (is.null(event_id)) "NULL" else if (is(event_id, "subQuery")) paste0("(", as.character(event_id), ")") else paste0("'", as.character(event_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_id')
+  }
+  
+  if (!missing(event_field_concept_id)) {
+    fields <- c(fields, "event_field_concept_id")
+    values <- c(values, if (is.null(event_field_concept_id)) "NULL" else if (is(event_field_concept_id, "subQuery")) paste0("(", as.character(event_field_concept_id), ")") else paste0("'", as.character(event_field_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_field_concept_id')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 1, table = "episode_event", fields = fields, values = values)
   frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
   invisible(NULL)
 }
@@ -8834,6 +9082,113 @@ expect_count_location_history <- function(rowCount, location_id, relationship_ty
 
   expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 2, table = "location_history", fields = fields, values = values)
   expects$rowCount = rowCount
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
+expect_count_episode <- function(episode_id, person_id, episode_start_datetime, episode_end_datetime, episode_concept_id, episode_parent_id, episode_number, episode_object_concept_id, episode_type_concept_id, episode_source_value, episode_source_concept_id, record_source_value) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(person_id)) {
+    fields <- c(fields, "person_id")
+    values <- c(values, if (is.null(person_id)) "NULL" else if (is(person_id, "subQuery")) paste0("(", as.character(person_id), ")") else paste0("'", as.character(person_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.person_id')
+  }
+  
+  if (!missing(episode_start_datetime)) {
+    fields <- c(fields, "episode_start_datetime")
+    values <- c(values, if (is.null(episode_start_datetime)) "NULL" else if (is(episode_start_datetime, "subQuery")) paste0("(", as.character(episode_start_datetime), ")") else paste0("'", as.character(episode_start_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_start_datetime')
+  }
+  
+  if (!missing(episode_end_datetime)) {
+    fields <- c(fields, "episode_end_datetime")
+    values <- c(values, if (is.null(episode_end_datetime)) "NULL" else if (is(episode_end_datetime, "subQuery")) paste0("(", as.character(episode_end_datetime), ")") else paste0("'", as.character(episode_end_datetime), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_end_datetime')
+  }
+  
+  if (!missing(episode_concept_id)) {
+    fields <- c(fields, "episode_concept_id")
+    values <- c(values, if (is.null(episode_concept_id)) "NULL" else if (is(episode_concept_id, "subQuery")) paste0("(", as.character(episode_concept_id), ")") else paste0("'", as.character(episode_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_concept_id')
+  }
+  
+  if (!missing(episode_parent_id)) {
+    fields <- c(fields, "episode_parent_id")
+    values <- c(values, if (is.null(episode_parent_id)) "NULL" else if (is(episode_parent_id, "subQuery")) paste0("(", as.character(episode_parent_id), ")") else paste0("'", as.character(episode_parent_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_parent_id')
+  }
+  
+  if (!missing(episode_number)) {
+    fields <- c(fields, "episode_number")
+    values <- c(values, if (is.null(episode_number)) "NULL" else if (is(episode_number, "subQuery")) paste0("(", as.character(episode_number), ")") else paste0("'", as.character(episode_number), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_number')
+  }
+  
+  if (!missing(episode_object_concept_id)) {
+    fields <- c(fields, "episode_object_concept_id")
+    values <- c(values, if (is.null(episode_object_concept_id)) "NULL" else if (is(episode_object_concept_id, "subQuery")) paste0("(", as.character(episode_object_concept_id), ")") else paste0("'", as.character(episode_object_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_object_concept_id')
+  }
+  
+  if (!missing(episode_type_concept_id)) {
+    fields <- c(fields, "episode_type_concept_id")
+    values <- c(values, if (is.null(episode_type_concept_id)) "NULL" else if (is(episode_type_concept_id, "subQuery")) paste0("(", as.character(episode_type_concept_id), ")") else paste0("'", as.character(episode_type_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_type_concept_id')
+  }
+  
+  if (!missing(episode_source_value)) {
+    fields <- c(fields, "episode_source_value")
+    values <- c(values, if (is.null(episode_source_value)) "NULL" else if (is(episode_source_value, "subQuery")) paste0("(", as.character(episode_source_value), ")") else paste0("'", as.character(episode_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_value')
+  }
+  
+  if (!missing(episode_source_concept_id)) {
+    fields <- c(fields, "episode_source_concept_id")
+    values <- c(values, if (is.null(episode_source_concept_id)) "NULL" else if (is(episode_source_concept_id, "subQuery")) paste0("(", as.character(episode_source_concept_id), ")") else paste0("'", as.character(episode_source_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_source_concept_id')
+  }
+  
+  if (!missing(record_source_value)) {
+    fields <- c(fields, "record_source_value")
+    values <- c(values, if (is.null(record_source_value)) "NULL" else if (is(record_source_value, "subQuery")) paste0("(", as.character(record_source_value), ")") else paste0("'", as.character(record_source_value), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.record_source_value')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 2, table = "episode", fields = fields, values = values)
+  expects$rowCount = rowCount
+  frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
+  invisible(NULL)
+}
+
+expect_count_episode_event <- function(episode_id, event_id, event_field_concept_id) {
+  fields <- c()
+  values <- c()
+  if (!missing(episode_id)) {
+    fields <- c(fields, "episode_id")
+    values <- c(values, if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.episode_id')
+  }
+  
+  if (!missing(event_id)) {
+    fields <- c(fields, "event_id")
+    values <- c(values, if (is.null(event_id)) "NULL" else if (is(event_id, "subQuery")) paste0("(", as.character(event_id), ")") else paste0("'", as.character(event_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_id')
+  }
+  
+  if (!missing(event_field_concept_id)) {
+    fields <- c(fields, "event_field_concept_id")
+    values <- c(values, if (is.null(event_field_concept_id)) "NULL" else if (is(event_field_concept_id, "subQuery")) paste0("(", as.character(event_field_concept_id), ")") else paste0("'", as.character(event_field_concept_id), "'"))
+    frameworkContext$targetFieldsTested <- c(frameworkContext$targetFieldsTested, 'episode.event_field_concept_id')
+  }
+  
+  expects <- list(testId = frameworkContext$testId, testDescription = frameworkContext$testDescription, type = 2, table = "episode_event", fields = fields, values = values)
   frameworkContext$expects[[length(frameworkContext$expects) + 1]] <- expects
   invisible(NULL)
 }
@@ -12328,6 +12683,155 @@ lookup_location_history <- function(fetchField, location_id, relationship_type_c
   return(statement)
 }
 
+lookup_episode <- function(fetchField, episode_id, person_id, episode_start_datetime, episode_end_datetime, episode_concept_id, episode_parent_id, episode_number, episode_object_concept_id, episode_type_concept_id, episode_source_value, episode_source_concept_id, record_source_value) {
+  statement <- paste0('SELECT ', fetchField , ' FROM @cdm_database_schema.episode WHERE')
+  first <- TRUE
+  if (!missing(episode_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_id = ", if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+  }
+  
+  if (!missing(person_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " person_id = ", if (is.null(person_id)) "NULL" else if (is(person_id, "subQuery")) paste0("(", as.character(person_id), ")") else paste0("'", as.character(person_id), "'"))
+  }
+  
+  if (!missing(episode_start_datetime)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_start_datetime = ", if (is.null(episode_start_datetime)) "NULL" else if (is(episode_start_datetime, "subQuery")) paste0("(", as.character(episode_start_datetime), ")") else paste0("'", as.character(episode_start_datetime), "'"))
+  }
+  
+  if (!missing(episode_end_datetime)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_end_datetime = ", if (is.null(episode_end_datetime)) "NULL" else if (is(episode_end_datetime, "subQuery")) paste0("(", as.character(episode_end_datetime), ")") else paste0("'", as.character(episode_end_datetime), "'"))
+  }
+  
+  if (!missing(episode_concept_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_concept_id = ", if (is.null(episode_concept_id)) "NULL" else if (is(episode_concept_id, "subQuery")) paste0("(", as.character(episode_concept_id), ")") else paste0("'", as.character(episode_concept_id), "'"))
+  }
+  
+  if (!missing(episode_parent_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_parent_id = ", if (is.null(episode_parent_id)) "NULL" else if (is(episode_parent_id, "subQuery")) paste0("(", as.character(episode_parent_id), ")") else paste0("'", as.character(episode_parent_id), "'"))
+  }
+  
+  if (!missing(episode_number)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_number = ", if (is.null(episode_number)) "NULL" else if (is(episode_number, "subQuery")) paste0("(", as.character(episode_number), ")") else paste0("'", as.character(episode_number), "'"))
+  }
+  
+  if (!missing(episode_object_concept_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_object_concept_id = ", if (is.null(episode_object_concept_id)) "NULL" else if (is(episode_object_concept_id, "subQuery")) paste0("(", as.character(episode_object_concept_id), ")") else paste0("'", as.character(episode_object_concept_id), "'"))
+  }
+  
+  if (!missing(episode_type_concept_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_type_concept_id = ", if (is.null(episode_type_concept_id)) "NULL" else if (is(episode_type_concept_id, "subQuery")) paste0("(", as.character(episode_type_concept_id), ")") else paste0("'", as.character(episode_type_concept_id), "'"))
+  }
+  
+  if (!missing(episode_source_value)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_source_value = ", if (is.null(episode_source_value)) "NULL" else if (is(episode_source_value, "subQuery")) paste0("(", as.character(episode_source_value), ")") else paste0("'", as.character(episode_source_value), "'"))
+  }
+  
+  if (!missing(episode_source_concept_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_source_concept_id = ", if (is.null(episode_source_concept_id)) "NULL" else if (is(episode_source_concept_id, "subQuery")) paste0("(", as.character(episode_source_concept_id), ")") else paste0("'", as.character(episode_source_concept_id), "'"))
+  }
+  
+  if (!missing(record_source_value)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " record_source_value = ", if (is.null(record_source_value)) "NULL" else if (is(record_source_value, "subQuery")) paste0("(", as.character(record_source_value), ")") else paste0("'", as.character(record_source_value), "'"))
+  }
+  
+  class(statement) <- 'subQuery'
+  return(statement)
+}
+
+lookup_episode_event <- function(fetchField, episode_id, event_id, event_field_concept_id) {
+  statement <- paste0('SELECT ', fetchField , ' FROM @cdm_database_schema.episode_event WHERE')
+  first <- TRUE
+  if (!missing(episode_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " episode_id = ", if (is.null(episode_id)) "NULL" else if (is(episode_id, "subQuery")) paste0("(", as.character(episode_id), ")") else paste0("'", as.character(episode_id), "'"))
+  }
+  
+  if (!missing(event_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " event_id = ", if (is.null(person_id)) "NULL" else if (is(event_id, "subQuery")) paste0("(", as.character(event_id), ")") else paste0("'", as.character(event_id), "'"))
+  }
+  
+  if (!missing(event_field_concept_id)) {
+    if (first) {
+      first <- FALSE
+    } else {
+      statement <- paste0(statement, " AND")
+    }
+    statement <- paste0(statement, " event_field_concept_id = ", if (is.null(event_field_concept_id)) "NULL" else if (is(event_field_concept_id, "subQuery")) paste0("(", as.character(event_field_concept_id), ")") else paste0("'", as.character(event_field_concept_id), "'"))
+  }
+  
+  class(statement) <- 'subQuery'
+  return(statement)
+}
+
 generateInsertSql <- function(databaseSchema = NULL) {
   insertSql <- c()
   insertSql <- c(insertSql, "TRUNCATE TABLE @cdm_database_schema.basedata;")
@@ -12555,4 +13059,3 @@ outputTestResultsSummary <- function(connection, databaseSchema = NULL) {
     write(sprintf('All %d tests PASSED', n_tests), file='')
   }
 }
-

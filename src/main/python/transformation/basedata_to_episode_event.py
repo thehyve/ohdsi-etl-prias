@@ -68,10 +68,8 @@ def basedata_to_episode_event(wrapper) -> list:
                 event_id = wrapper.lookup_stem_table_id(stem_table_record_source_value)
 
                 # Get event_field_concept_id
-                if variable.startswith('mri_pirads'):
-                    event_field_concept_id = 1147140  # measurement.measurement_concept_id
-                else:
-                    event_field_concept_id = 1147167  # observation.observation_concept_id
+                target = wrapper.variable_mapper.lookup(variable, row[variable])
+                event_field_concept_id = wrapper.get_event_field_concept_id(target.concept_id)
 
                 record = EpisodeEvent(
                     event_id=event_id,
@@ -100,8 +98,10 @@ def basedata_to_episode_event(wrapper) -> list:
                 # Exception: Map variable concatenation of gleason1 and gleason2
                 if variable == 'gleason1':
                     variable, value = wrapper.gleason_sum(row, 'gleason1', 'gleason2')
-                if variable == 'gleason1_2':
+                elif variable == 'gleason1_2':
                     variable, value = wrapper.gleason_sum(row, 'gleason1_2', 'gleason2_2')
+                else:
+                    value = row[variable]
 
                 # Get event id from stem_table lookup
                 stem_table_record_source_value = create_basedata_stem_table_record_source_value(row['p_id'],
@@ -109,10 +109,8 @@ def basedata_to_episode_event(wrapper) -> list:
                 event_id = wrapper.lookup_stem_table_id(stem_table_record_source_value)
 
                 # Get event_field_concept_id
-                if variable.startswith('num_cores'):
-                    event_field_concept_id = 1147140  # measurement.measurement_concept_id
-                else:
-                    event_field_concept_id = 1147167  # observation.observation_concept_id
+                target = wrapper.variable_mapper.lookup(variable, value)
+                event_field_concept_id = wrapper.get_event_field_concept_id(target.concept_id)
 
                 record = EpisodeEvent(
                     event_id=event_id,
