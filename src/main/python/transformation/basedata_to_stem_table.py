@@ -33,6 +33,10 @@ def basedata_to_stem_table(wrapper) -> list:
 
         for variable, value in row.items():
 
+            # Exception: If num_cores or num_cores2 value is empty string, replace value with 0
+            if variable in ['num_cores', 'num_cores2'] and value == '':
+                value = '0'
+
             # Ignore the following columns for mapping
             if variable in ['p_id', 'year_diagnosis', 'year_birth', 'asa',
                             'log2psa', 'gleason_sum', 'pro_psa', 'tnm', 'method_detection',
@@ -42,7 +46,7 @@ def basedata_to_stem_table(wrapper) -> list:
                 continue
 
             # Skip empty string values
-            if value == '' or value == None:
+            if value == '':
                 continue
 
             # Skip 0 values for specific biopt_ variables
@@ -80,12 +84,6 @@ def basedata_to_stem_table(wrapper) -> list:
                 if value == '4':
                     value = '3'
                     operator_concept_id = 4172704  # >
-
-            # Exception: Do not map num_cores*, num_cores_pc*, gleason1* and gleason* when num_cores* is 0 or empty
-            if row['num_cores'] == '' and variable in ['num_cores', 'num_cores_pc', 'gleason1', 'gleason2']:
-                continue
-            if row['num_cores2'] == '' and variable in ['num_cores2', 'num_cores_pc2', 'gleason1_2', 'gleason2_2']:
-                continue
 
             # Exception: Do not map length if < 50
             if variable == 'length' and float(value) < 50:

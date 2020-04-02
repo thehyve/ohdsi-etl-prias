@@ -44,6 +44,10 @@ def fulong_to_stem_table(wrapper) -> list:
 
         for variable, value in row.items():
 
+            # Exception: If num_cores or num_cores2 value is empty string, replace value with 0
+            if variable in 'num_cores_biop_fu' and value == '':
+                value = '0'
+
             # Ignore the following columns for mapping
             if variable in ['p_id', 'time', 'dre_fu_recode', 'log2psa_fu', 'gleason_sum_fu',
                             'slope', 'pro_psa_fu', 'visit_action', 'active_visit', 'year_visit', 'days_psa_diag',
@@ -51,7 +55,7 @@ def fulong_to_stem_table(wrapper) -> list:
                 continue
 
             # Skip empty string values
-            if value == '' or value == None:
+            if value == '':
                 continue
 
             # Exception: Map sum of mri_targeted_gleason1 and mri_targeted_gleason2

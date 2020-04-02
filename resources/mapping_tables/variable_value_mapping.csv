@@ -35,7 +35,7 @@ Mri_Method_used.0,3,Inbore,2000000044,In-bore targeting of MRI lesions,1970-01-0
 Mri_Prostate_Volume_Method,1,Ellipsoid (W*H*L*0.52),2000000045,Prostate MRI segmentation,1970-01-01,2099-12-31,
 Mri_Prostate_Volume_Method,2,Segmentation,2000000046,Prostate MRI ellipsoid,1970-01-01,2099-12-31,
 Mri_Prostate_Volume_Method,3,"Other, specify in comment",2000000047,Prostate MRI volume,1970-01-01,2099-12-31,
-Mri_Prostate_Volume_Method.0,1,Ellipsoid (W*H*L*0.52),000000045,Prostate MRI segmentation,1970-01-01,2099-12-31,
+Mri_Prostate_Volume_Method.0,1,Ellipsoid (W*H*L*0.52),2000000045,Prostate MRI segmentation,1970-01-01,2099-12-31,
 Mri_Prostate_Volume_Method.0,2,Segmentation,2000000046,Prostate MRI ellipsoid,1970-01-01,2099-12-31,
 Mri_Prostate_Volume_Method.0,3,"Other, specify in comment",2000000047,Prostate MRI volume,1970-01-01,2099-12-31,
 Mri_taken,1,yes,4192638,MRI of prostate,1970-01-01,2099-12-31,
