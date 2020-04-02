@@ -108,6 +108,14 @@ def fulong_to_stem_table(wrapper) -> list:
                 # Remove (a,b,c) from dre values
                 value = value.split(' ')[0]
 
+            # Exception: store PIRADS score as number
+            if variable.startswith('mri_pirads'):
+                value = wrapper.pirads_score(value)
+
+            # Exception: do not capture mri_progrssion_lesions.0 if value is an empty string
+            if variable == 'mri_progrssion_lesions' and value == '':
+                continue
+
             # Extract variable and value form mapping tables
             target = wrapper.variable_mapper.lookup(variable, value)
 
