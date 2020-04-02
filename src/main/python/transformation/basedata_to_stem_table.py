@@ -37,7 +37,8 @@ def basedata_to_stem_table(wrapper) -> list:
             if variable in ['p_id', 'year_diagnosis', 'year_birth', 'asa',
                             'log2psa', 'gleason_sum', 'pro_psa', 'tnm', 'method_detection',
                             'no_co_morbidity', 'active_visit', 'mri_included',
-                            'bonescan']:
+                            'bonescan', 'biopt_inf_unrine_resistant', 'biopt_inf_antibiotic_therapy',
+                            'biopt_inf_antibiotic_type']:
                 continue
 
             # Skip empty string values
@@ -51,8 +52,7 @@ def basedata_to_stem_table(wrapper) -> list:
                 continue
 
             # Only map variables when value is 1
-            if variable in ['biopt_inf_antibiotic_therapy', 'biopt_hematuria',
-                            'biopt_hemospermia', 'biopt_pain'] and value != '1':
+            if variable in ['biopt_hematuria', 'biopt_hemospermia', 'biopt_pain'] and value != '1':
                 continue
 
             #  Skip 0 values for specific mri_ variables

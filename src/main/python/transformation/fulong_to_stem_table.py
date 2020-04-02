@@ -46,7 +46,8 @@ def fulong_to_stem_table(wrapper) -> list:
 
             # Ignore the following columns for mapping
             if variable in ['p_id', 'time', 'dre_fu_recode', 'log2psa_fu', 'gleason_sum_fu',
-                            'slope', 'pro_psa_fu', 'visit_action', 'active_visit', 'year_visit', 'days_psa_diag']:
+                            'slope', 'pro_psa_fu', 'visit_action', 'active_visit', 'year_visit', 'days_psa_diag',
+                            'biopt_inf_unrine_resistant_fu', 'biopt_inf_antibiotic_therapy_fu', 'biopt_inf_antibiotic_type_fu']:
                 continue
 
             # Skip empty string values
@@ -68,7 +69,7 @@ def fulong_to_stem_table(wrapper) -> list:
                 continue
 
             # Only map variables when value is 1
-            if variable in ['biopt_inf_antibiotic_therapy_fu', 'biopt_hematuria_fu',
+            if variable in ['biopt_hematuria_fu',
                             'biopt_hemospermia_fu', 'biopt_pain_fu'] and value != '1':
                 continue
 

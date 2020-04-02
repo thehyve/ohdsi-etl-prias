@@ -6,8 +6,6 @@ Biopt_infection,Infection occurred after biopsy,2000000023,Infection occurred af
 Biopt_infection_FU,Infection occurred after biopsy,2000000023,Infection occurred after biopsy,1970-01-01,2099-12-31,
 Biopt_inf_hospitalisation_days,Days in hospital,42869434,Hospitalized or emergency room [ESRD],2012-05-04,2099-12-31,
 Biopt_inf_hospitalisation_days_FU,Days in hospital,42869434,Hospitalized or emergency room [ESRD],2012-05-04,2099-12-31,
-Biopt_inf_unrine_resistant,Antibiotic resistance of bacteria in urine,2000000024,Antibiotic resistance,1970-01-01,2099-12-31,
-Biopt_inf_unrine_resistant_FU,Antibiotic resistance of bacteria in urine,2000000024,Antibiotic resistance,1970-01-01,2099-12-32,
 Biopt_inf_urine_bacterium,Type of urine bacterium measured,36304419,Bacteria [Presence] in Urine,2018-06-15,2099-12-31,
 Biopt_inf_urine_bacterium_FU,Type of urine bacterium measured,36304419,Bacteria [Presence] in Urine,2018-06-15,2099-12-31,
 Biopt_inf_urine_culture,Urine culture measured,4024509,Urine culture,1970-01-01,2099-12-31,
