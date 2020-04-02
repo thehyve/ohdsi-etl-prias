@@ -6,7 +6,7 @@ concept_id,concept_name,domain_id,vocabulary_id,concept_class_id,standard_concep
 2000000025,Nitrofuran,Measurement,None,Undefined,,5,19700101,20991231,
 2000000026,Pain after biopsy,Condition,None,Undefined,,6,19700101,20991231,
 2000000027,Size of prostate cancer in biopt,Measurement,None,Undefined,,7,19700101,20991231,
-2000000028,PIRADS score,Measurement,None,Undefined,,8,19700101,20991231,
+2000000028,PI-RADS score,Measurement,None,Undefined,,8,19700101,20991231,
 2000000041,PSA doubling time,Measurement,None,Undefined,,21,19700101,20991231,
 2000000042,Visual targeting of MRI lesions,Procedure,None,Undefined,,22,19700101,20991231,
 2000000043,Software targeting of MRI lesions,Procedure,None,Undefined,,23,19700101,20991231,
