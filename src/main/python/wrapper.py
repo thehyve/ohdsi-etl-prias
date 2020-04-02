@@ -323,7 +323,6 @@ class Wrapper(EtlWrapper):
         return self.source_table_enddata
 
     # Set the different visit types
-    class BasedataVisit(enum.Enum):
+    class VisitType(enum.Enum):
         standard = 1
         mri = 2
-        biopsy = 3

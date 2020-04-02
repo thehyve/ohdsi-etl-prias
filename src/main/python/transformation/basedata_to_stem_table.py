@@ -161,13 +161,10 @@ def basedata_to_stem_table(wrapper) -> list:
             # Get visit occurrence id
             if variable.startswith('mri_') and row['mri_taken.0'] == '1':
                 # mri visit
-                visit_type = wrapper.BasedataVisit.mri.name
-            elif variable.startswith('biopt_'):
-                # biopsy visit
-                visit_type = wrapper.BasedataVisit.biopsy.name
+                visit_type = wrapper.VisitType.mri.name
             else:
                 # standard visit
-                visit_type = wrapper.BasedataVisit.standard.name
+                visit_type = wrapper.VisitType.standard.name
 
             visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'],
                                                                                   visit_type)
