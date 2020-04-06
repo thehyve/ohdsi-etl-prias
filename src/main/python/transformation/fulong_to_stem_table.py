@@ -92,8 +92,7 @@ def fulong_to_stem_table(wrapper) -> list:
                 continue
 
             # Exception: Only map mri_method_used and mri_targeted_cores if mri_targeted_biopsy is 1
-            if (variable == 'mri_method_used' or variable == 'mri_targeted_cores') \
-                    and row['mri_targeted_biopsy'] != '1':
+            if variable in ['mri_method_used', 'mri_targeted_cores'] and row['mri_targeted_biopsy'] != '1':
                 continue
 
             # Exception: When value of mri_suspected_number is 4, value should be '>3'
@@ -116,10 +115,6 @@ def fulong_to_stem_table(wrapper) -> list:
             # Exception: store PIRADS score as number
             if variable.startswith('mri_pirads'):
                 value = wrapper.pirads_score(value)
-
-            # Exception: do not capture mri_progrssion_lesions.0 if value is an empty string
-            if variable == 'mri_progrssion_lesions' and value == '':
-                continue
 
             # Extract variable and value form mapping tables
             target = wrapper.variable_mapper.lookup(variable, value)
