@@ -59,7 +59,7 @@ Capture an episode for each person and lesion group, except:
 The record_source_value is used to link the episode to the events (i.e. observation and measurement records) occurring in the episode.
 This variable is not included in OMOP CDM v6 + oncology extensions and should be removed from the episode table after all mappings are finished.
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 
@@ -95,7 +95,7 @@ Capture an episode for each person and lesion group, except:
 The record_source_value is used to link the episode to the events (i.e. observation and measurement records) occurring in the episode.
 This variable is not included in OMOP CDM v6 + oncology extensions and should be removed from the episode table after all mappings are finished.
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 
@@ -125,7 +125,7 @@ Capture an episode for each person and lesion group, except:
 The record_source_value is used to link the episode to the events (i.e. observation and measurement records) occurring in the episode.
 This variable is not included in OMOP CDM v6 + oncology extensions and should be removed from the episode table after all mappings are finished.
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 

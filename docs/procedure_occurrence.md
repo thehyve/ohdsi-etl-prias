@@ -10,7 +10,7 @@ nav_order: 9
 
 ![](index_files/image15.png)
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 

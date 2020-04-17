@@ -19,7 +19,7 @@ nav_order: 3
 
 ![](index_files/image3.png)
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 
@@ -35,7 +35,7 @@ No filters applied
 
 ![](index_files/image4.png)
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 

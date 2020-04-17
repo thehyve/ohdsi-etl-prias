@@ -50,7 +50,7 @@ An episode is captured for each person and lesion group, except:
 
 Using the record_source_value in the stem_table and the record_source_value in the episode table, episodes are linked to events.
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 
@@ -75,7 +75,7 @@ An episode is captured for each person and lesion group, except:
 
 The record_source_value is used to link the episode to the events (i.e. observation and measurement records) occurring in the episode.
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 
@@ -96,7 +96,7 @@ An episode for each person and lesion group, except:
 
 The record_source_value is used to link the episode to the events (i.e. observation and measurement records) occurring in the episode.
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 

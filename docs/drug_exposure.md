@@ -9,7 +9,7 @@ nav_order: 6
 ## Reading from stem_table
 
 ![](index_files/image12.png)
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 

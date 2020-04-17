@@ -22,7 +22,7 @@ nav_order: 4
 The ``stem_table.record_source_value`` is used to link Stem table visits to the ``Visit Occurrence`` table.
 This variable is not included in OMOP CDM v6 + oncology extensions and should be removed from the episode table after all mappings are finished.
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 
@@ -54,7 +54,7 @@ No filters applied
 The record_source_value is used to link stem_table visits to the visit_occurrence table.
 This variable is not included in OMOP CDM v6 + oncology extensions and should be removed from the episode table after all mappings are finished.
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 

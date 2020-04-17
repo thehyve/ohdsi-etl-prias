@@ -12,7 +12,7 @@ All persons are male and the only demographic information given is the year of b
 The care site (site that has entered the data for the person) is also known in the original dataset,
 but not given in the data extract used for the ETL.
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 
@@ -42,7 +42,7 @@ No filters applied
 For each patient in the **enddata** with a 'Died' value in the ``discontinued`` field, take ``year_discontinued`` 
 from **enddata** as input for ``person.death_datetime``. 
 
-**Inclusion/Exlcusion criteria**
+**Inclusion/Exclusion criteria**
 
 No filters applied
 
