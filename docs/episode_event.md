@@ -38,7 +38,6 @@ Using the record_source_value in the stem_table and the record_source_value in t
 | event_id               | p_id         | Concatenate p_id-"basedata"-variable (e.g. 1-basedata-mri_pirads_1.0), equal to record_source_value in stem_table, and obtain event_id through stem_table lookup |
 | event_field_concept_id |              | When event variable is mri_pirads\*, map to 1147140 - measurement.measurement_concept <br> Else map to 1147167 - observation.observation_concept_id              |
 
-
 ### Core biopsy episodes
 
 All measurements and observations belonging to core biopsies taken is grouped into an episode. The following two episodes are present:
@@ -51,12 +50,15 @@ An episode is captured for each person and lesion group, except:
 
 Using the record_source_value in the stem_table and the record_source_value in the episode table, episodes are linked to events.
 
+**Inclusion/Exlcusion criteria**
+
+No filters applied
+
 | Destination Field      | Source field | Comment field                                                                                                                                                         |
 |:-----------------------|:-------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | episode_id             | p_id         | Concatenate p_id-"basedata"-episode_group (e.g. 1-basedata-core_biopsy1), equal to record_source_value in episode table, and obtain episode_id through episode lookup |
 | event_id               | p_id         | Concatenate p_id-"basedata"-variable (e.g. 1-basedata-num_cores), equal to record_source_value in stem_table, and obtain event_id through stem_table lookup           |
 | event_field_concept_id |              | When event variable is num_cores\*, map to 1147140 - measurement.measurement_concept <br> Else map to 1147167 - observation.observation_concept_id                    |
-
 
 ## Reading from fulong.csv
 
@@ -72,6 +74,10 @@ An episode is captured for each person and lesion group, except:
 - When `mri_taken` != 1 --> Do not capture episode
 
 The record_source_value is used to link the episode to the events (i.e. observation and measurement records) occurring in the episode.
+
+**Inclusion/Exlcusion criteria**
+
+No filters applied
 
 | Destination Field      | Source field | Comment field                                                                                                                                                |
 |:-----------------------|:-------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -89,6 +95,10 @@ An episode for each person and lesion group, except:
 - When all `num_cores_biop_fu` is empty ('') --> Do not capture episode
 
 The record_source_value is used to link the episode to the events (i.e. observation and measurement records) occurring in the episode.
+
+**Inclusion/Exlcusion criteria**
+
+No filters applied
 
 | Destination Field      | Source field | Comment field                                                                                                                                                     |
 |:-----------------------|:-------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------|

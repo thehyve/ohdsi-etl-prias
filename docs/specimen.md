@@ -10,6 +10,10 @@ nav_order: 11
 
 ![](index_files/image16.png)
 
+**Inclusion/Exlcusion criteria**
+
+No filters applied
+
 | Destination Field           | Source field                | Logic | Comment field |
 |:----------------------------|:----------------------------|:------|:--------------|
 | specimen_id                 | id                          |       |               |
