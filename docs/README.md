@@ -63,6 +63,12 @@ e.g. the ``person_id`` field in the *Person* table is noted as ``person.person_i
 then we use July 1st as a proxy. This will be, on average, the closest 
 to the actual date.
 
+* If no date is given, the following conventions will be followed:
+    * Derive year from context
+    * If no context derivation is possible, take 1970-01-01 as both start_date and end_date. 
+    There is an exception for the ``observation_period.observation_period_end_date``. When this date is missing,
+    it is set to the date of the last ETL run.
+
 * Where appropriate, we made use of the [oncology extensions](https://github.com/OHDSI/OncologyWG/wiki), as proposed by the [OHDSI Oncology Workgroup](https://github.com/OHDSI/OncologyWG).
  We incorporated the *Episode* and *Episode Event* tables, as well as the ``measurement.modifier_of_event_id`` and ``measurement.modifier_of_field_concept_id``.
  
