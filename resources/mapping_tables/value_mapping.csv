@@ -1,5 +1,4 @@
 variable_source_code,value_source_code,source_code_description,target_concept_id,target_concept_name,valid_start_date,valid_end_date,invalid_reason
-Adjuvant_radiotherapy,1,yes,45881386,Rad After Surgery,1970-01-01,2099-12-31,
 Biopt_inf_unrine_resistant,1,Fluoroquinolones,1176676,Fluoroquinolone,1970-01-01,2099-12-31,
 Biopt_inf_unrine_resistant,2,Trimethoprim-sulfonamide (TMP-SMX) combination,40792503,Trimethoprim+Sulfamethoxazole,1970-01-01,2099-12-31,
 Biopt_inf_unrine_resistant,3,Cephalosporin (group 1 or 2),37026981,Cephalosporin,1970-01-01,2099-12-31,

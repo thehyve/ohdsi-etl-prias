@@ -1,5 +1,5 @@
 variable_source_code,value_source_code,source_code_description,target_concept_id,target_concept_name,valid_start_date,valid_end_date,invalid_reason
-Adjuvant_radiotherapy,1,yes,35919395,Radiation after surgery,1970-01-01,2099-12-31,
+Adjuvant_radiotherapy,1,yes,2000000019,Adjuvant Radiotherapy,1970-01-01,2099-12-31,
 Biopt_hematuria,1,yes,437038,Blood in urine,1970-01-01,2099-12-31,
 Biopt_hematuria_FU,1,yes,437038,Blood in urine,1970-01-01,2099-12-31,
 Biopt_hemospermia,1,yes,439871,Hemospermia,1970-01-01,2099-12-31,
