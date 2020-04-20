@@ -18,7 +18,7 @@ from datetime import date
 
 def basedata_to_observation_period(wrapper) -> list:
     base_data = wrapper.get_basedata()
-    extraction_date = date(2099, 7, 1)
+    extraction_date = date.today()
 
     records_to_insert = []
     for row in base_data:
