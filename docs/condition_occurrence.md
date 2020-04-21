@@ -19,7 +19,7 @@ nav_order: 5
 | condition_start_datetime      | start_datetime                |       |               |
 | condition_end_date            | end_date                      |       |               |
 | condition_end_datetime        | end_datetime                  |       |               |
-| condition_type_concept_id     | type_concept_id               |       |44786627 - Primary Condition|
+| condition_type_concept_id     | type_concept_id               |       |32535 - Tumor Registry|
 | stop_reason                   | stop_reason                   |       |               |
 | provider_id                   | provider_id                   |       |               |
 | visit_occurrence_id           | visit_occurrence_id           |       |               |
