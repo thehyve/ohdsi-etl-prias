@@ -13,6 +13,7 @@ ETL scripts to concert the Prostate cancer Research International: Active Survei
     - LIONC
     - NAACCR
     - UCUM
+    - [PIONEER custom vocabulary](https://github.com/thehyve/ohdsi-omop-pioneer/blob/master/pioneer_custom_vocabulary/pioneer_concepts.csv)
 
 ## Run
 ```bash
