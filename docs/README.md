@@ -80,8 +80,10 @@ For example, the variable ``psa`` is mapped to the concept Total PSA level (conc
 This concept belongs to the *Measurement* domain, hence this concept end up in this *Measurement* table of the OMOP CDM.
 
 * For the mapping of source terms to OMOP CDM concepts, we make use of 
-the following mapping tables: variable_mapping.csv, value_mapping.csv, 
-variable_value_mapping.csv and unit_mapping.csv.
+the following mapping tables: [variable_mapping.csv](https://github.com/thehyve/ohdsi-etl-prias/blob/master/resources/mapping_tables/variable_mapping.csv), 
+[value_mapping.csv](https://github.com/thehyve/ohdsi-etl-prias/blob/master/resources/mapping_tables/value_mapping.csv),
+[variable_value_mapping.csv](https://github.com/thehyve/ohdsi-etl-prias/blob/master/resources/mapping_tables/variable_value_mapping.csv) 
+and [unit_mapping.csv](https://github.com/thehyve/ohdsi-etl-prias/blob/master/resources/mapping_tables/unit_mapping.csv).
     * variable_mapping and value_mappings form a 
     variable-value pair. The general convention is that variable_mapping
     contains the mappings of the source field names, and that value_mapping
