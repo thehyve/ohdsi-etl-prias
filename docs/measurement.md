@@ -10,6 +10,10 @@ nav_order: 8
 
 ![](index_files/image13.png)
 
+**Inclusion/Exclusion criteria**
+
+No filters applied
+
 | Destination Field             | Source field        | Logic | Comment field |
 |:------------------------------|:--------------------|:------|:--------------|
 | measurement_id                | id                  |       |               |

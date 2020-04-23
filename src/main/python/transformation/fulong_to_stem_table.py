@@ -44,13 +44,18 @@ def fulong_to_stem_table(wrapper) -> list:
 
         for variable, value in row.items():
 
+            # Exception: If num_cores or num_cores2 value is empty string, replace value with 0
+            if variable in 'num_cores_biop_fu' and value == '':
+                value = '0'
+
             # Ignore the following columns for mapping
             if variable in ['p_id', 'time', 'dre_fu_recode', 'log2psa_fu', 'gleason_sum_fu',
-                            'slope', 'pro_psa_fu', 'visit_action', 'active_visit', 'year_visit', 'days_psa_diag']:
+                            'slope', 'pro_psa_fu', 'visit_action', 'active_visit', 'year_visit', 'days_psa_diag',
+                            'biopt_inf_unrine_resistant_fu', 'biopt_inf_antibiotic_therapy_fu', 'biopt_inf_antibiotic_type_fu']:
                 continue
 
             # Skip empty string values
-            if value == '' or value == None:
+            if value == '':
                 continue
 
             # Exception: Map sum of mri_targeted_gleason1 and mri_targeted_gleason2
@@ -68,7 +73,7 @@ def fulong_to_stem_table(wrapper) -> list:
                 continue
 
             # Only map variables when value is 1
-            if variable in ['biopt_inf_antibiotic_therapy_fu', 'biopt_hematuria_fu',
+            if variable in ['biopt_hematuria_fu',
                             'biopt_hemospermia_fu', 'biopt_pain_fu'] and value != '1':
                 continue
 
@@ -87,8 +92,7 @@ def fulong_to_stem_table(wrapper) -> list:
                 continue
 
             # Exception: Only map mri_method_used and mri_targeted_cores if mri_targeted_biopsy is 1
-            if (variable == 'mri_method_used' or variable == 'mri_targeted_cores') \
-                    and row['mri_targeted_biopsy'] != '1':
+            if variable in ['mri_method_used', 'mri_targeted_cores'] and row['mri_targeted_biopsy'] != '1':
                 continue
 
             # Exception: When value of mri_suspected_number is 4, value should be '>3'
@@ -107,6 +111,10 @@ def fulong_to_stem_table(wrapper) -> list:
             if variable == 'dre_fu':
                 # Remove (a,b,c) from dre values
                 value = value.split(' ')[0]
+
+            # Exception: store PIRADS score as number
+            if variable.startswith('mri_pirads'):
+                value = wrapper.pirads_score(value)
 
             # Extract variable and value form mapping tables
             target = wrapper.variable_mapper.lookup(variable, value)
@@ -143,13 +151,10 @@ def fulong_to_stem_table(wrapper) -> list:
             # Get visit occurrence id
             if variable.startswith('mri_') and row['mri_taken'] == '1':
                 # mri visit
-                visit_type = wrapper.BasedataVisit.mri.name
-            elif variable.startswith('biopt_'):
-                # biopsy visit
-                visit_type = wrapper.BasedataVisit.biopsy.name
+                visit_type = wrapper.VisitType.mri.name
             else:
                 # standard visit
-                visit_type = wrapper.BasedataVisit.standard.name
+                visit_type = wrapper.VisitType.standard.name
             visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'],
                                                                                 row['time'],
                                                                                 visit_type)

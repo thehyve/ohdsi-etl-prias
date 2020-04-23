@@ -10,6 +10,10 @@ nav_order: 9
 
 ![](index_files/image15.png)
 
+**Inclusion/Exclusion criteria**
+
+No filters applied
+
 | Destination Field           | Source field          | Logic | Comment field |
 |:----------------------------|:----------------------|:------|:--------------|
 | procedure_occurrence_id     | id                    |       |               |

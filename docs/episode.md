@@ -41,7 +41,7 @@ This variable is not included in OMOP CDM v6 + oncology extensions and should be
 | episode_parent_id         |                |                                                                         |
 | episode_number            |                | Take number of episode group name (e.g lesion1 --> episode number is 1) |
 | episode_object_concept_id |                | 0                                                                       |
-| episode_type_concept_id   |                |                                                                         |
+| episode_type_concept_id   |                | 44786630 - Primary procedure (procedure occurrence type_concept_id      |
 | episode_source_value      |                |                                                                         |
 | episode_source_concept_id |                | 0                                                                       |
 | record_source_value       | p_id           | p_id-'basedata'-episode_group, e.g. 1-basedata-lesion1                  |
@@ -59,6 +59,10 @@ Capture an episode for each person and lesion group, except:
 The record_source_value is used to link the episode to the events (i.e. observation and measurement records) occurring in the episode.
 This variable is not included in OMOP CDM v6 + oncology extensions and should be removed from the episode table after all mappings are finished.
 
+**Inclusion/Exclusion criteria**
+
+No filters applied
+
 | Destination Field         | Source field   | Comment field                                                                |
 |:--------------------------|:---------------|:-----------------------------------------------------------------------------|
 | episode_id                |                | Auto-increment                                                               |
@@ -69,7 +73,7 @@ This variable is not included in OMOP CDM v6 + oncology extensions and should be
 | episode_parent_id         |                |                                                                              |
 | episode_number            |                | Take number of episode group name (e.g core_biopsy1 --> episode number is 1) |
 | episode_object_concept_id |                | 0                                                                            |
-| episode_type_concept_id   |                |                                                                              |
+| episode_type_concept_id   |                | 5086 - Condition tested by diagnosis procedure (condition occurrence type_concept_id|
 | episode_source_value      |                |                                                                              |
 | episode_source_concept_id |                | 0                                                                            |
 | record_source_value       | p_id           | p_id-'basedata'-episode_group, e.g. 1-basedata-core_biopsy1                  |
@@ -91,6 +95,9 @@ Capture an episode for each person and lesion group, except:
 The record_source_value is used to link the episode to the events (i.e. observation and measurement records) occurring in the episode.
 This variable is not included in OMOP CDM v6 + oncology extensions and should be removed from the episode table after all mappings are finished.
 
+**Inclusion/Exclusion criteria**
+
+No filters applied
 
 | Destination Field         | Source field  | Comment field                                                           |
 |:--------------------------|:--------------|:------------------------------------------------------------------------|
@@ -117,6 +124,10 @@ Capture an episode for each person and lesion group, except:
 
 The record_source_value is used to link the episode to the events (i.e. observation and measurement records) occurring in the episode.
 This variable is not included in OMOP CDM v6 + oncology extensions and should be removed from the episode table after all mappings are finished.
+
+**Inclusion/Exclusion criteria**
+
+No filters applied
 
 | Destination Field         | Source field  | Comment field                                                                |
 |:--------------------------|:--------------|:-----------------------------------------------------------------------------|

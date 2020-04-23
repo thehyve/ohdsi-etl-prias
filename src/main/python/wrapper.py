@@ -284,6 +284,14 @@ class Wrapper(EtlWrapper):
             value = int(row[gleason_score1]) + int(row[gleason_score2])
         return variable, value
 
+    def pirads_score(self, value):
+        value_lookup = {
+            '1': 3,
+            '2': 4,
+            '3': 5
+        }
+        return value_lookup[value]
+
     def get_event_field_concept_id(self, concept_id):
         """
         :param concept_id:
@@ -315,7 +323,6 @@ class Wrapper(EtlWrapper):
         return self.source_table_enddata
 
     # Set the different visit types
-    class BasedataVisit(enum.Enum):
+    class VisitType(enum.Enum):
         standard = 1
         mri = 2
-        biopsy = 3

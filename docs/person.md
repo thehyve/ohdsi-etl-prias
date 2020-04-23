@@ -7,9 +7,14 @@ nav_order: 2
 # person
 
 ## Reading from basedata.csv
-For each record in the basedata table, insert a record in the person table. 
-All persons are male and the only demographic information given is the year of birth. 
-The care site (site that has entered the data for the person) is also known in the original dataset, but not given in the data extract used for the ETL.
+For each record in the **basedata** table, insert a record in the *person* table. 
+All persons are male and the only demographic information given is the year of birth (``year_of_birth``). 
+The care site (site that has entered the data for the person) is also known in the original dataset,
+but not given in the data extract used for the ETL.
+
+**Inclusion/Exclusion criteria**
+
+No filters applied
 
 | Destination Field           | Source field  | Logic | Comment field     |
 |:----------------------------|:--------------|:------|:------------------|
@@ -34,7 +39,12 @@ The care site (site that has entered the data for the person) is also known in t
 | ethnicity_source_concept_id |               |       |                   |
 
 ## Reading from enddata.csv
-For each patient in the enddata with a 'Died' value in the 'discontinued' field, take 'year_discontinued' from enddata as input for death_datetime. 
+For each patient in the **enddata** with a 'Died' value in the ``discontinued`` field, take ``year_discontinued`` 
+from **enddata** as input for ``person.death_datetime``. 
+
+**Inclusion/Exclusion criteria**
+
+No filters applied
 
 | Destination Field           | Source field  | Logic | Comment field     |
 |:----------------------------|:--------------|:------|:------------------|
