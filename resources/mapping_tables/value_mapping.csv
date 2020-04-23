@@ -1,5 +1,4 @@
 variable_source_code,value_source_code,source_code_description,target_concept_id,target_concept_name,valid_start_date,valid_end_date,invalid_reason
-Adjuvant_radiotherapy,1,yes,45881386,Rad After Surgery,1970-01-01,2099-12-31,
 Biopt_inf_urine_bacterium,1,E.coli,4011683,Escherichia coli,1970-01-01,2099-12-31,
 Biopt_inf_urine_bacterium,2,pseudomonas,4211547,Pseudomonas,1970-01-01,2099-12-31,
 Biopt_inf_urine_bacterium,3,Enterococci,4101235,Genus Enterococcus,1970-01-01,2099-12-31,

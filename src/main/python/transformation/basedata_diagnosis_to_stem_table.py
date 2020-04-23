@@ -44,7 +44,7 @@ def basedata_diagnosis_to_stem_table(wrapper) -> list:
             visit_occurrence_id=visit_occurrence_id,
             start_date=date(int(row['year_diagnosis']), 7, 1),
             start_datetime=datetime(int(row['year_diagnosis']), 7, 1),
-            concept_id=4116087,  # Carcinoma of prostate
+            concept_id=4163261,  # Malignant tumor of prostate
             type_concept_id=0,
             record_source_value=stem_table_record_source_value
         )

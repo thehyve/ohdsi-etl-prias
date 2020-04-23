@@ -24,7 +24,7 @@ SELECT
 
 	coalesce(stem_table.concept_id, 0)	AS	specimen_concept_id,
 
-	581378	AS	specimen_type_concept_id, /* EHR Detail*/
+	stem_table.type_concept_id	AS	specimen_type_concept_id, /* EHR Detail*/
 
 	stem_table.start_date	AS	specimen_date,
 
