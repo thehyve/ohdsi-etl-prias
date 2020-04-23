@@ -75,8 +75,7 @@ def basedata_to_stem_table(wrapper) -> list:
                 continue
 
             # Exception: Only map mri_method_used.0 and mri_targeted_cores.0 if mri_targeted_biopsy.0 is 1
-            if (variable == 'mri_method_used.0' or variable == 'mri_targeted_cores.0') \
-                    and row['mri_targeted_biopsy.0'] != '1':
+            if variable in ['mri_method_used.0', 'mri_targeted_cores.0'] and row['mri_targeted_biopsy.0'] != '1':
                 continue
 
             # Exception: When value of mri_suspected_number.0 is 4, value should be '>3'
@@ -120,9 +119,6 @@ def basedata_to_stem_table(wrapper) -> list:
             if variable.startswith('mri_pirads'):
                 value = wrapper.pirads_score(value)
 
-            # Exception: do not capture mri_progrssion_lesions.0 if value is an empty string
-            if variable == 'mri_progrssion_lesions.0' and value == '':
-                continue
 
             # Extract variable and value form mapping tables
             target = wrapper.variable_mapper.lookup(variable, value)
