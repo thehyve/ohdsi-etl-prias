@@ -33,15 +33,20 @@ def basedata_to_stem_table(wrapper) -> list:
 
         for variable, value in row.items():
 
+            # Exception: If num_cores or num_cores2 value is empty string, replace value with 0
+            if variable in ['num_cores', 'num_cores2'] and value == '':
+                value = '0'
+
             # Ignore the following columns for mapping
             if variable in ['p_id', 'year_diagnosis', 'year_birth', 'asa',
                             'log2psa', 'gleason_sum', 'pro_psa', 'tnm', 'method_detection',
                             'no_co_morbidity', 'active_visit', 'mri_included',
-                            'bonescan']:
+                            'bonescan', 'biopt_inf_unrine_resistant', 'biopt_inf_antibiotic_therapy',
+                            'biopt_inf_antibiotic_type']:
                 continue
 
             # Skip empty string values
-            if value == '' or value == None:
+            if value == '':
                 continue
 
             # Skip 0 values for specific biopt_ variables
@@ -51,8 +56,7 @@ def basedata_to_stem_table(wrapper) -> list:
                 continue
 
             # Only map variables when value is 1
-            if variable in ['biopt_inf_antibiotic_therapy', 'biopt_hematuria',
-                            'biopt_hemospermia', 'biopt_pain'] and value != '1':
+            if variable in ['biopt_hematuria', 'biopt_hemospermia', 'biopt_pain'] and value != '1':
                 continue
 
             #  Skip 0 values for specific mri_ variables
@@ -81,21 +85,13 @@ def basedata_to_stem_table(wrapper) -> list:
                     value = '3'
                     operator_concept_id = 4172704  # >
 
-            # Exception: Do not map num_cores*, num_cores_pc*, gleason1* and gleason* when num_cores* is 0 or empty
-            if row['num_cores'] == '' and variable in ['num_cores', 'num_cores_pc', 'gleason1', 'gleason2']:
-                continue
-            if row['num_cores2'] == '' and variable in ['num_cores2', 'num_cores_pc2', 'gleason1_2', 'gleason2_2']:
-                continue
-
             # Exception: Do not map length if < 50
-            if variable == 'length':
-                if float(value) < 50:
-                    continue
+            if variable == 'length' and float(value) < 50:
+                continue
 
             # Exception: Do not map weight if 0
-            if variable == 'weight':
-                if float(value) == 0:
-                    continue
+            if variable == 'weight' and float(value) == 0:
+                continue
 
             # Exception: Map sum of gleason1 and gleason2
             if variable == 'gleason1':
@@ -119,6 +115,14 @@ def basedata_to_stem_table(wrapper) -> list:
             if variable == 'dre':
                 # Remove (a,b,c) from dre values
                 value = value.split(' ')[0]
+
+            # Exception: store PIRADS score as number
+            if variable.startswith('mri_pirads'):
+                value = wrapper.pirads_score(value)
+
+            # Exception: do not capture mri_progrssion_lesions.0 if value is an empty string
+            if variable == 'mri_progrssion_lesions.0' and value == '':
+                continue
 
             # Extract variable and value form mapping tables
             target = wrapper.variable_mapper.lookup(variable, value)
@@ -155,13 +159,10 @@ def basedata_to_stem_table(wrapper) -> list:
             # Get visit occurrence id
             if variable.startswith('mri_') and row['mri_taken.0'] == '1':
                 # mri visit
-                visit_type = wrapper.BasedataVisit.mri.name
-            elif variable.startswith('biopt_'):
-                # biopsy visit
-                visit_type = wrapper.BasedataVisit.biopsy.name
+                visit_type = wrapper.VisitType.mri.name
             else:
                 # standard visit
-                visit_type = wrapper.BasedataVisit.standard.name
+                visit_type = wrapper.VisitType.standard.name
 
             visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'],
                                                                                   visit_type)

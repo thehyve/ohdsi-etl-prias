@@ -28,7 +28,7 @@ def basedata_dre_to_stem_table(wrapper) -> list:
     for row in basedata:
 
         # visit_type is 'standard'
-        visit_type = wrapper.BasedataVisit.standard.name
+        visit_type = wrapper.VisitType.standard.name
 
         # Get visit occurrence id
         visit_record_source_value = create_basedata_visit_record_source_value(row['p_id'], visit_type)
