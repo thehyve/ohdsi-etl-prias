@@ -152,7 +152,6 @@ class Wrapper(EtlWrapper):
             self.create_person_lookup()
 
         if person_source_value not in self.person_id_lookup:
-            print(self.person_id_lookup.keys())
             raise Exception('Person source value "{}" not found in lookup.'.format(person_source_value))
 
         return self.person_id_lookup[person_source_value]
@@ -168,7 +167,6 @@ class Wrapper(EtlWrapper):
             self.create_visit_lookup()
 
         if visit_record_source_value not in self.visit_occurrence_id_lookup:
-            print(self.visit_occurrence_id_lookup.keys())
             raise Exception('Visit record_source_value "{}" not found in lookup.'.format(visit_record_source_value))
 
         return self.visit_occurrence_id_lookup.get(visit_record_source_value)
@@ -184,7 +182,6 @@ class Wrapper(EtlWrapper):
             self.create_episode_lookup()
 
         if episode_record_source_value not in self.episode_id_lookup:
-            print(self.episode_id_lookup.keys())
             raise Exception('Episode record source value "{}" not found in lookup.'.format(episode_record_source_value))
 
         return self.episode_id_lookup.get(episode_record_source_value)
@@ -214,7 +211,6 @@ class Wrapper(EtlWrapper):
             self.create_event_field_concept_id_lookup()
 
         if concept_name not in self.event_field_concept_id_lookup:
-            print(self.event_field_concept_id_lookup.keys())
             raise Exception('Concept name "{}" not found in lookup.'.format(concept_name))
 
         return self.event_field_concept_id_lookup.get(concept_name)
@@ -230,7 +226,6 @@ class Wrapper(EtlWrapper):
             self.create_stem_table_lookup()
 
         if stem_table_record_source_value not in self.stem_table_id_lookup:
-            print(self.stem_table_id_lookup.keys())
             raise Exception(
                 'Stem table record source value "{}" not found in lookup.'.format(stem_table_record_source_value))
 
@@ -249,7 +244,6 @@ class Wrapper(EtlWrapper):
             self.create_basedata_by_pid_lookup()
 
         if p_id not in self.basedata_by_pid_lookup:
-            print(self.basedata_by_pid_lookup.keys())
             raise Exception('Person id "{}" not found in lookup.'.format(p_id))
 
         return self.basedata_by_pid_lookup[p_id]
