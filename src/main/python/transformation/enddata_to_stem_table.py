@@ -32,7 +32,7 @@ def enddata_to_stem_table(wrapper) -> list:
                 continue
 
             # Skip empty string values
-            if value == '' or value == None:
+            if value == '':
                 continue
 
             # Exception: Map ece, svi and adjuvant_radiotherapy only if value is 1

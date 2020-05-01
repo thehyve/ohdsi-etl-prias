@@ -219,7 +219,6 @@ class Wrapper(EtlWrapper):
 
         return self.event_field_concept_id_lookup.get(concept_name)
 
-
     def create_stem_table_lookup(self):
         """ Initialize the stem_table lookup """
         with self.db.session_scope() as session:
@@ -232,7 +231,8 @@ class Wrapper(EtlWrapper):
 
         if stem_table_record_source_value not in self.stem_table_id_lookup:
             print(self.stem_table_id_lookup.keys())
-            raise Exception('Stem table record source value "{}" not found in lookup.'.format(stem_table_record_source_value))
+            raise Exception(
+                'Stem table record source value "{}" not found in lookup.'.format(stem_table_record_source_value))
 
         return self.stem_table_id_lookup.get(stem_table_record_source_value)
 
@@ -287,6 +287,26 @@ class Wrapper(EtlWrapper):
             value = int(row[gleason_score1]) + int(row[gleason_score2])
         return variable, value
 
+    def pirads_score(self, value):
+        value_lookup = {
+            '1': 3,
+            '2': 4,
+            '3': 5
+        }
+        return value_lookup[value]
+
+    def get_event_field_concept_id(self, concept_id):
+        """
+        :param concept_id:
+        :return event_field_concept_id:
+        """
+        domain_id = self.domain_id_lookup(concept_id)
+        domain_prefix = domain_id.split('_')[0]
+        concept_name = domain_id + "." + domain_prefix + "_concept_id"
+        concept_name = concept_name.lower()
+        event_field_concept_id = self.lookup_event_field_concept_id(concept_name)
+        return event_field_concept_id
+
     def get_basedata(self):
         if not self.source_table_basedata:
             self.source_table_basedata = SourceData(self.source_folder / 'basedata.csv')
@@ -306,7 +326,6 @@ class Wrapper(EtlWrapper):
         return self.source_table_enddata
 
     # Set the different visit types
-    class BasedataVisit(enum.Enum):
+    class VisitType(enum.Enum):
         standard = 1
         mri = 2
-        biopsy = 3
