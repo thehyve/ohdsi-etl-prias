@@ -9,6 +9,9 @@ nav_order: 6
 ## Reading from stem_table
 
 ![](index_files/image12.png)
+**Inclusion/Exclusion criteria**
+
+No filters applied
 
 | Destination Field            | Source field           | Logic | Comment field |
 |:-----------------------------|:-----------------------|:------|:--------------|
