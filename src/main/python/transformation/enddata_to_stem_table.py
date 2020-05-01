@@ -35,6 +35,10 @@ def enddata_to_stem_table(wrapper) -> list:
             if value == '':
                 continue
 
+            # Skip empty string values
+            if value == 'n.a.':
+                continue
+
             # Exception: Map ece, svi and adjuvant_radiotherapy only if value is 1
             if variable in ['ece', 'svi', 'adjuvant_radiotherapy'] and value != '1':
                 continue

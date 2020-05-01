@@ -74,8 +74,8 @@ services:
     networks:
       - app
     restart: on-failure
-    volumes:
-      - ./logs:/app/logs
+#    volumes:
+#      - ./logs:/app/logs
     environment:
       - ETL_HOSTNAME=postgresql
       - ETL_PORT=5432
