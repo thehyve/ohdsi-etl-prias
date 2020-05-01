@@ -64,8 +64,8 @@ class EtlWrapper:
             f = open(file)
             n_rows = len(f.readlines()) - 1
             f.close()
-        except:
-            logger.error(f'Could not read contents of source file: {file}')
+        except Exception as e:
+            logger.error(f'Could not read contents of source file: {file}. {e.args[0]}')
             return None
 
         return n_rows
