@@ -55,6 +55,8 @@ class Wrapper(EtlWrapper):
         logger.info('{:-^100}'.format(' Setup '))
 
         # Prepare source
+        self.execute_sql_query('CREATE SCHEMA IF NOT EXISTS cdm5;')
+        self.execute_sql_query('DROP SCHEMA IF EXISTS vocab CASCADE; CREATE SCHEMA vocab;')
         self.drop_cdm()
         logger.info('Clinical CDM tables dropped')
         self.create_cdm()

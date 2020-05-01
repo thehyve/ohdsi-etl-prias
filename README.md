@@ -11,13 +11,13 @@ ETL scripts to concert the Prostate cancer Research International: Active Survei
 * jupyter
 * etl
 
-Run logs:
+To view the progress of the database setup and etl, view the logs:
 * To check the postgres database:
 `docker-compose logs -f postgresql`
 * To check the ETL:
 `docker-compose logs -f etl`
 
-To run ETL again: `docker-compose up --build etl`
+To run ETL again: `docker-compose up -d --build etl` and check the etl logs.
 
 
 ## Target

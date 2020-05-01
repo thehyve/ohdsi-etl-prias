@@ -26,12 +26,12 @@ class Metadata(base):
     __tablename__ = 'metadata'
     __table_args__ = {'schema': 'public'}
 
-    metadata_concept_id = Column(ForeignKey('vocab.concept.concept_id'), primary_key=True, nullable=False)
-    metadata_type_concept_id = Column(ForeignKey('vocab.concept.concept_id'), nullable=False)
+    metadata_concept_id = Column(Integer, primary_key=True, nullable=False)
+    metadata_type_concept_id = Column(Integer, nullable=False)
     name = Column(String(250), nullable=False)
     value_as_string = Column(Text)
     value_as_concept_id = Column(Integer)
     metadata_date = Column(Date)
 
-    metadata_concept = relationship('Concept', primaryjoin='Metadata.metadata_concept_id == Concept.concept_id')
-    metadata_type_concept = relationship('Concept', primaryjoin='Metadata.metadata_type_concept_id == Concept.concept_id')
+
+

@@ -48,7 +48,7 @@ services:
       - app
     volumes:
       - postgresql_data:/bitnami/postgresql
-      - ./postgres:/docker-entrypoint-initdb.d:ro
+#      - ./postgres:/docker-entrypoint-initdb.d:ro
     environment:
       - POSTGRESQL_USERNAME=admin
       - POSTGRESQL_PASSWORD=secret
