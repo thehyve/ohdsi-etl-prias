@@ -1,43 +1,34 @@
-# Run Achilles and export result
-library(devtools)
-devtools::install_github("OHDSI/Achilles@v1.6.1",)
+if (!require(Achilles)) {
+  if (!require("devtools")) install.packages("devtools")
+  devtools::install_github("OHDSI/Achilles")
+}
+
 library(Achilles)
 
-outputPath <- "out/path/here"  # "/Users/Maxim/Develop/OHDSI/AchillesWeb/data"
+connectionDetails <- createConnectionDetails(dbms="postgresql",
+                                             server="localhost/ohdsi",
+                                             user="admin",
+                                             password="secret",
+                                             port=5432)
+c <- connect(connectionDetails)
+executeSql(connection = c, "CREATE SCHEMA IF NOT EXISTS temp;")
 
-connectionDetails <- createConnectionDetails(
-  dbms="postgresql",
-  server="localhost/ohdsi",
-  user="ohdsi",
-  password='ohdsi',
-  port="4443"
-)
+# Run select analyses, excluding some that are not essential and can cause issues.
+analysisDetails <-  Achilles::getAnalysisDetails()
+analysisIds <- analysisDetails[   !(analysisDetails$ANALYSIS_ID >= 900 & analysisDetails$ANALYSIS_ID < 1000) # drug_era
+  & !(analysisDetails$ANALYSIS_ID >= 1400 & analysisDetails$ANALYSIS_ID < 1800), # cost, payer-plan
+  "ANALYSIS_ID"] # cost
 
-# connectionDetails <- createConnectionDetails(
-#   dbms="postgresql",
-#   server="localhost/erspc",
-#   user="Maxim",
-#   password='',
-#   port="5432"
-# )
+achillesResults <- achilles(connectionDetails,
+                            cdmDatabaseSchema = "public",
+                            resultsDatabaseSchema = "ohdsi",
+                            vocabDatabaseSchema = "vocab",
+                            scratchDatabaseSchema = "temp",
+                            sourceName = "PRIAS",
+                            cdmVersion = "5",
+                            smallCellCount = 1,
+                            analysisIds = analysisIds,
+                            runHeel = TRUE,
+                            validateSchema = FALSE)
 
-DatabaseConnector::executeSql(connect(connectionDetails), "create schema results;")
-
-achilles(connectionDetails, 
-         cdmDatabaseSchema = "public", 
-         resultsDatabaseSchema="results",
-         vocabDatabaseSchema = "public",
-         numThreads = 1,
-         sourceName = "ERSPC", 
-         cdmVersion = "5.3.0",
-         smallCellCount = NULL,
-         runHeel = TRUE,
-         conceptHierarchy=FALSE,
-         runCostAnalysis = FALSE)
-
-exportToJson(connectionDetails, 
-             cdmDatabaseSchema = "public", 
-             resultsDatabaseSchema = "results", 
-             outputPath = outputPath,
-             compressIntoOneFile = TRUE)
-             
+exportToJson(connectionDetails, "public", "ohdsi", vocabDatabaseSchema = "vocab")
