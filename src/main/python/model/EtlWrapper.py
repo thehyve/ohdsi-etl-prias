@@ -13,6 +13,7 @@
 # GNU General Public License for more details.
 
 import csv
+import codecs
 import logging
 import os
 import re
@@ -61,7 +62,7 @@ class EtlWrapper:
         :return n_rows: number of rows from .csv file, assuming file has header
         """
         try:
-            f = open(file)
+            f = codecs.open(file, encoding='windows-1252')
             n_rows = len(f.readlines()) - 1
             f.close()
         except Exception as e:
