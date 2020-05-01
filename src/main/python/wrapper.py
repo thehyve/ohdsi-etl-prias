@@ -83,9 +83,10 @@ class Wrapper(EtlWrapper):
         logger.info('Stem table to domains')
         self.stem_table_to_domains()
 
-        logger.info('Episode event')
-        self.execute_transformation(basedata_to_episode_event)
-        self.execute_transformation(fulong_to_episode_event)
+        # TODO: Disabled as this needs a loaded vocabulary
+        # logger.info('Episode event')
+        # self.execute_transformation(basedata_to_episode_event)
+        # self.execute_transformation(fulong_to_episode_event)
 
         # self.create_person_lookup()
 
