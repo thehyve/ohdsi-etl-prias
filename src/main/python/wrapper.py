@@ -167,8 +167,8 @@ class Wrapper(EtlWrapper):
             self.create_visit_lookup()
 
         if visit_record_source_value not in self.visit_occurrence_id_lookup:
+            logger.info('Visit record_source_value "{}" not found in lookup.'.format(visit_record_source_value))
             return None
-            # raise Exception('Visit record_source_value "{}" not found in lookup.'.format(visit_record_source_value))
 
         return self.visit_occurrence_id_lookup.get(visit_record_source_value)
 
