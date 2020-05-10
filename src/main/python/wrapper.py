@@ -65,7 +65,8 @@ class Wrapper(EtlWrapper):
         self.load_from_csv('vocab_files/VOCABULARY.csv', Vocabulary)
         self.load_from_csv('vocab_files/DOMAIN.csv', Domain)
         self.load_from_csv('vocab_files/CONCEPT_CLASS.csv', ConceptClass)
-        self.load_from_csv('vocab_files/CONCEPT_standard.csv', Concept)
+        self.load_from_csv('vocab_files/CONCEPT_CPT4.csv', Concept)
+        self.load_from_csv('vocab_files/CONCEPT.csv', Concept)
         self.load_from_csv('vocab_files/CONCEPT_ANCESTOR.csv', ConceptAncestor)
         self.create_vocab_views()  # Views in public schema
         logger.info('Vocabulary schema and vocabulary views loaded')
