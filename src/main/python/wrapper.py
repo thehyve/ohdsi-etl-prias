@@ -68,7 +68,8 @@ class Wrapper(EtlWrapper):
         self.load_from_csv('vocab_files/CONCEPT_CLASS.csv', ConceptClass)
         self.load_from_csv('vocab_files/CONCEPT_standard.csv', Concept)
         self.load_from_csv('vocab_files/CONCEPT_ANCESTOR.csv', ConceptAncestor)
-        logger.info('Vocabulary loaded')
+        self.create_vocab_views() # Views in public schema
+        logger.info('Vocabulary schema and vocabulary views loaded')
 
         # Load custom concepts and stcm
         self.load_concept_from_csv('./resources/custom_vocabulary/2b_concepts.csv')
@@ -95,7 +96,8 @@ class Wrapper(EtlWrapper):
         self.execute_transformation(basedata_to_episode_event)
         self.execute_transformation(fulong_to_episode_event)
 
-        # self.create_person_lookup()
+        logger.info('Daimon config')
+        self.execute_sql_file('./postgres/30-source_source_daimon.sql')
 
         self.log_summary()
         self.log_runtime()
@@ -327,6 +329,15 @@ class Wrapper(EtlWrapper):
             self.source_table_enddata = SourceData(self.source_folder / 'enddata.csv')
 
         return self.source_table_enddata
+
+    def create_vocab_views(self):
+        self.execute_sql_query("""
+        CREATE OR REPLACE VIEW concept AS (SELECT * FROM vocab.concept);
+        CREATE OR REPLACE VIEW concept_ancestor AS (SELECT * FROM vocab.concept_ancestor);
+        CREATE OR REPLACE VIEW concept_class AS (SELECT * FROM vocab.concept_class);
+        CREATE OR REPLACE VIEW domain AS (SELECT * FROM vocab.domain);
+        CREATE OR REPLACE VIEW vocabulary AS (SELECT * FROM vocab.vocabulary);
+        """)
 
     # Set the different visit types
     class VisitType(enum.Enum):
