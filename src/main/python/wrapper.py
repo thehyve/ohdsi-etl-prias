@@ -55,12 +55,20 @@ class Wrapper(EtlWrapper):
         logger.info('{:-^100}'.format(' Setup '))
 
         # Prepare source
-        self.execute_sql_query('CREATE SCHEMA IF NOT EXISTS cdm5;')
         self.execute_sql_query('DROP SCHEMA IF EXISTS vocab CASCADE; CREATE SCHEMA vocab;')
+        logger.info('Vocabulary schema emptied')
         self.drop_cdm()
         logger.info('Clinical CDM tables dropped')
         self.create_cdm()
-        logger.info('Clinical CDM tables created')
+        logger.info('CDM tables created')
+
+        # Load vocabulary files
+        self.load_from_csv('vocab_files/VOCABULARY.csv', Vocabulary)
+        self.load_from_csv('vocab_files/DOMAIN.csv', Domain)
+        self.load_from_csv('vocab_files/CONCEPT_CLASS.csv', ConceptClass)
+        self.load_from_csv('vocab_files/CONCEPT_standard.csv', Concept)
+        self.load_from_csv('vocab_files/CONCEPT_ANCESTOR.csv', ConceptAncestor)
+        logger.info('Vocabulary loaded')
 
         # Load custom concepts and stcm
         self.load_concept_from_csv('./resources/custom_vocabulary/2b_concepts.csv')
