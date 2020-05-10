@@ -246,9 +246,8 @@ class EtlWrapper:
         logger.info(f'Loading {source_file}')
 
         t = time.time()
-        session = self.db.get_new_session()
-
         records = []
+        n_records = 0
         with open(source_file) as f_in, self.db.session_scope() as session:
             rows = csv.DictReader(f_in, delimiter='\t')
             for i, row in enumerate(rows):
@@ -259,14 +258,19 @@ class EtlWrapper:
                     setattr(obj, key, value if value else None)
                 records.append(obj)
 
+                # Load in batches
                 if i > 0 and i % 100000 == 0:
-                    logger.info(f'Processed {i/1000}k rows')
+                    logger.info(f'Processed {i:,} rows')
+                    session.bulk_save_objects(records)
+                    n_records += 100001
+                    records = []
 
             session.bulk_save_objects(records)
+            n_records += len(records)
             session.commit()
 
         message = 'INTO - {}'.format(orm_base_class.__name__)
-        self.log_table_completed(message, len(records), time.time() - t, '')
+        self.log_table_completed(message, n_records, time.time() - t, '')
 
     def load_concept_from_csv(self, source_file):
         """

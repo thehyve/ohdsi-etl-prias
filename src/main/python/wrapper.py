@@ -49,7 +49,6 @@ class Wrapper(EtlWrapper):
         self.start_timing()
 
         logger.info('{:-^100}'.format(' Source Counts '))
-        # TODO: integrate this with loading all source files, such that each source table is only named once.
         self.log_tables_rowcounts(self.source_folder)
 
         logger.info('{:-^100}'.format(' Setup '))
@@ -68,8 +67,11 @@ class Wrapper(EtlWrapper):
         self.load_from_csv('vocab_files/CONCEPT_CLASS.csv', ConceptClass)
         self.load_from_csv('vocab_files/CONCEPT_standard.csv', Concept)
         self.load_from_csv('vocab_files/CONCEPT_ANCESTOR.csv', ConceptAncestor)
-        self.create_vocab_views() # Views in public schema
+        self.create_vocab_views()  # Views in public schema
         logger.info('Vocabulary schema and vocabulary views loaded')
+
+        logger.info('Daimon config')
+        self.execute_sql_file('./postgres/30-source_source_daimon.sql')
 
         # Load custom concepts and stcm
         self.load_concept_from_csv('./resources/custom_vocabulary/2b_concepts.csv')
@@ -95,9 +97,6 @@ class Wrapper(EtlWrapper):
         logger.info('Episode event')
         self.execute_transformation(basedata_to_episode_event)
         self.execute_transformation(fulong_to_episode_event)
-
-        logger.info('Daimon config')
-        self.execute_sql_file('./postgres/30-source_source_daimon.sql')
 
         self.log_summary()
         self.log_runtime()
