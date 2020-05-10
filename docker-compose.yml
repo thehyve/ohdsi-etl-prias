@@ -17,7 +17,7 @@ services:
       - "8080:8080"
     volumes:
      - .:/tmp/drivers/:ro
-     - ./config-local.js:/usr/local/tomcat/webapps/atlas/js/config-local.js:ro
+     - ./config-local.js:/usr/local/tomcat/webapps/atlas/js/config-local.js:ro # Needs to be enabled for Atlas to find the WebApi
     networks:
       - app
     environment:

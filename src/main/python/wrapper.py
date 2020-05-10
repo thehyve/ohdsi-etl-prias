@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 
 class Wrapper(EtlWrapper):
 
-    def __init__(self, database, source_folder, mapping_tables_folder):
+    def __init__(self, database, source_folder, mapping_tables_folder, skipvocab):
         super().__init__(database=database, source_schema='')
         self.source_folder = Path(source_folder)
         self.variable_mapper = VariableConceptMapper(Path(mapping_tables_folder))
@@ -43,27 +43,48 @@ class Wrapper(EtlWrapper):
         self.source_table_basedata = None
         self.source_table_fulong = None
         self.source_table_enddata = None
+        self.skipvocab = skipvocab
+        self.fulong_batch_number = 0
+        self.FULONG_BATCH_SIZE = 5000
 
     def run(self):
         """Run PRIAS to OMOP V6.0 ETL"""
         self.start_timing()
 
         logger.info('{:-^100}'.format(' Source Counts '))
-        # TODO: integrate this with loading all source files, such that each source table is only named once.
         self.log_tables_rowcounts(self.source_folder)
 
         logger.info('{:-^100}'.format(' Setup '))
 
+        # Vocab schema
+        if not self.skipvocab:
+            self.execute_sql_query('DROP SCHEMA IF EXISTS vocab CASCADE; CREATE SCHEMA vocab;')
+            logger.info('Vocabulary schema emptied')
+
         # Prepare source
-        self.execute_sql_query('CREATE SCHEMA IF NOT EXISTS cdm5;')
-        self.execute_sql_query('DROP SCHEMA IF EXISTS vocab CASCADE; CREATE SCHEMA vocab;')
         self.drop_cdm()
         logger.info('Clinical CDM tables dropped')
         self.create_cdm()
-        logger.info('Clinical CDM tables created')
+        logger.info('CDM tables created')
+
+        # Load vocabulary files
+        if not self.skipvocab:
+            self.load_from_csv('vocab_files/VOCABULARY.csv', Vocabulary)
+            self.load_from_csv('vocab_files/DOMAIN.csv', Domain)
+            self.load_from_csv('vocab_files/CONCEPT_CLASS.csv', ConceptClass)
+            self.load_from_csv('vocab_files/CONCEPT_CPT4.csv', Concept)
+            self.load_from_csv('vocab_files/CONCEPT.csv', Concept)
+            self.load_from_csv('vocab_files/CONCEPT_ANCESTOR.csv', ConceptAncestor)
+            logger.info('Vocabulary schema loaded')
+
+        self.create_vocab_views()  # Views in public schema
+        logger.info('Vocabulary views created')
 
         # Load custom concepts and stcm
         self.load_concept_from_csv('./resources/custom_vocabulary/2b_concepts.csv')
+
+        logger.info('Daimon config')
+        self.execute_sql_file('./postgres/30-source_source_daimon.sql')
 
         # Transformations
         logger.info('{:-^100}'.format(' ETL '))
@@ -71,7 +92,8 @@ class Wrapper(EtlWrapper):
         self.execute_transformation(basedata_to_visit)
         self.execute_transformation(fulong_to_visit)
         self.execute_transformation(basedata_to_stem_table)
-        self.execute_transformation(fulong_to_stem_table)
+        while self.has_next_fulong_batch():
+            self.execute_transformation(fulong_to_stem_table)
         self.execute_transformation(basedata_diagnosis_to_stem_table)
         self.execute_transformation(basedata_dre_to_stem_table)
         self.execute_transformation(fulong_dre_to_stem_table)
@@ -83,12 +105,9 @@ class Wrapper(EtlWrapper):
         logger.info('Stem table to domains')
         self.stem_table_to_domains()
 
-        # TODO: Disabled as this needs a loaded vocabulary
-        # logger.info('Episode event')
-        # self.execute_transformation(basedata_to_episode_event)
-        # self.execute_transformation(fulong_to_episode_event)
-
-        # self.create_person_lookup()
+        logger.info('Episode event')
+        self.execute_transformation(basedata_to_episode_event)
+        self.execute_transformation(fulong_to_episode_event)
 
         self.log_summary()
         self.log_runtime()
@@ -190,7 +209,7 @@ class Wrapper(EtlWrapper):
     def domain_id_lookup(self, concept_id):
         """Initialize the domain lookup"""
         with self.db.session_scope() as session:
-            query = session.query(vocabularies.Concept)
+            query = session.query(Concept)
             result = query.filter_by(concept_id=concept_id).one()
             return result.domain_id
 
@@ -212,7 +231,8 @@ class Wrapper(EtlWrapper):
             self.create_event_field_concept_id_lookup()
 
         if concept_name not in self.event_field_concept_id_lookup:
-            raise Exception('Concept name "{}" not found in lookup.'.format(concept_name))
+            logger.info('Event field concept "{}" could not be found in lookup.'.format(concept_name))
+            return 0
 
         return self.event_field_concept_id_lookup.get(concept_name)
 
@@ -314,11 +334,35 @@ class Wrapper(EtlWrapper):
 
         return self.source_table_fulong
 
+    def has_next_fulong_batch(self):
+        if not self.source_table_fulong:
+            self.source_table_fulong = SourceData(self.source_folder / 'fulong.csv')
+
+        return self.fulong_batch_number * self.FULONG_BATCH_SIZE < len(self.source_table_fulong.data_dicts)
+
+    def get_next_fulong_batch(self):
+        if not self.source_table_fulong:
+            self.source_table_fulong = SourceData(self.source_folder / 'fulong.csv')
+        start_index = self.fulong_batch_number*self.FULONG_BATCH_SIZE
+        end_index = (self.fulong_batch_number+1)*self.FULONG_BATCH_SIZE
+        end_index = min(end_index, len(self.source_table_fulong.data_dicts)-1)
+        self.fulong_batch_number += 1
+        return self.source_table_fulong.data_dicts[start_index:end_index]
+
     def get_enddata(self):
         if not self.source_table_enddata:
             self.source_table_enddata = SourceData(self.source_folder / 'enddata.csv')
 
         return self.source_table_enddata
+
+    def create_vocab_views(self):
+        self.execute_sql_query("""
+        CREATE OR REPLACE VIEW concept AS (SELECT * FROM vocab.concept);
+        CREATE OR REPLACE VIEW concept_ancestor AS (SELECT * FROM vocab.concept_ancestor);
+        CREATE OR REPLACE VIEW concept_class AS (SELECT * FROM vocab.concept_class);
+        CREATE OR REPLACE VIEW domain AS (SELECT * FROM vocab.domain);
+        CREATE OR REPLACE VIEW vocabulary AS (SELECT * FROM vocab.vocabulary);
+        """)
 
     # Set the different visit types
     class VisitType(enum.Enum):
