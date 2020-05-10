@@ -91,10 +91,9 @@ class Wrapper(EtlWrapper):
         logger.info('Stem table to domains')
         self.stem_table_to_domains()
 
-        # TODO: Disabled as this needs a loaded vocabulary
-        # logger.info('Episode event')
-        # self.execute_transformation(basedata_to_episode_event)
-        # self.execute_transformation(fulong_to_episode_event)
+        logger.info('Episode event')
+        self.execute_transformation(basedata_to_episode_event)
+        self.execute_transformation(fulong_to_episode_event)
 
         # self.create_person_lookup()
 
@@ -220,7 +219,8 @@ class Wrapper(EtlWrapper):
             self.create_event_field_concept_id_lookup()
 
         if concept_name not in self.event_field_concept_id_lookup:
-            raise Exception('Concept name "{}" not found in lookup.'.format(concept_name))
+            logger.info('Event field concept "{}" could not be found in lookup.'.format(concept_name))
+            return 0
 
         return self.event_field_concept_id_lookup.get(concept_name)
 
