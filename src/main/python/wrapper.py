@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 
 class Wrapper(EtlWrapper):
 
-    def __init__(self, database, source_folder, mapping_tables_folder):
+    def __init__(self, database, source_folder, mapping_tables_folder, skipvocab):
         super().__init__(database=database, source_schema='')
         self.source_folder = Path(source_folder)
         self.variable_mapper = VariableConceptMapper(Path(mapping_tables_folder))
@@ -43,6 +43,7 @@ class Wrapper(EtlWrapper):
         self.source_table_basedata = None
         self.source_table_fulong = None
         self.source_table_enddata = None
+        self.skipvocab = skipvocab
 
     def run(self):
         """Run PRIAS to OMOP V6.0 ETL"""
@@ -54,28 +55,29 @@ class Wrapper(EtlWrapper):
         logger.info('{:-^100}'.format(' Setup '))
 
         # Prepare source
-        self.execute_sql_query('DROP SCHEMA IF EXISTS vocab CASCADE; CREATE SCHEMA vocab;')
-        logger.info('Vocabulary schema emptied')
         self.drop_cdm()
         logger.info('Clinical CDM tables dropped')
         self.create_cdm()
         logger.info('CDM tables created')
 
         # Load vocabulary files
-        self.load_from_csv('vocab_files/VOCABULARY.csv', Vocabulary)
-        self.load_from_csv('vocab_files/DOMAIN.csv', Domain)
-        self.load_from_csv('vocab_files/CONCEPT_CLASS.csv', ConceptClass)
-        self.load_from_csv('vocab_files/CONCEPT_CPT4.csv', Concept)
-        self.load_from_csv('vocab_files/CONCEPT.csv', Concept)
-        self.load_from_csv('vocab_files/CONCEPT_ANCESTOR.csv', ConceptAncestor)
-        self.create_vocab_views()  # Views in public schema
-        logger.info('Vocabulary schema and vocabulary views loaded')
+        if not skipvocab:
+            self.execute_sql_query('DROP SCHEMA IF EXISTS vocab CASCADE; CREATE SCHEMA vocab;')
+            logger.info('Vocabulary schema emptied')
+            self.load_from_csv('vocab_files/VOCABULARY.csv', Vocabulary)
+            self.load_from_csv('vocab_files/DOMAIN.csv', Domain)
+            self.load_from_csv('vocab_files/CONCEPT_CLASS.csv', ConceptClass)
+            self.load_from_csv('vocab_files/CONCEPT_CPT4.csv', Concept)
+            self.load_from_csv('vocab_files/CONCEPT.csv', Concept)
+            self.load_from_csv('vocab_files/CONCEPT_ANCESTOR.csv', ConceptAncestor)
+            self.create_vocab_views()  # Views in public schema
+            logger.info('Vocabulary schema and vocabulary views loaded')
+
+            # Load custom concepts and stcm
+            self.load_concept_from_csv('./resources/custom_vocabulary/2b_concepts.csv')
 
         logger.info('Daimon config')
         self.execute_sql_file('./postgres/30-source_source_daimon.sql')
-
-        # Load custom concepts and stcm
-        self.load_concept_from_csv('./resources/custom_vocabulary/2b_concepts.csv')
 
         # Transformations
         logger.info('{:-^100}'.format(' ETL '))
