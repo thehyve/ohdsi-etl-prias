@@ -58,6 +58,8 @@ class Wrapper(EtlWrapper):
 
         logger.info('Daimon config')
         self.execute_sql_file('./postgres/30-source_source_daimon.sql')
+        self.execute_sql_file('./postgres/results_ddl_2.7.4.sql')
+        self.execute_sql_query('SET search_path TO public;')
 
         # Vocab schema
         if not self.skipvocab:
