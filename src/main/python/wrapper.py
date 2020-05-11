@@ -56,6 +56,9 @@ class Wrapper(EtlWrapper):
 
         logger.info('{:-^100}'.format(' Setup '))
 
+        logger.info('Daimon config')
+        self.execute_sql_file('./postgres/30-source_source_daimon.sql')
+
         # Vocab schema
         if not self.skipvocab:
             self.execute_sql_query('DROP SCHEMA IF EXISTS vocab CASCADE; CREATE SCHEMA vocab;')
@@ -82,9 +85,6 @@ class Wrapper(EtlWrapper):
 
         # Load custom concepts and stcm
         self.load_concept_from_csv('./resources/custom_vocabulary/2b_concepts.csv')
-
-        logger.info('Daimon config')
-        self.execute_sql_file('./postgres/30-source_source_daimon.sql')
 
         # Transformations
         logger.info('{:-^100}'.format(' ETL '))
