@@ -14,7 +14,7 @@ The mapping document can be found [here](https://thehyve.github.io/ohdsi-etl-pri
     - OMOP generated (Gender, Race, Type Concepts)
     - SNOMED
     - LIONC
-    - NAACCR
+    - NAACCR (note: NAACCR is not included in the Athena download by default, and should be selected manually)
     - UCUM
     - [PIONEER custom vocabulary](https://github.com/thehyve/ohdsi-omop-pioneer/blob/master/pioneer_custom_vocabulary/pioneer_concepts.csv)
 
