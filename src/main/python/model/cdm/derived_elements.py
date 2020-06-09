@@ -72,20 +72,20 @@ class DrugEra(base):
     person = relationship('Person')
 
 
-t_cdm_source = Table(
-    'cdm_source', metadata,
-    Column('cdm_source_name', String(255), nullable=False),
-    Column('cdm_source_abbreviation', String(25)),
-    Column('cdm_holder', String(255)),
-    Column('source_description', Text),
-    Column('source_documentation_reference', String(255)),
-    Column('cdm_etl_reference', String(255)),
-    Column('source_release_date', Date),
-    Column('cdm_release_date', Date),
-    Column('cdm_version', String(10)),
-    Column('vocabulary_version', String(20)),
-    schema='public'
-)
+class CdmSource(base):
+    __tablename__ = 'cdm_source'
+    __table_args__ = {'schema': 'public'}
+
+    cdm_source_name = Column(String(255), primary_key=True)
+    cdm_source_abbreviation = Column(String(25))
+    cdm_holder = Column(String(255))
+    source_description = Column(Text)
+    source_documentation_reference = Column(String(255))
+    cdm_etl_reference = Column(String(255))
+    source_release_date = Column(Date)
+    cdm_release_date = Column(Date)
+    cdm_version = Column(String(10))
+    vocabulary_version = Column(String(20))
 
 
 t_metadata = Table(
