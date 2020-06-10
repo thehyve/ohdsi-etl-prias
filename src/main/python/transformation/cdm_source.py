@@ -16,7 +16,7 @@ def cdm_source(wrapper) -> list:
             cdm_source_name='PRIAS',
             cdm_etl_reference='https://github.com/thehyve/ohdsi-etl-prias',
             cdm_release_date=date.today(),
-            cdm_version='v6.0.x',
+            cdm_version='v6.x',
             vocabulary_version=vocab_info.vocabulary_version
         )
 
