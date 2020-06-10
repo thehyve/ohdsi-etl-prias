@@ -1,5 +1,5 @@
-# PRIAS to OMOP v6
-ETL scripts to convert the Prostate cancer Research International: Active Surveillance (PRIAS) datasets to [OMOP CDM V6](https://github.com/OHDSI/CommonDataModel/tree/v6.0.0) 
+# PRIAS to OMOP v6.x
+ETL scripts to convert the Prostate cancer Research International: Active Surveillance (PRIAS) datasets to a PIONEER modification of [OMOP CDM V6](https://github.com/thehyve/ohdsi-omop-pioneer/tree/master/pioneer_omop_cdm). 
 + [Oncology WG extensions](https://github.com/OHDSI/OncologyWG/wiki).
 
 ## Mapping Document
