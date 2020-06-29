@@ -14,7 +14,7 @@ library(yaml)
 devtools::install_github(repo="thehyve/DataQualityDashboard", ref="v6_extensions")
 
 # Set working directory to directory of this R script
-setwd("~/ohdsi-etl-AB/src/dqd") #e.g. ~/PIONEER/Active_Biotech/ohdsi-etl-prias/src/dqd
+setwd("~/ohdsi-etl-prias/src/dqd") #e.g. ~/PIONEER/Active_Biotech/ohdsi-etl-prias/src/dqd
 
 # Load configuration settings
 config <- yaml.load_file('config.yml')
