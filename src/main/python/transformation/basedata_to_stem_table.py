@@ -56,7 +56,9 @@ def basedata_to_stem_table(wrapper) -> list:
                 continue
 
             # Only map variables when value is 1
-            if variable in ['biopt_hematuria', 'biopt_hemospermia', 'biopt_pain'] and value != '1':
+            ignore_variables_if_value_not_1 = {'biopt_hematuria', 'biopt_hemospermia',
+                                               'biopt_pain', 'first_500'}
+            if variable in ignore_variables_if_value_not_1 and value != '1':
                 continue
 
             #  Skip 0 values for specific mri_ variables

@@ -121,4 +121,4 @@ time_mri,35,35,2000000122,Follow-up Visit 35 - MRI,19700101,20991231,
 time_mri,36,36,2000000123,Follow-up Visit 36 - MRI,19700101,20991231,
 time_mri,37,37,2000000124,Follow-up Visit 37 - MRI,19700101,20991231,
 time_mri,38,38,2000000125,Follow-up Visit 38 - MRI,19700101,20991231,
-
+first_500,1,True,2000000184,Is one of first 500 patients,19700101,20991231,
