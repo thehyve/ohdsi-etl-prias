@@ -19,8 +19,8 @@ from datetime import timedelta
 from src.main.python.util.number_conversion import to_int
 from src.main.python.util.create_record_source_value import create_fulong_visit_record_source_value
 
-def fulong_to_visit(wrapper) -> list:
 
+def fulong_to_visit(wrapper) -> list:
     fulong = wrapper.get_fulong()
 
     records_to_insert = []
@@ -48,6 +48,9 @@ def fulong_to_visit(wrapper) -> list:
                 visit_concept_id = target.concept_id  # Follow-up Visit *number* - MRI
             else:
                 continue
+
+            if not visit_concept_id:
+                visit_concept_id = 0
 
             # Create visit_occurrence_source_value for visit_id lookup
             visit_record_source_value = create_fulong_visit_record_source_value(row['p_id'],

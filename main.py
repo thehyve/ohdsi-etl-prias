@@ -24,7 +24,7 @@ from src.main.python.model.setup_logging import setup_logging
 from src.main.python.database.database import Database
 from src.main.python.wrapper import Wrapper
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 logger = logging.getLogger(__name__)
 
@@ -45,10 +45,10 @@ logger = logging.getLogger(__name__)
               help='Folder containing the source data tables as csv.')
 @click.option('--debug', default=False, metavar='<debug_mode>', is_flag=True,
               help='In debug mode, the table constraints are applied before loading')
-# @click.option('--skipvocab', default=False, metavar='<skip_vocab>', is_flag=True,
-#               help='When provided, the loading and pre-processing '
-#                    'of source to target vocabularies is skipped')
-def main(database, username, password, hostname, port, source, debug):
+@click.option('--skipvocab', default=False, metavar='<skip_vocab>', is_flag=True,
+              help='When provided, the loading and pre-processing '
+                   'of source to target vocabularies is skipped')
+def main(database, username, password, hostname, port, source, debug, skipvocab):
     setup_logging(debug)
 
     # Test database connection
@@ -57,11 +57,11 @@ def main(database, username, password, hostname, port, source, debug):
         return
 
     db = Database(uri)
-    etl = Wrapper(db, source, './resources/mapping_tables')
+    etl = Wrapper(db, source, './resources/mapping_tables', skipvocab)
 
     logger.info('ETL version {}'.format(__version__))
-    if etl.is_git_repo():
-        logger.info('Git HEAD at ' + etl.get_git_tag_or_branch())
+    # if etl.is_git_repo():
+    #     logger.info('Git HEAD at ' + etl.get_git_tag_or_branch())
 
     # Run ETL
     try:
@@ -73,4 +73,4 @@ def main(database, username, password, hostname, port, source, debug):
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(auto_envvar_prefix='ETL'))

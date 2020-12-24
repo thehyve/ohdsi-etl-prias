@@ -13,6 +13,7 @@
 # GNU General Public License for more details.
 
 import csv
+import codecs
 import logging
 import os
 import re
@@ -61,11 +62,11 @@ class EtlWrapper:
         :return n_rows: number of rows from .csv file, assuming file has header
         """
         try:
-            f = open(file)
+            f = codecs.open(file, encoding='windows-1252')
             n_rows = len(f.readlines()) - 1
             f.close()
-        except:
-            logger.error(f'Could not read contents of source file: {file}')
+        except Exception as e:
+            logger.error(f'Could not read contents of source file: {file}. {e.args[0]}')
             return None
 
         return n_rows
@@ -240,6 +241,36 @@ class EtlWrapper:
 
         self.n_queries_executed += 1
         return
+
+    def load_from_csv(self, source_file, orm_base_class):
+        logger.info(f'Loading {source_file}')
+
+        t = time.time()
+        records = []
+        n_records = 0
+        with open(source_file) as f_in, self.db.session_scope() as session:
+            rows = csv.DictReader(f_in, delimiter='\t')
+            for i, row in enumerate(rows):
+                obj = orm_base_class()
+
+                # Set all variables
+                for key, value in row.items():
+                    setattr(obj, key, value if value else None)
+                records.append(obj)
+
+                # Load in batches
+                if i > 0 and i % 100000 == 0:
+                    logger.info(f'Processed {i:,} rows')
+                    session.bulk_save_objects(records)
+                    n_records += 100001
+                    records = []
+
+            session.bulk_save_objects(records)
+            n_records += len(records)
+            session.commit()
+
+        message = 'INTO - {}'.format(orm_base_class.__name__)
+        self.log_table_completed(message, n_records, time.time() - t, '')
 
     def load_concept_from_csv(self, source_file):
         """

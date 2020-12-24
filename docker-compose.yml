@@ -1,0 +1,96 @@
+version: '3'
+
+services:
+  broadsea-methods-library:
+    image: ohdsi/broadsea-methodslibrary
+    networks:
+      - app
+    ports:
+      - "8787:8787"
+      - "6311:6311"
+    environment:
+      - PASSWORD=mypass
+
+  broadsea-webtools:
+    image: ohdsi/broadsea-webtools
+    ports:
+      - "8080:8080"
+    volumes:
+     - .:/tmp/drivers/:ro
+     - ./config-local.js:/usr/local/tomcat/webapps/atlas/js/config-local.js:ro # Needs to be enabled for Atlas to find the WebApi
+    networks:
+      - app
+    environment:
+      - WEBAPI_URL=http://localhost:8080
+      - env=webapi-postgresql
+      - datasource_driverClassName=org.postgresql.Driver
+      - datasource_url=jdbc:postgresql://postgresql:5432/ohdsi
+      - datasource.cdm.schema=cdm
+      - datasource.ohdsi.schema=ohdsi
+      - datasource_username=admin
+      - datasource_password=secret
+      - spring.jpa.properties.hibernate.default_schema=ohdsi
+      - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+      - spring.batch.repository.tableprefix=ohdsi.BATCH_
+      - flyway_datasource_driverClassName=org.postgresql.Driver
+      - flyway_datasource_url=jdbc:postgresql://postgresql:5432/ohdsi
+      - flyway_schemas=ohdsi
+      - flyway.placeholders.ohdsiSchema=ohdsi
+      - flyway_datasource_username=admin
+      - flyway_datasource_password=secret
+      - flyway.locations=classpath:db/migration/postgresql
+
+  postgresql:
+    image: thehyve/ohdsi_postgresql
+    ports:
+      - 5432:5432
+    networks:
+      - app
+    volumes:
+      - postgresql_data:/bitnami/postgresql
+#      - ./postgres:/docker-entrypoint-initdb.d:ro
+    environment:
+      - POSTGRESQL_USERNAME=admin
+      - POSTGRESQL_PASSWORD=secret
+      - POSTGRESQL_DATABASE=ohdsi
+      - BITNAMI_DEBUG=true
+
+  jupyter:
+    image: jupyter/r-notebook
+    command: start-notebook.sh --NotebookApp.password='sha1:f7105c4fb85e:5d1b80e5fe40f641268ad01db47da046f6e66698'
+    networks:
+      - app
+    ports:
+      - 8888:8888
+    volumes:
+      - jupyter:/home/jovyan/work
+    environment:
+      - RESTARTABLE=yes
+
+  etl:
+    command: python main.py
+    build:
+      context: .
+    networks:
+      - app
+    restart: on-failure
+#    volumes:
+#      - ./logs:/app/logs
+    environment:
+      - ETL_HOSTNAME=postgresql
+      - ETL_PORT=5432
+      - ETL_DATABASE=ohdsi
+      - ETL_USERNAME=admin
+      - ETL_PASSWORD=secret
+      - ETL_SOURCE=/app/resources/test_datasets/1000_records
+      - ETL_DEBUG=False
+      - ETL_SKIPVOCAB=False
+
+volumes:
+  postgresql_data:
+    driver: local
+  jupyter:
+    driver: local
+
+networks:
+  app:

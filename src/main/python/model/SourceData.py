@@ -14,6 +14,7 @@
 
 # !/usr/bin/env python3
 import csv
+import codecs
 
 
 class SourceData:
@@ -27,7 +28,7 @@ class SourceData:
         yield from self.data_dicts
 
     def load(self, source_file_path):
-        with open(source_file_path) as f_in:
+        with codecs.open(source_file_path, encoding='windows-1252') as f_in:
             self.data_dicts = [CaseInsensitiveDict(x) for x in csv.DictReader(f_in, delimiter=self.delimiter)]
 
 

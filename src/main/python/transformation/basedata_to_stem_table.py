@@ -175,7 +175,7 @@ def basedata_to_stem_table(wrapper) -> list:
                 visit_occurrence_id=visit_occurrence_id,
                 start_date=date(int(row['year_diagnosis']), 7, 1),
                 start_datetime=datetime(int(row['year_diagnosis']), 7, 1),
-                concept_id=concept_id,
+                concept_id=concept_id if concept_id else 0,
                 value_as_concept_id=value_as_concept_id,
                 value_as_number=value_as_number,
                 unit_concept_id=unit_concept_id if unit_concept_id else None,

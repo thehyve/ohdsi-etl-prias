@@ -64,7 +64,13 @@ def enddata_to_stem_table(wrapper) -> list:
                 value = re.sub(',', '.', value)
 
             # Extract variable and value form mapping tables
-            target = wrapper.variable_mapper.lookup(variable, value)
+            try:
+                target = wrapper.variable_mapper.lookup(variable, value)
+            except ValueError as e:
+                # Skip empty string values
+                if value == 'n.a.' or value == 'ni':
+                    continue
+                continue
 
             # Set stem table values
             concept_id = target.concept_id

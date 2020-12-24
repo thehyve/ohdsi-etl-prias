@@ -67,6 +67,6 @@ SELECT
 	stem_table.value_as_datetime	AS	value_as_datetime
 
 FROM public.stem_table
-    LEFT JOIN public.concept USING (concept_id)
+    LEFT JOIN vocab.concept USING (concept_id)
 WHERE concept.domain_id = 'Observation'
 ;

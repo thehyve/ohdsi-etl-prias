@@ -73,6 +73,6 @@ SELECT
 	stem_table.dose_unit_source_value	AS	dose_unit_source_value
 
 FROM public.stem_table
-    LEFT JOIN public.concept USING (concept_id)
+    LEFT JOIN vocab.concept USING (concept_id)
 WHERE concept.domain_id = 'Drug'
 ;
