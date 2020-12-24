@@ -110,6 +110,7 @@ class Wrapper(EtlWrapper):
         logger.info('Episode event')
         self.execute_transformation(basedata_to_episode_event)
         self.execute_transformation(fulong_to_episode_event)
+        self.execute_transformation(cdm_source)
 
         self.log_summary()
         self.log_runtime()
@@ -155,7 +156,8 @@ class Wrapper(EtlWrapper):
             health_system_data.Location.__table__,
             health_system_data.CareSite.__table__,
             health_system_data.Provider.__table__,
-            clinical_data.StemTable.__table__
+            clinical_data.StemTable.__table__,
+            derived_elements.CdmSource.__table__
         ])
 
     def create_cdm(self):
