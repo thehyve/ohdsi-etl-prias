@@ -1,3 +1,6 @@
+# don't index vocabulary
+*.zip
+
 # Exclude the config yml
 src/test/R/config.yml
 src/test/R/all_test_cases.csv

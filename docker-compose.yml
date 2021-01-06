@@ -1,45 +1,6 @@
 version: '3'
 
 services:
-  broadsea-methods-library:
-    image: ohdsi/broadsea-methodslibrary
-    networks:
-      - app
-    ports:
-      - "8787:8787"
-      - "6311:6311"
-    environment:
-      - PASSWORD=mypass
-
-  broadsea-webtools:
-    image: ohdsi/broadsea-webtools
-    ports:
-      - "8080:8080"
-    volumes:
-     - .:/tmp/drivers/:ro
-     - ./config-local.js:/usr/local/tomcat/webapps/atlas/js/config-local.js:ro # Needs to be enabled for Atlas to find the WebApi
-    networks:
-      - app
-    environment:
-      - WEBAPI_URL=http://localhost:8080
-      - env=webapi-postgresql
-      - datasource_driverClassName=org.postgresql.Driver
-      - datasource_url=jdbc:postgresql://postgresql:5432/ohdsi
-      - datasource.cdm.schema=cdm
-      - datasource.ohdsi.schema=ohdsi
-      - datasource_username=admin
-      - datasource_password=secret
-      - spring.jpa.properties.hibernate.default_schema=ohdsi
-      - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-      - spring.batch.repository.tableprefix=ohdsi.BATCH_
-      - flyway_datasource_driverClassName=org.postgresql.Driver
-      - flyway_datasource_url=jdbc:postgresql://postgresql:5432/ohdsi
-      - flyway_schemas=ohdsi
-      - flyway.placeholders.ohdsiSchema=ohdsi
-      - flyway_datasource_username=admin
-      - flyway_datasource_password=secret
-      - flyway.locations=classpath:db/migration/postgresql
-
   postgresql:
     image: thehyve/ohdsi_postgresql
     ports:
@@ -88,8 +49,6 @@ services:
 
 volumes:
   postgresql_data:
-    driver: local
-  jupyter:
     driver: local
 
 networks:
