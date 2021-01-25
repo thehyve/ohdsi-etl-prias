@@ -37,6 +37,7 @@ The fields for each table are listed in the [Source Appendix](source_appendix.md
 | OHDSI        | Observational Health Data Sciences and Informatics |
 
 ## Versions
+
 | Resource     | Version                                    |
 | ------------ | ------------------------------------------ |
 | OMOP CDM     | V6.0.0 + oncology extensions               |
