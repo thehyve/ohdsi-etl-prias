@@ -57,13 +57,14 @@ class Wrapper(EtlWrapper):
         logger.info('{:-^100}'.format(' Setup '))
 
         logger.info('Daimon config')
-        self.execute_sql_file('./postgres/30-source_source_daimon.sql')
-        self.execute_sql_file('./postgres/results_ddl_2.7.4.sql')
+        # self.execute_sql_file('./postgres/30-source_source_daimon.sql')
+        # self.execute_sql_file('./postgres/results_ddl_2.7.4.sql')
         self.execute_sql_query('SET search_path TO public;')
 
         # Vocab schema
         if not self.skipvocab:
-            self.execute_sql_query('DROP SCHEMA IF EXISTS vocab CASCADE; CREATE SCHEMA vocab;')
+            print('Dropping vocab schema')
+            # self.execute_sql_query('DROP SCHEMA IF EXISTS vocab CASCADE; CREATE SCHEMA vocab;')
             logger.info('Vocabulary schema emptied')
 
         # Prepare source
@@ -74,12 +75,13 @@ class Wrapper(EtlWrapper):
 
         # Load vocabulary files
         if not self.skipvocab:
-            self.load_from_csv('vocab_files/VOCABULARY.csv', Vocabulary)
-            self.load_from_csv('vocab_files/DOMAIN.csv', Domain)
-            self.load_from_csv('vocab_files/CONCEPT_CLASS.csv', ConceptClass)
-            self.load_from_csv('vocab_files/CONCEPT_CPT4.csv', Concept)
-            self.load_from_csv('vocab_files/CONCEPT.csv', Concept)
-            self.load_from_csv('vocab_files/CONCEPT_ANCESTOR.csv', ConceptAncestor)
+            print('Loading vocab files')
+            # self.load_from_csv('vocab_files/VOCABULARY.csv', Vocabulary)
+            # self.load_from_csv('vocab_files/DOMAIN.csv', Domain)
+            # self.load_from_csv('vocab_files/CONCEPT_CLASS.csv', ConceptClass)
+            # self.load_from_csv('vocab_files/CONCEPT_CPT4.csv', Concept)
+            # self.load_from_csv('vocab_files/CONCEPT.csv', Concept)
+            # self.load_from_csv('vocab_files/CONCEPT_ANCESTOR.csv', ConceptAncestor)
             logger.info('Vocabulary schema loaded')
 
         self.create_vocab_views()  # Views in public schema

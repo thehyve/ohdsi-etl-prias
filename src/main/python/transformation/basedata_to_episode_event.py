@@ -55,6 +55,8 @@ def basedata_to_episode_event(wrapper) -> list:
             episode_record_source_value = create_basedata_episode_record_source_value(row['p_id'],
                                                                                       episode_group)
             episode_id = wrapper.lookup_episode_id(episode_record_source_value)
+            print(f"episode_record_source_value={episode_record_source_value}")
+            print(f"episode_id={episode_id}")
 
             for variable in episode_variables:
 
@@ -66,6 +68,8 @@ def basedata_to_episode_event(wrapper) -> list:
                 stem_table_record_source_value = create_basedata_stem_table_record_source_value(row['p_id'],
                                                                                                 variable)
                 event_id = wrapper.lookup_stem_table_id(stem_table_record_source_value)
+                print(f"stem_table_record_source_value={stem_table_record_source_value}")
+                print(f"event_id={event_id}")
 
                 # Get event_field_concept_id
                 target = wrapper.variable_mapper.lookup(variable, row[variable])

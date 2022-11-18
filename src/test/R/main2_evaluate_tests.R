@@ -22,11 +22,14 @@ source('TestFrameWork.R')
 
 # Run and output test queries ---------------------------------------------
 connectionConfig <- config$connectionDetails
-connectionDetails <- createConnectionDetails(dbms = connectionConfig$dbms,
-user = connectionConfig$user,
-password = connectionConfig$password,
-server = connectionConfig$server,
-port = connectionConfig$port)
+connectionDetails <- createConnectionDetails(
+  dbms = connectionConfig$dbms,
+  user = connectionConfig$user,
+  password = connectionConfig$password,
+  server = connectionConfig$server,
+  port = connectionConfig$port,
+  pathToDriver = connectionConfig$pathToDriver
+)
 connection <- connect(connectionDetails)
 
 testSql <- readLines(config$testQueryFileName)
