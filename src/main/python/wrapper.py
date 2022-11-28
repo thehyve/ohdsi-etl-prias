@@ -351,7 +351,7 @@ class Wrapper(EtlWrapper):
             self.source_table_fulong = SourceData(self.source_folder / 'fulong.csv')
         start_index = self.fulong_batch_number*self.FULONG_BATCH_SIZE
         end_index = (self.fulong_batch_number+1)*self.FULONG_BATCH_SIZE
-        end_index = min(end_index, len(self.source_table_fulong.data_dicts)-1)
+        end_index = min(end_index, len(self.source_table_fulong.data_dicts))
         self.fulong_batch_number += 1
         return self.source_table_fulong.data_dicts[start_index:end_index]
 
