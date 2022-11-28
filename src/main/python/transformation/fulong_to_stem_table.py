@@ -43,6 +43,10 @@ def fulong_to_stem_table(wrapper) -> list:
 
         for variable, value in row.items():
 
+            # Rule: If num_cores or num_cores2 value is empty string, replace value with 0
+            if variable == 'num_cores_biop_fu' and value == '':
+                value = '0'
+
             # Ignore the following columns for mapping
             if variable in ['p_id', 'time', 'dre_fu_recode', 'log2psa_fu', 'gleason_sum_fu',
                             'slope', 'pro_psa_fu', 'visit_action', 'active_visit', 'year_visit', 'days_psa_diag',
@@ -87,10 +91,7 @@ def fulong_to_stem_table(wrapper) -> list:
             if variable == 'biopt_inf_hospitalisation_days_fu' and row['biopt_inf_hospitalisation_fu'] != '1':
                 continue
 
-            # Rule: If num_cores or num_cores2 value is empty string, replace value with 0
-            if variable == 'num_cores_biop_fu' and value == '':
-                value = '0'
-            elif variable == 'mri_suspected_number':
+            if variable == 'mri_suspected_number':
                 # Rule: When value of mri_suspected_number is 4, value should be '>3'
                 if value == '4':
                     value = '3'
@@ -140,8 +141,8 @@ def fulong_to_stem_table(wrapper) -> list:
             visit_occurrence_id = wrapper.lookup_visit_occurrence_id(visit_record_source_value)
 
             # Add record source value to Stem Table
-            stem_table_record_source_value = create_fulong_stem_table_record_source_value(row['p_id'], row['time'], visit_type)
-            print(stem_table_record_source_value)
+            stem_table_record_source_value = create_fulong_stem_table_record_source_value(
+                row['p_id'], row['time'], variable)
 
             record = StemTable(
                 person_id=int(row['p_id']),

@@ -58,7 +58,7 @@ def fulong_to_episode_event(wrapper) -> list:
 
             for variable in episode_variables:
 
-                # Don't map event when event when value is 0, None or an empty string
+                # Don't map event when value is 0, None or an empty string
                 if row[variable] in [None, '0', '']:
                     continue
 
@@ -66,8 +66,6 @@ def fulong_to_episode_event(wrapper) -> list:
                 stem_table_record_source_value = create_fulong_stem_table_record_source_value(row['p_id'],
                                                                                               row['time'],
                                                                                               variable)
-                print("episode variable")
-                print(stem_table_record_source_value)
                 event_id = wrapper.lookup_stem_table_id(stem_table_record_source_value)
 
                 # Get event_field_concept_id
@@ -105,8 +103,6 @@ def fulong_to_episode_event(wrapper) -> list:
                 stem_table_record_source_value = create_fulong_stem_table_record_source_value(row['p_id'],
                                                                                               row['time'],
                                                                                               variable)
-                print("Go through each episode group")
-                print(stem_table_record_source_value)
                 event_id = wrapper.lookup_stem_table_id(stem_table_record_source_value)
 
                 # Get event_field_concept_id
