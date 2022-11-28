@@ -34,7 +34,7 @@ SELECT
 
 	stem_table.start_datetime	AS	observation_datetime,
 
-	45905771	AS	observation_type_concept_id, /*Observation Recorded from a Survey*/
+    32879	AS	observation_type_concept_id, /*Registry*/
 
 	stem_table.value_as_number	AS	value_as_number,
 

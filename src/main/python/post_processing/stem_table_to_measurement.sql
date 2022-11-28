@@ -35,7 +35,7 @@ SELECT
 
 	NULL AS measurement_time,
 
-	44818701 AS measurement_type_concept_id,  /*From Physical Examination*/
+    32879 AS measurement_type_concept_id,  /*Registry*/
 
 	stem_table.operator_concept_id AS operator_concept_id,
 

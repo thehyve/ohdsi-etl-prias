@@ -156,7 +156,7 @@ def fulong_to_stem_table(wrapper) -> list:
                 source_value=source_value,
                 value_source_value=value_source_value,
                 operator_concept_id=operator_concept_id,
-                type_concept_id=0,
+                type_concept_id=32879,
                 record_source_value=stem_table_record_source_value
             )
 

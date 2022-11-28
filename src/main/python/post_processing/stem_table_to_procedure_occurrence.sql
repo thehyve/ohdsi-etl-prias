@@ -27,7 +27,7 @@ SELECT
 
 	stem_table.start_datetime	AS	procedure_datetime,
 
-	581412	AS	procedure_type_concept_id, /* Procedure Recorded from a Survey*/
+    32879	AS	procedure_type_concept_id, /* Registry*/
 
 	coalesce(stem_table.modifier_concept_id, 0)	AS	modifier_concept_id,
 
