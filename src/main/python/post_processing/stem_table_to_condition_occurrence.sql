@@ -33,7 +33,7 @@ SELECT
 
 	stem_table.end_datetime	AS	condition_end_datetime,
 
-	32535	AS	condition_type_concept_id, /* Tumor Registry */
+    32879	AS	condition_type_concept_id, /* Registry */
 
 	stem_table.stop_reason	AS	stop_reason,
 

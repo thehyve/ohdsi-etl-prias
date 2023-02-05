@@ -36,7 +36,7 @@ def basedata_to_observation_period(wrapper) -> list:
             person_id=int(row['p_id']),
             observation_period_start_date=basedata_start_date,
             observation_period_end_date=observation_period_end_date,
-            period_type_concept_id=44814723  # Period while enrolled in study
+            period_type_concept_id=32879  # Registry
         )
         records_to_insert.append(record)
 

@@ -91,14 +91,14 @@ class CdmSource(base):
     vocabulary_version = Column(String(20))
 
 
-t_metadata = Table(
-    'metadata', metadata,
-    Column('metadata_concept_id', Integer, nullable=False, index=True),
-    Column('metadata_type_concept_id', Integer, nullable=False),
-    Column('name', String(250), nullable=False),
-    Column('value_as_string', Text),
-    Column('value_as_concept_id', Integer),
-    Column('metadata_date', Date),
-    Column('metadata_datetime', DateTime),
-    schema='public'
-)
+# t_metadata = Table(
+#     'metadata', metadata,
+#     Column('metadata_concept_id', Integer, nullable=False, index=True),
+#     Column('metadata_type_concept_id', Integer, nullable=False),
+#     Column('name', String(250), nullable=False),
+#     Column('value_as_string', Text),
+#     Column('value_as_concept_id', Integer),
+#     Column('metadata_date', Date),
+#     Column('metadata_datetime', DateTime),
+#     schema='public'
+# )

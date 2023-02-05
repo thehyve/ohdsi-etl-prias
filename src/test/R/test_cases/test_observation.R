@@ -7,51 +7,51 @@ expect_observation(person_id=10203, observation_concept_id=4096978, unit_concept
 #Basedata to observation --------------------------------------------
 declareTest(204, 'Observation - gleason')
 add_basedata(p_id='10204', gleason1='2', gleason2='1')
-expect_observation(person_id=10204, value_as_concept_id=35934087,
+expect_observation(person_id=10204, value_as_concept_id=1633550,
                    observation_concept_id=4297949, observation_source_value='gleason1_gleason2')
 
 #Basedata to observation --------------------------------------------
 declareTest(205, 'Observation - gleason')
 add_basedata(p_id='10205', num_cores='10', gleason1='3', gleason2='3')
-expect_observation(person_id=10205, value_as_concept_id=35934087, 
+expect_observation(person_id=10205, value_as_concept_id=1633550,
                    observation_concept_id=4297949, observation_source_value='gleason1_gleason2')
 
 #Basedata to observation --------------------------------------------
 declareTest(206, 'Observation - gleason')
 add_basedata(p_id='10206', num_cores='8', gleason1='3', gleason2='4')
-expect_observation(person_id=10206, value_as_concept_id=35930757, 
+expect_observation(person_id=10206, value_as_concept_id=1633826,
                    observation_concept_id=4297949, observation_source_value='gleason1_gleason2')
 
 #Basedata to observation --------------------------------------------
 declareTest(207, 'Observation - gleason')
 add_basedata(p_id='10207', num_cores='11', gleason1='4', gleason2='3')
-expect_observation(person_id=10207, value_as_concept_id=35929404, 
+expect_observation(person_id=10207, value_as_concept_id=1634459,
                    observation_concept_id=4297949, observation_source_value='gleason1_gleason2')
 
 #Basedata to observation --------------------------------------------
 declareTest(208, 'Observation - gleason')
 add_basedata(p_id='10208', year_diagnosis='2011', gleason1='5', gleason2='3')
-expect_observation(person_id=10208, value_as_concept_id=35921496, 
+expect_observation(person_id=10208, value_as_concept_id=1635079,
                    observation_concept_id=4297949, observation_source_value='gleason1_gleason2',
                    observation_date='2011-07-01')
 
 #Basedata to observation --------------------------------------------
 declareTest(209, 'Observation - gleason')
 add_basedata(p_id='10209', gleason1='4', gleason2='5')
-expect_observation(person_id=10209, value_as_concept_id=35928355, 
+expect_observation(person_id=10209, value_as_concept_id=1635009,
                    observation_concept_id=4297949, observation_source_value='gleason1_gleason2')
 
 #Basedata to observation --------------------------------------------
 declareTest(210, 'Observation - gleason')
 add_basedata(p_id='10210', gleason1='5', gleason2='5')
-expect_observation(person_id=10210, value_as_concept_id=35928355, 
+expect_observation(person_id=10210, value_as_concept_id=1635009,
                    observation_concept_id=4297949, observation_source_value='gleason1_gleason2')
 
 #Basedata to observation --------------------------------------------
 declareTest(336, 'Observation - gleason_2')
 add_basedata(p_id='10336', num_cores='2', num_cores2='10', num_cores_pc2='1', 
              gleason1_2='1', gleason2_2='2')
-expect_observation(person_id=10336, value_as_concept_id=35934087, 
+expect_observation(person_id=10336, value_as_concept_id=1633550,
                    observation_concept_id=4297949, 
                    observation_source_value='gleason1_2_gleason2_2')
 
@@ -59,7 +59,7 @@ expect_observation(person_id=10336, value_as_concept_id=35934087,
 declareTest(337, 'Observation - gleason_2')
 add_basedata(p_id='10337', num_cores='5', num_cores2='9', num_cores_pc2='5', 
              gleason1_2='3', gleason2_2='4')
-expect_observation(person_id=10337, value_as_concept_id=35930757, 
+expect_observation(person_id=10337, value_as_concept_id=1633826,
                    observation_concept_id=4297949, 
                    observation_source_value='gleason1_2_gleason2_2')
 
@@ -67,7 +67,7 @@ expect_observation(person_id=10337, value_as_concept_id=35930757,
 declareTest(338, 'Observation - gleason_2')
 add_basedata(p_id='10338', num_cores='7', num_cores2='8', num_cores_pc2='3',
              gleason1_2='4', gleason2_2='3')
-expect_observation(person_id=10338, value_as_concept_id=35929404, 
+expect_observation(person_id=10338, value_as_concept_id=1634459,
                    observation_concept_id=4297949, 
                    observation_source_value='gleason1_2_gleason2_2')
 
@@ -75,7 +75,7 @@ expect_observation(person_id=10338, value_as_concept_id=35929404,
 declareTest(339, 'Observation - gleason_2')
 add_basedata(p_id='10339', num_cores='6', num_cores2='12', num_cores_pc2='1', 
              gleason1_2='3', gleason2_2='5')
-expect_observation(person_id=10339, value_as_concept_id=35921496, 
+expect_observation(person_id=10339, value_as_concept_id=1635079,
                    observation_concept_id=4297949, 
                    observation_source_value='gleason1_2_gleason2_2')
 
@@ -321,31 +321,31 @@ expect_observation(person_id=10251, observation_concept_id=4077864,
 declareTest(252, 'Observation - mri_targeted_gleason1.0.1')
 add_basedata(p_id='10252', mri_taken.0='1', gleason1='2', gleason2='3')
 expect_observation(person_id=10252, observation_concept_id=4297949, 
-                   value_as_concept_id=35934087)
+                   value_as_concept_id=1633550)
 
 #Basedata to observation --------------------------------------------
 declareTest(253, 'Observation - mri_targeted_gleason1.0.1')
 add_basedata(p_id='10253', mri_taken.0='1', gleason1='3', gleason2='4')
 expect_observation(person_id=10253, observation_concept_id=4297949, 
-                   value_as_concept_id=35930757)
+                   value_as_concept_id=1633826)
 
 #Basedata to observation --------------------------------------------
 declareTest(254, 'Observation - mri_targeted_gleason1.0.1')
 add_basedata(p_id='10254', mri_taken.0='1', gleason1='4', gleason2='3')
 expect_observation(person_id=10254, observation_concept_id=4297949, 
-                   value_as_concept_id=35929404)
+                   value_as_concept_id=1634459)
 
 #Basedata to observation --------------------------------------------
 declareTest(255, 'Observation - mri_targeted_gleason1.0.1')
 add_basedata(p_id='10255', mri_taken.0='1', gleason1='4', gleason2='4')
 expect_observation(person_id=10255, observation_concept_id=4297949, 
-                   value_as_concept_id=35921496)
+                   value_as_concept_id=1635079)
 
 #Basedata to observation --------------------------------------------
 declareTest(256, 'Observation - mri_targeted_gleason1.0.1')
 add_basedata(p_id='10256', mri_taken.0='1', gleason1='5', gleason2='4')
 expect_observation(person_id=10256, observation_concept_id=4297949, 
-                   value_as_concept_id=35928355)
+                   value_as_concept_id=1635009)
 
 #Basedata to observation --------------------------------------------
 declareTest(257, 'Observation - age_diagnosis')
@@ -376,35 +376,35 @@ declareTest(258, 'Observation - gleason_fu')
 add_basedata(p_id='10258')
 add_fulong(p_id='10258', gleason1_fu='0', gleason2_fu='2')
 expect_observation(person_id=10258, observation_concept_id=4297949, 
-                   value_as_concept_id=35934087)
+                   value_as_concept_id=1633550)
 
 #Fulong to observation ----------------------------------------------
 declareTest(259, 'Observation - gleason_fu')
 add_basedata(p_id='10259')
 add_fulong(p_id='10259', gleason1_fu='3', gleason2_fu='4')
 expect_observation(person_id=10259, observation_concept_id=4297949, 
-                   value_as_concept_id=35930757)
+                   value_as_concept_id=1633826)
 
 #Fulong to observation ----------------------------------------------
 declareTest(260, 'Observation - gleason_fu')
 add_basedata(p_id='10260')
 add_fulong(p_id='10260', gleason1_fu='4', gleason2_fu='3')
 expect_observation(person_id=10260, observation_concept_id=4297949, 
-                   value_as_concept_id=35929404)
+                   value_as_concept_id=1634459)
 
 #Fulong to observation ----------------------------------------------
 declareTest(261, 'Observation - gleason_fu')
 add_basedata(p_id='10261')
 add_fulong(p_id='10261', gleason1_fu='3', gleason2_fu='5')
 expect_observation(person_id=10261, observation_concept_id=4297949, 
-                   value_as_concept_id=35921496)
+                   value_as_concept_id=1635079)
 
 #Fulong to observation ----------------------------------------------
 declareTest(262, 'Observation - gleason_fu')
 add_basedata(p_id='10262')
 add_fulong(p_id='10262', gleason1_fu='5', gleason2_fu='5')
 expect_observation(person_id=10262, observation_concept_id=4297949, 
-                   value_as_concept_id=35928355)
+                   value_as_concept_id=1635009)
 
 #Fulong to observation --------------------------------------------
 declareTest(263, 'Observation - biopt_infection_fu')

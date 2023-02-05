@@ -76,7 +76,7 @@ def fulong_to_visit(wrapper) -> list:
                 visit_start_datetime=start_date,
                 visit_end_date=start_date.date(),
                 visit_end_datetime=start_date,
-                visit_type_concept_id=44818519,  # Clinical Study visit
+                visit_type_concept_id=32879,  # Registry
                 visit_source_value=row[variable],
                 discharge_to_concept_id=0,
                 admitted_from_concept_id=0,

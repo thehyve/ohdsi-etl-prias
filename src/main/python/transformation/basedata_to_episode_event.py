@@ -58,7 +58,7 @@ def basedata_to_episode_event(wrapper) -> list:
 
             for variable in episode_variables:
 
-                # Don't map event when event when value is 0, None or an empty string
+                # Don't map event when value is 0, None or an empty string
                 if row[variable] in [None, '0', '']:
                     continue
 
