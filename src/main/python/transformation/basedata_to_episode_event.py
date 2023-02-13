@@ -107,6 +107,8 @@ def basedata_to_episode_event(wrapper) -> list:
                 stem_table_record_source_value = create_basedata_stem_table_record_source_value(row['p_id'],
                                                                                                 variable)
                 event_id = wrapper.lookup_stem_table_id(stem_table_record_source_value)
+                if event_id is None:
+                    continue
 
                 # Get event_field_concept_id
                 target = wrapper.variable_mapper.lookup(variable, value)
