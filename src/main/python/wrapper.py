@@ -15,7 +15,7 @@
 # !/usr/bin/env python3
 from pathlib import Path
 import logging
-from datetime import date
+from typing import Optional
 
 from src.main.python.model import EtlWrapper
 from src.main.python.model.SourceData import SourceData
@@ -230,14 +230,14 @@ class Wrapper(EtlWrapper):
             query = session.query(clinical_data.StemTable).all()
             self.stem_table_id_lookup = {x.record_source_value: x.id for x in query}
 
-    def lookup_stem_table_id(self, stem_table_record_source_value):
+    def lookup_stem_table_id(self, stem_table_record_source_value) -> Optional[int]:
         if self.stem_table_id_lookup is None:
             self.create_stem_table_lookup()
 
         if stem_table_record_source_value not in self.stem_table_id_lookup:
-            raise Exception(
-                'Stem table record source value "{}" not found in lookup.'.format(stem_table_record_source_value))
-
+            logger.warning(f'Stem table record source value "{stem_table_record_source_value}" '
+                           f'not found in lookup.')
+            return None
         return self.stem_table_id_lookup.get(stem_table_record_source_value)
 
     def create_basedata_by_pid_lookup(self):
