@@ -139,7 +139,7 @@ class Relationship(base):
     relationship_name = Column(String(255), nullable=False)
     is_hierarchical = Column(String(1), nullable=False)
     defines_ancestry = Column(String(1), nullable=False)
-    reverse_relationship_id = Column(Integer, nullable=False)
+    reverse_relationship_id = Column(String(20), nullable=False)
     relationship_concept_id = Column(Integer, nullable=False)
 
 
